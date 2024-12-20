@@ -1,0 +1,21 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+  username: spep
+  password: 1830spep
+  host: db
+  port: 5432
+
+development:
+  <<: *default
+  database: spep_development
+
+test:
+  <<: *default
+  database: spep_test
+
+production:
+  <<: *default
+  database: spep_production
+  password: 1830spep

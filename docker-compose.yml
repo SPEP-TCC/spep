@@ -1,0 +1,39 @@
+services:
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: spep
+      POSTGRES_PASSWORD: 1830spep
+      POSTGRES_DB: spep_development
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - rails_network
+
+  app:
+    build: .
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec bin/rails server -b '0.0.0.0'"
+    volumes:
+      - ".:/app"
+    ports:
+      - "3001:3000"
+    environment:
+      DB_PORT: 5432
+      DATABASE_HOST: db
+      DB_USER: spep
+      POSTGRES_PASSWORD: 1830spep
+      DB_POOL_SIZE: 5
+      DB_NAME: spep
+    depends_on:
+      - db
+    networks:
+      - rails_network
+
+volumes:
+  postgres_data:
+
+networks:
+  rails_network:
+    driver: bridge
