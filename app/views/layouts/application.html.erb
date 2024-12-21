@@ -13,8 +13,24 @@
     <link rel="icon" href="/icon.png" type="image/png">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+
+    <%= stylesheet_link_tag "application",                               "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "/assets/fonts/tabler-icons.min.css", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "/assets/fonts/feather.css",          "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "/assets/fonts/fontawesome.css",      "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "/assets/fonts/material.css",         "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "/assets/css/style.css",              "data-turbo-track": "reload", id: "main-style-link" %>
+    <%= stylesheet_link_tag "/assets/css/style-preset.css",       "data-turbo-track": "reload" %>
+    
+
+    <%= javascript_include_tag "/assets/js/plugins/popper.min.js",    "data-turbo-track": "reload" %>
+    <%= javascript_include_tag "/assets/js/plugins/simplebar.min.js", "data-turbo-track": "reload" %>
+    <%= javascript_include_tag "/assets/js/plugins/bootstrap.min.js", "data-turbo-track": "reload" %>
+    <%= javascript_include_tag "/assets/js/fonts/custom-font.min.js", "data-turbo-track": "reload" %>
+    <%= javascript_include_tag "/assets/js/pcoded.js",                "data-turbo-track": "reload" %>
+    <%= javascript_include_tag "/assets/js/plugins/feather.min.js",   "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+
   </head>
 
   <body>
