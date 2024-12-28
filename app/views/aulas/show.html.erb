@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @aula %>
+
+<div>
+  <%= link_to "Edit this aula", edit_aula_path(@aula) %> |
+  <%= link_to "Back to aulas", aulas_path %>
+
+  <%= button_to "Destroy this aula", @aula, method: :delete %>
+</div>

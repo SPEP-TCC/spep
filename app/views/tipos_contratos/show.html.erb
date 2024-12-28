@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @tipo_contrato %>
+
+<div>
+  <%= link_to "Edit this tipo contrato", edit_tipo_contrato_path(@tipo_contrato) %> |
+  <%= link_to "Back to tipo contratos", tipos_contratos_path %>
+
+  <%= button_to "Destroy this tipo contrato", @tipo_contrato, method: :delete %>
+</div>

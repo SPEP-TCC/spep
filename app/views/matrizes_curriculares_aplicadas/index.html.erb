@@ -1,0 +1,16 @@
+<p style="color: green"><%= notice %></p>
+
+<% content_for :title, "Matriz curricular aplicadas" %>
+
+<h1>Matriz curricular aplicadas</h1>
+
+<div id="matrizes_curriculares_aplicadas">
+  <% @matrizes_curriculares_aplicadas.each do |matriz_curricular_aplicada| %>
+    <%= render matriz_curricular_aplicada %>
+    <p>
+      <%= link_to "Show this matriz curricular aplicada", matriz_curricular_aplicada %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New matriz curricular aplicada", new_matriz_curricular_aplicada_path %>

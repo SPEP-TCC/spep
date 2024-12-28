@@ -1,0 +1,17 @@
+
+<%= simple_form_for(@tipo_contrato) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <div class="form-inputs">
+    <%= f.input :descricao %>
+    <%= f.input :carga_horaria_semanal %>
+    <%= f.input :created_by %>
+    <%= f.input :updated_by %>
+    <%= f.input :deleted_at %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

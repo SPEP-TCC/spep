@@ -1,0 +1,16 @@
+<p style="color: green"><%= notice %></p>
+
+<% content_for :title, "Restricoes" %>
+
+<h1>Restricoes</h1>
+
+<div id="restricoes">
+  <% @restricoes.each do |restricao| %>
+    <%= render restricao %>
+    <p>
+      <%= link_to "Show this restricao", restricao %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New restricao", new_restricao_path %>

@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @subarea %>
+
+<div>
+  <%= link_to "Edit this subarea", edit_subarea_path(@subarea) %> |
+  <%= link_to "Back to subareas", subareas_path %>
+
+  <%= button_to "Destroy this subarea", @subarea, method: :delete %>
+</div>

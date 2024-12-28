@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @nivel %>
+
+<div>
+  <%= link_to "Edit this nivel", edit_nivel_path(@nivel) %> |
+  <%= link_to "Back to niveis", niveis_path %>
+
+  <%= button_to "Destroy this nivel", @nivel, method: :delete %>
+</div>

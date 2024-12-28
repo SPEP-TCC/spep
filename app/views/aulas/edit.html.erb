@@ -1,0 +1,12 @@
+<% content_for :title, "Editing aula" %>
+
+<h1>Editing aula</h1>
+
+<%= render "form", aula: @aula %>
+
+<br>
+
+<div>
+  <%= link_to "Show this aula", @aula %> |
+  <%= link_to "Back to aulas", aulas_path %>
+</div>

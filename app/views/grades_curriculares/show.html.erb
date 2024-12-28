@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @grade_curricular %>
+
+<div>
+  <%= link_to "Edit this grade curricular", edit_grade_curricular_path(@grade_curricular) %> |
+  <%= link_to "Back to grade curriculars", grades_curriculares_path %>
+
+  <%= button_to "Destroy this grade curricular", @grade_curricular, method: :delete %>
+</div>

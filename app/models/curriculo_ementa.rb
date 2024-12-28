@@ -1,0 +1,2 @@
+class CurriculoEmenta < ApplicationRecord
+end

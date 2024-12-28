@@ -1,0 +1,16 @@
+<p style="color: green"><%= notice %></p>
+
+<% content_for :title, "Subareas" %>
+
+<h1>Subareas</h1>
+
+<div id="subareas">
+  <% @subareas.each do |subarea| %>
+    <%= render subarea %>
+    <p>
+      <%= link_to "Show this subarea", subarea %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New subarea", new_subarea_path %>

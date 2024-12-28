@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @matriz_curricular_aplicada %>
+
+<div>
+  <%= link_to "Edit this matriz curricular aplicada", edit_matriz_curricular_aplicada_path(@matriz_curricular_aplicada) %> |
+  <%= link_to "Back to matriz curricular aplicadas", matrizes_curriculares_aplicadas_path %>
+
+  <%= button_to "Destroy this matriz curricular aplicada", @matriz_curricular_aplicada, method: :delete %>
+</div>

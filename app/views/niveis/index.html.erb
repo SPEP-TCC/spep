@@ -1,0 +1,16 @@
+<p style="color: green"><%= notice %></p>
+
+<% content_for :title, "Niveis" %>
+
+<h1>Niveis</h1>
+
+<div id="niveis">
+  <% @niveis.each do |nivel| %>
+    <%= render nivel %>
+    <p>
+      <%= link_to "Show this nivel", nivel %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New nivel", new_nivel_path %>
