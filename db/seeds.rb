@@ -4,9 +4,9 @@
 #
 # Example:
 Instituicao.find_or_create_by([
-    { descricao: "IFRO - CAMPUS CALAMA", duracao_aula: 50, tempos_dia: 16, inep: "11109807",
+    { nome: "IFRO - CAMPUS CALAMA", duracao_aula: 50, tempos_aula: 16, inep: "11109807",
       endereco: "AVENIDA CALAMA, 4985 LOTE 994, QUADRA 169. FLODOALDO PONTES PINTO." },
-    { descricao: "EEEFM ESTUDO E TRABALHO", duracao_aula: "50", tempos_dia: 10, inep: "11001046",
+    { nome: "EEEFM ESTUDO E TRABALHO", duracao_aula: 50, tempos_aula: 10, inep: "11001046",
       endereco: "RUA ALEXANDRE GUIMARÃES, BAIRRO AREAL, Nº1340" }
 ])
 
@@ -64,9 +64,9 @@ Subarea.find_or_create_by!([
 ])
 
 TipoContrato.find_or_create_by!([
-    { descricao: "EFETIVO", carga_horaria: 30 },
-    { descricao: "TEMPORARIO", carga_horaria: 30 },
-    { descricao: "EFETIVO", carga_horaria: 40 }
+    { descricao: "EFETIVO", carga_horaria_semanal: 30 },
+    { descricao: "TEMPORARIO", carga_horaria_semanal: 30 },
+    { descricao: "EFETIVO", carga_horaria_semanal: 40 }
 ])
 
 [ "PRESENCIAL", "EAD", "SEMIPRESENCIAL" ].each do |met_desc|
