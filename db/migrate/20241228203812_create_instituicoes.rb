@@ -3,8 +3,10 @@ class CreateInstituicoes < ActiveRecord::Migration[7.2]
     unless table_exists?(:instituicoes)
       create_table :instituicoes do |t|
         t.string :nome
+        t.string :inep
+        t.string :endereco
         t.integer :duracao_aula
-        t.integer :tempos_dia
+        t.integer :tempos_aula
         t.string :created_by
         t.string :updated_by
         t.datetime :deleted_at

@@ -64,9 +64,9 @@ Subarea.find_or_create_by!([
 ])
 
 TipoContrato.find_or_create_by!([
-    { descricao: "EFETIVO", carga_horaria_semanal: 30 },
-    { descricao: "TEMPORARIO", carga_horaria_semanal: 30 },
-    { descricao: "EFETIVO", carga_horaria_semanal: 40 }
+    { descricao: "EFETIVO", carga_horaria: 30 },
+    { descricao: "TEMPORARIO", carga_horaria: 30 },
+    { descricao: "EFETIVO", carga_horaria: 40 }
 ])
 
 [ "PRESENCIAL", "EAD", "SEMIPRESENCIAL" ].each do |met_desc|

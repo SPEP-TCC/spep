@@ -1,10 +1,8 @@
 services:
   db:
     image: postgres:13
-    environment:
-      POSTGRES_USER: spep
-      POSTGRES_PASSWORD: 1830spep
-      POSTGRES_DB: spep_development
+    env_file:
+      - .env
     ports:
       - "5433:5432"
     volumes:
@@ -19,13 +17,8 @@ services:
       - ".:/app"
     ports:
       - "3001:3000"
-    environment:
-      DB_PORT: 5432
-      DATABASE_HOST: db
-      DB_USER: spep
-      POSTGRES_PASSWORD: 1830spep
-      DB_POOL_SIZE: 5
-      DB_NAME: spep
+    env_file:
+      - .env
     depends_on:
       - db
     networks:
