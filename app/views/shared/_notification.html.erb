@@ -1,0 +1,33 @@
+<!-- shared/notification.html.erb -->
+<% if flash[:access_denied] %>
+  <div id="noty_error" data-message="<%= flash[:access_denied] %>" style="display:none;"></div>
+<% end %>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    if (typeof Noty == 'undefined') {
+      console.warn('Warning - noty.min.js is not loaded.');
+      return;
+    }
+    // Override Noty defaults
+    Noty.overrideDefaults({
+      theme: 'limitless',
+      layout: 'topRight',
+      type: 'alert',
+      modal: true,
+      timeout: 2500
+    });
+
+    // Check if the error message element exists
+    const notyErrorElement = document.getElementById('noty_error');
+    if (notyErrorElement) {
+      const message = notyErrorElement.getAttribute('data-message');
+      if (message) {
+        new Noty({
+          text: message,
+          type: 'error'
+        }).show();
+      }
+    }
+  });
+</script>

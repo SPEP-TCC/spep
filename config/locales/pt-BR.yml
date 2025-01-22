@@ -1,0 +1,403 @@
+---
+pt-BR:
+  common:
+    filters: Filtros
+    clean_filters: Limpar Filtros
+    apply_filters: Aplicar Filtros
+    table_th_actions: "Ações"
+    table_dropdown_options: "Opções"
+    back: Voltar
+    controllers:
+      home: "Home"
+      ambientes: "ambientes"
+      areas: "areas"
+      curriculos_ementas: "curriculos_ementas"
+      g_localidades: "Localidades"
+      cursos: "cursos"
+      turnos: "turnos"
+      disciplinas: "disciplinas"
+      etapas: "etapas"
+      grades_curriculares: "grades_curriculares"
+      matrizes_curriculares_aplicadas: "matrizes_curriculares_aplicadas"
+      metodologias: "metodologias"
+      modalidades: "modalidades"
+      niveis: "niveis"
+      instituicoes: "instituicoes"
+      tipos_contratos: "tipos_contratos"
+      turnos: "turnos"
+      turmas: "turmas"
+      curriculo_ementa_disciplinas: "curriculo_ementa_disciplinas"
+      restricoes: "restricoes"
+      disponibilidade_salas: "disponibilidade_salas"
+      aulas: "aulas"
+      subareas: "subareas"
+    actions:
+      index: "Lista"
+      new: "Incluir"
+      create: "Incluir"
+      show: "Visualizar"
+      edit: "Editar"
+      update: "Editar"
+      delete: "Excluir"
+
+  messages:
+    created_successfully: "Registro criado com sucesso!"
+    updated_successfully: "Registro atualizado com sucesso!"
+    deleted_successfully: "Registro marcado como excluído!"
+    delete_failed_due_to_dependencies: "Exclusão falhou devido a dependências."
+    not_found: "Registro não encontrado."
+  activerecord:
+    models:
+      ambiente:
+        one: "País"
+        other: "Países"
+      area: 
+        one: "Tipo de Rua"
+        other: "Tipos de Ruas"
+      curriculo_ementa: 
+        one: "Natureza Unidade"
+        other: "Naturezas Unidades"
+      curso: 
+        one: "Estado"
+        other: "Estados"
+      disciplina: 
+        one: "Município"
+        other: "Municípios"
+      etapa: 
+        one: "Município"
+        other: "Municípios"
+      grade_curricular: 
+        one: "Município"
+        other: "Municípios"
+      matriz_curricular_aplicada: 
+        one: "Município"
+        other: "Municípios"
+      metodologia: 
+        one: "Município"
+        other: "Municípios"
+      modalidade: 
+        one: "Município"
+        other: "Municípios"
+      nivel: 
+        one: "Município"
+        other: "Municípios"
+      instituicao: 
+        one: "Município"
+        other: "Municípios"
+      tipo_contrato: 
+        one: "Município"
+        other: "Municípios"
+      turno: 
+        one: "Município"
+        other: "Municípios"
+      turma: 
+        one: "Município"
+        other: "Municípios"
+      curriculo_ementa_disciplina: 
+        one: "Município"
+        other: "Municípios"
+      restricao: 
+        one: "Município"
+        other: "Municípios"
+      disponibilidade_sala: 
+        one: "Município"
+        other: "Municípios"
+      aula: 
+        one: "Município"
+        other: "Municípios"
+      subarea: 
+        one: "Município"
+        other: "Municípios"
+    attributes:
+      g_pais:
+        descricao: "Descrição"
+      g_tipo_rua:
+        descricao: "Descrição"
+      g_natureza_unidade:
+        descricao: "Descrição"
+      g_estado:
+        descricao: "Descrição"
+        g_pais: "País"
+      g_municipio:
+        descricao: "Descrição"
+        g_estado: "Estado"
+      g_distrito:
+        descricao: "Descrição"
+        g_municipio: "Município"
+      g_localidade:
+        descricao: "Descrição"
+        g_distrito: "Município"
+      g_entidade:
+        nome: "Nome"
+        g_estado: "Estado"
+        g_municipio: "Município"
+        email: "E-mail"
+        cnpj: "CNPJ"
+        cep: "CEP"
+        bairro: "Bairro"
+        rua: "Rua"
+        numero: "Número"
+      g_unidade:
+        descricao: "Descrição"
+        g_entidade: "Entidade"
+        g_municipio: "Município"
+        g_natureza_unidade: "Natureza unidade"
+      g_unidade_educacional:
+        nome: "Nome Jurídico"
+        inep: "INEP"
+        nome_fantasia: "Nome fantasia"
+        g_natureza_unidade: "Natureza Unidade"
+        rua: "Rua"
+        bairro: "Bairro"
+        cep: "CEP"
+        numero: "Número"
+        email_unidade: "E-mail unidade"
+        telefone_unidade: "Telefone unidade"
+        responsavel_diretor: "Responsável/Diretor"
+        email_responsavel: "E-mail responsável"
+        telefone_responsavel: "Telefone responsável"
+        complemento: "Complemento"
+        g_tipo_rua: "Tipo rua"
+        status: "Status"
+        cnpj: "CNPJ"
+        inscricao_estadual: "Inscrição estadual"
+        g_coligada: "Entidade Gestora"
+      e_tipo_turno:
+        descricao: "Descrição"
+      e_turno:
+        descricao: "Descrição"
+        hora_inicial: "Hora inicial"
+        hora_final: "Hora final"
+        g_unidade_educacional: "Unidade educacional"
+        e_tipo_turno: "Tipo de turno"
+        g_coligada: "Entidade Gestora"
+      e_modalidade:
+        descricao: "Descrição"
+        codigo_modalidade: "Código"  
+    errors:
+      messages:        
+        record_invalid: 'A validação falhou: %{errors}'        
+        restrict_dependent_destroy:
+          has_one: Não é possível excluir o registro pois existe um %{record} dependente
+          has_many: Não é possível excluir o registro pois existem %{record} dependentes
+  date:
+    abbr_day_names:
+    - dom
+    - seg
+    - ter
+    - qua
+    - qui
+    - sex
+    - sáb
+    abbr_month_names:
+    -
+    - jan
+    - fev
+    - mar
+    - abr
+    - mai
+    - jun
+    - jul
+    - ago
+    - set
+    - out
+    - nov
+    - dez
+    day_names:
+    - domingo
+    - segunda-feira
+    - terça-feira
+    - quarta-feira
+    - quinta-feira
+    - sexta-feira
+    - sábado
+    formats:
+      default: "%d/%m/%Y"
+      long: "%d de %B de %Y"
+      short: "%d de %B"
+    month_names:
+    -
+    - janeiro
+    - fevereiro
+    - março
+    - abril
+    - maio
+    - junho
+    - julho
+    - agosto
+    - setembro
+    - outubro
+    - novembro
+    - dezembro
+    order:
+    - :day
+    - :month
+    - :year
+  datetime:
+    distance_in_words:
+      about_x_hours:
+        one: aproximadamente %{count} hora
+        other: aproximadamente %{count} horas
+      about_x_months:
+        one: aproximadamente %{count} mês
+        other: aproximadamente %{count} meses
+      about_x_years:
+        one: aproximadamente %{count} ano
+        other: aproximadamente %{count} anos
+      almost_x_years:
+        one: quase %{count} ano
+        other: quase %{count} anos
+      half_a_minute: meio minuto
+      less_than_x_seconds:
+        one: menos de %{count} segundo
+        other: menos de %{count} segundos
+      less_than_x_minutes:
+        one: menos de um minuto
+        other: menos de %{count} minutos
+      over_x_years:
+        one: mais de %{count} ano
+        other: mais de %{count} anos
+      x_seconds:
+        one: "%{count} segundo"
+        other: "%{count} segundos"
+      x_minutes:
+        one: "%{count} minuto"
+        other: "%{count} minutos"
+      x_days:
+        one: "%{count} dia"
+        other: "%{count} dias"
+      x_months:
+        one: "%{count} mês"
+        other: "%{count} meses"
+      x_years:
+        one: "%{count} ano"
+        other: "%{count} anos"
+    prompts:
+      second: Segundo
+      minute: Minuto
+      hour: Hora
+      day: Dia
+      month: Mês
+      year: Ano
+  errors:
+    format: "%{attribute} %{message}"
+    messages:
+      accepted: deve ser aceito
+      blank: não pode ficar em branco
+      confirmation: não é igual a %{attribute}
+      empty: não pode ficar vazio
+      equal_to: deve ser igual a %{count}
+      even: deve ser par
+      exclusion: não está disponível
+      greater_than: deve ser maior que %{count}
+      greater_than_or_equal_to: deve ser maior ou igual a %{count}
+      in: deve estar em %{count}
+      inclusion: não está incluído na lista
+      invalid: não é válido
+      less_than: deve ser menor que %{count}
+      less_than_or_equal_to: deve ser menor ou igual a %{count}
+      model_invalid: 'A validação falhou: %{errors}'
+      not_a_number: não é um número
+      not_an_integer: não é um número inteiro
+      odd: deve ser ímpar
+      other_than: deve ser diferente de %{count}
+      present: deve ficar em branco
+      required: é obrigatório(a)
+      taken: já está em uso
+      too_long:
+        one: 'é muito longo (máximo: %{count} caracter)'
+        other: 'é muito longo (máximo: %{count} caracteres)'
+      too_short:
+        one: 'é muito curto (mínimo: %{count} caracter)'
+        other: 'é muito curto (mínimo: %{count} caracteres)'
+      wrong_length:
+        one: não possui o tamanho esperado (%{count} caracter)
+        other: não possui o tamanho esperado (%{count} caracteres)
+    template:
+      body: 'Por favor, verifique o(s) seguinte(s) campo(s):'
+      header:
+        one: 'Não foi possível gravar %{model}: %{count} erro'
+        other: 'Não foi possível gravar %{model}: %{count} erros'
+  helpers:
+    select:
+      prompt: Por favor selecione
+    submit:
+      index: Lista
+      show: Visualizar
+      new: Incluir
+      edit: Editar
+      create: Incluir
+      submit: Salvar
+      update: Atualizar
+      destroy: Excluir
+  number:
+    currency:
+      format:
+        delimiter: "."
+        format: "%u %n"
+        precision: 2
+        separator: ","
+        significant: false
+        strip_insignificant_zeros: false
+        unit: R$
+    format:
+      delimiter: "."
+      precision: 3
+      round_mode: default
+      separator: ","
+      significant: false
+      strip_insignificant_zeros: false
+    human:
+      decimal_units:
+        format: "%n %u"
+        units:
+          billion:
+            one: bilhão
+            other: bilhões
+          million:
+            one: milhão
+            other: milhões
+          quadrillion:
+            one: quatrilhão
+            other: quatrilhões
+          thousand: mil
+          trillion:
+            one: trilhão
+            other: trilhões
+          unit: ''
+      format:
+        delimiter: ''
+        precision: 3
+        significant: true
+        strip_insignificant_zeros: true
+      storage_units:
+        format: "%n %u"
+        units:
+          byte:
+            one: Byte
+            other: Bytes
+          eb: EB
+          gb: GB
+          kb: KB
+          mb: MB
+          pb: PB
+          tb: TB
+    percentage:
+      format:
+        delimiter: "."
+        format: "%n%"
+    precision:
+      format:
+        delimiter: "."
+  support:
+    array:
+      last_word_connector: " e "
+      two_words_connector: " e "
+      words_connector: ", "
+  time:
+    am: am
+    formats:
+      default: "%a, %d de %B de %Y, %H:%M:%S %z"
+      long: "%d de %B de %Y, %H:%M"
+      short: "%d de %B, %H:%M"
+    pm: pm

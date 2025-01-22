@@ -1,0 +1,11 @@
+<div class="row">
+<% attributes.each do |attribute| %>
+  <div class="col-12">
+  <% if attribute.reference? %>
+    <%%= f.association :<%= attribute.name %>, input_html: { class: "keyup", disabled: local_assigns[:disabled] } %>
+  <% else %>
+    <%%= f.input :<%= attribute.name %>, input_html: { class: "keyup", disabled: local_assigns[:disabled] } %>
+  <% end %>
+  </div>
+<% end %>
+</div>

@@ -1,0 +1,10 @@
+   <!-- Botão para abrir o modal de filtros -->
+<div>
+  <!-- Botão com modal -->
+  <%= button_tag type: "button", class: "btn btn-info #{"active" if params[:q]}", data: { bs_toggle: "modal", bs_target: "#filters_modal" } do %>
+    <%= t("common.filters") %>
+  <% end %>
+  <!-- Botão de limpar filtros -->
+  <%= link_to t("common.clean_filters"), index_url, class: "btn btn-secondary" if params[:q] %>
+</div>
+<%= yield %>

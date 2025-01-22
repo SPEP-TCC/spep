@@ -1,0 +1,38 @@
+<% content_for :context_nav do %>
+  <div class="page-header page-header-light shadow">
+    <div class="page-header-content">
+      <div class="d-flex align-items-center justify-content-between gap-1">
+        <div class="page-title">
+          <div class="d-inline-flex align-items-center">
+            <i class="ph-arrow-circle-left fs-1 me-2 hand-pointer" onclick="window.history.back();"></i>
+            <h4 class="mb-0"><%= title %></h4>
+          </div>
+        </div>
+        <% if defined?(new_path) and ["index"].include?(params[:action]) %>
+          <% if new_path.class == Array %>
+            <div class="btn-group">
+              <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Incluir</button>
+              <div class="dropdown-menu">
+                <% new_path.each do |link| %>
+                  <%= link_to link[0], link[1], class: "dropdown-item" %>
+                <% end %>
+              </div>
+            </div>
+          <% else %>
+            <%= link_to new_path, class: "btn btn-primary btn-icon d-flex gap-1" do %>
+              <i class="ph-plus"></i> <span class="d-none d-sm-block" >Incluir</span>
+            <% end %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+    <div class="page-header-content d-lg-flex border-top">
+      <div class="d-flex">
+        <div class="breadcrumb py-2">
+          <a href="/" class="breadcrumb-item"><i class="ph-house"></i></a>
+          <%= yield %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

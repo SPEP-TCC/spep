@@ -65,6 +65,6 @@ class AmbientesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def ambiente_params
-      params.require(:ambiente).permit(:descricao, :capacidade, :periculosidade, :instituicao_id, :created_by, :updated_by, :deleted_at])
+      params.require(:ambiente).permit(:descricao, :capacidade, :periculosidade, :instituicao_id, :created_by, :updated_by, :deleted_at)
     end
 end

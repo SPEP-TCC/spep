@@ -18,7 +18,7 @@ require "action_cable/engine"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-module Spep
+module SPEP
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.2
@@ -36,7 +36,17 @@ module Spep
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
 
-    # Don't generate system test files.
-    config.generators.system_tests = nil
+    config.time_zone = "La Paz" # Configuração do Time Zone
+    config.i18n.default_locale = :'pt-BR' # Configuração do idioma padrão
+
+    # Paleativo apenas para resolver problema de cabeçalho em produção
+    # config.action_controller.forgery_protection_origin_check = false
+
+    config.generators do |g|
+      # g.assets false # Não gera arquivos de assets
+      # g.helper false # Não gera helpers automaticamente
+      # g.stylesheets false # Não gera stylesheets automaticamente
+      # g.jbuilder false # Não gera arquivos jbuilder
+    end
   end
 end

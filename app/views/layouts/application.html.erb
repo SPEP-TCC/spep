@@ -1,39 +1,53 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html >
+<html lang="pt">
   <head>
-    <title><%= content_for(:title) || "Spep" %></title>
+    <title>SPEP</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="apple-mobile-web-app-capable" content="yes">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
-    <%= yield :head %>
-
-    <link rel="manifest" href="/manifest.json">
-    <link rel="icon" href="/icon.png" type="image/png">
-    <link rel="icon" href="/icon.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="/icon.png">
-
-    <%= stylesheet_link_tag "application",                               "data-turbo-track": "reload" %>
-    <%= stylesheet_link_tag "/assets/fonts/tabler-icons.min.css", "data-turbo-track": "reload" %>
-    <%= stylesheet_link_tag "/assets/fonts/feather.css",          "data-turbo-track": "reload" %>
-    <%= stylesheet_link_tag "/assets/fonts/fontawesome.css",      "data-turbo-track": "reload" %>
-    <%= stylesheet_link_tag "/assets/fonts/material.css",         "data-turbo-track": "reload" %>
-    <%= stylesheet_link_tag "/assets/css/style.css",              "data-turbo-track": "reload", id: "main-style-link" %>
-    <%= stylesheet_link_tag "/assets/css/style-preset.css",       "data-turbo-track": "reload" %>
-    
-
-    <%= javascript_include_tag "/assets/js/plugins/popper.min.js",    "data-turbo-track": "reload" %>
-    <%= javascript_include_tag "/assets/js/plugins/simplebar.min.js", "data-turbo-track": "reload" %>
-    <%= javascript_include_tag "/assets/js/plugins/bootstrap.min.js", "data-turbo-track": "reload" %>
-    <%= javascript_include_tag "/assets/js/fonts/custom-font.min.js", "data-turbo-track": "reload" %>
-    <%= javascript_include_tag "/assets/js/pcoded.js",                "data-turbo-track": "reload" %>
-    <%= javascript_include_tag "/assets/js/plugins/feather.min.js",   "data-turbo-track": "reload" %>
-    <%= javascript_importmap_tags %>
-
+    <%= favicon_link_tag "/layout/able/assets/images/favicon.svg", type: 'image/x-icon', data: { turbo_track: 'reload' } %>
+    <%# CSS %>
+    <%= stylesheet_link_tag "/layout/able/assets/fonts/inter/inter.css",                "data-turbo-track": "reload"  %>
+    <%= stylesheet_link_tag "/layout/able/assets/fonts/phosphor/duotone/style.css",     "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "/layout/able/assets/fonts/tabler-icons.min.css",           "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "/layout/able/assets/fonts/feather.css",                    "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "/layout/able/assets/fonts/fontawesome.css",                "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "/layout/able/assets/fonts/material.css",                   "data-turbo-track": "reload" %>
+    <%# layout antigo %>
+    <%= stylesheet_link_tag "/layout/assets/icons/phosphor/styles.min.css",             "data-turbo-track": "reload" %>
+    <%# Fim layout antigo %>
+    <%= stylesheet_link_tag "/layout/able/assets/css/style.css", id: "main-style-link", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "/layout/able/assets/css/style-preset.css",                 "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "application",                                              "data-turbo-track": "reload" %>
+    <%# JS %>
+    <%= javascript_include_tag "/layout/able/assets/js/tech-stack.js",                    "data-turbo-track": "reload" %>
+    <%= javascript_include_tag "/layout/able/assets/js/plugins/popper.min.js",             "data-turbo-track": "reload" %>
+    <%= javascript_include_tag "/layout/able/assets/js/plugins/simplebar.min.js",          "data-turbo-track": "reload" %>
+    <%= javascript_include_tag "/layout/able/assets/js/plugins/bootstrap.min.js",          "data-turbo-track": "reload" %>
+    <%= javascript_include_tag "/layout/able/assets/js/plugins/i18next.min.js",            "data-turbo-track": "reload" %>
+    <%= javascript_include_tag "/layout/able/assets/js/plugins/i18nextHttpBackend.min.js", "data-turbo-track": "reload" %>
+    <%= javascript_include_tag "/layout/able/assets/js/icon/custom-font.js",               "data-turbo-track": "reload" %>
+    <%= javascript_include_tag "/layout/able/assets/js/script.js",                         "data-turbo-track": "reload" %>
+    <%= javascript_include_tag "/layout/able/assets/js/theme.js",                          "data-turbo-track": "reload" %>
+    <%= javascript_include_tag "/layout/able/assets/js/multi-lang.js",                     "data-turbo-track": "reload" %>
+    <%= javascript_include_tag "/layout/able/assets/js/plugins/feather.min.js",            "data-turbo-track": "reload" %>
+    <%= javascript_include_tag "/layout/assets/js/custom.js",                              "data-turbo-track": "reload" %>
   </head>
-
-  <body>
-    <%= yield %>
+  <body style="background-color:#008000" data-pc-preset="preset-1" data-pc-sidebar-caption="true" data-pc-layout="vertical" data-pc-direction="ltr" data-pc-theme_contrast="" data-pc-theme="light" data-pc-direction="ltr">
+    <%= render "shared/ablepro/sidebar" %>
+    <%= render "shared/ablepro/header" %>
+    <%= render "shared/ablepro/offcanvas" %>
+    <div class="pc-container">
+      <div class="pc-content">
+        <%= render "shared/ablepro/page_header" %>
+        <div class="row">
+          <div class="col-12">
+            <%= render "shared/notice" %>
+            <%= yield %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <%= render "shared/ablepro/footer"%>
   </body>
 </html>

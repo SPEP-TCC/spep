@@ -1,0 +1,39 @@
+	<!-- Main navbar -->
+<div class="navbar navbar-dark navbar-expand-lg navbar-static">
+  <div class="container-fluid">
+    <div class="navbar-brand flex-1 flex-lg-0">
+      <div class="d-inline-flex align-items-center mb-0">
+        <img class="me-2" src="/layout/assets/img/logo.svg" alt="">
+        <h4 class="mb-0">
+          PAI SGE
+        </h4>
+      </div>
+    </div>
+    <ul class="nav flex-row justify-content-end order-1 order-lg-2">
+      <li class="nav-item nav-item-dropdown-lg dropdown ms-lg-2">
+        <a href="#" class="navbar-nav-link align-items-center rounded-pill p-1" data-bs-toggle="dropdown">
+          <div class="status-indicator-container">
+            <i class="ph-user-circle"></i>
+            <span class="status-indicator bg-success"></span>
+          </div>
+          <span class="d-none d-lg-inline-block mx-lg-2"><%= current_user.present? ? current_user.email : 'Not user'%></span>
+        </a>
+        <div class="dropdown-menu dropdown-menu-end">
+          <a href="#" class="dropdown-item">
+            <i class="ph-user-circle me-2"></i>
+            Meu perfil
+          </a>
+          <div class="dropdown-divider"></div>
+          <a href="#" class="dropdown-item">
+            <i class="ph-gear me-2"></i>
+            Configurações de conta
+          </a>
+            <%= button_to destroy_user_session_path, method: :delete, class: "dropdown-item" do %>
+              <i class="ph-sign-out me-2"></i> Sair
+            <% end %>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
+<!-- /main navbar -->
