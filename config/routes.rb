@@ -1,22 +1,4 @@
 Rails.application.routes.draw do
-  resources :aulas
-  resources :grades_curriculares
-  resources :restricoes
-  resources :turmas
-  resources :matrizes_curriculares_aplicadas
-  resources :cursos
-  resources :disciplinas
-  resources :subareas
-  resources :modalidades
-  resources :metodologias
-  resources :ambientes
-  resources :tipos_contratos
-  resources :areas
-  resources :etapas
-  resources :niveis
-  resources :instituicoes
-  resources :curriculos_ementas
-  resources :turnos
   devise_for :users
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   root to: "home#index"

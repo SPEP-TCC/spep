@@ -3,7 +3,7 @@ default: &default
   encoding: unicode
   pool: <%= ENV.fetch("DB_POOL_SIZE", 5) %>
   username: <%= ENV.fetch("DB_USER", "spep") %>
-  password: <%= ENV.fetch("DB_PASSWORD", "spepdesenv") %>
+  password: <%= ENV.fetch("DB_PASSWORD", "1830spep") %>
   host: <%= ENV.fetch("DB_HOST", "db") %>
   port: <%= ENV.fetch("DB_PORT", 5432) %>
 
