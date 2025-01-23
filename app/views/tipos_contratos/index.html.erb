@@ -1,0 +1,91 @@
+<div class="card">
+  <div class="card-header border-0 d-flex justify-content-between">
+    <!-- Botão para abrir o modal de filtros -->
+    <%= render "shared/index_header_buttons", index_url: tipos_contratos_path do %>
+    <%= link_to t("common.actions.new"), new_tipo_contrato_path, class: "btn btn-primary" %>
+    <% end %>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-borderless table-striped">
+        <thead>
+          <tr>
+            <th class="text-center col-1 opacity-75"><%= t("common.table_th_actions") %></th>
+            
+              <th class="opacity-75"><%= sort_link(@q, :descricao, t("activerecord.attributes.tipo_contrato.descricao")) %></th>
+            
+              <th class="opacity-75"><%= sort_link(@q, :carga_horaria, t("activerecord.attributes.tipo_contrato.carga_horaria")) %></th>
+            
+          </tr>
+        </thead>
+        <tbody>
+          <% @tipos_contratos.each do |tipo_contrato| %>
+          <tr>
+            <td class="text-center">
+              <div class="dropdown-toggle">
+                <a href="#" class="text-body dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                  <i class="ti ti-settings fs-4"></i>
+                </a>
+                <div class="dropdown-menu">
+                  <div class="dropdown-header"><%= t("common.table_dropdown_options") %></div>
+                  <%= link_to content_tag(:i, "", class: "ph-eye me-2") + t("common.actions.show"), tipo_contrato_path(tipo_contrato), class: "dropdown-item" %>
+                  <%= link_to content_tag(:i, "", class: "ph-pen me-2") + t("common.actions.edit"), edit_tipo_contrato_path(tipo_contrato), class: "dropdown-item" %>
+                  <%= form_for tipo_contrato, method: :delete do |f| %>
+                  <a class="dropdown-item hand-pointer" data-confirm-delete="<%= tipo_contrato_path(tipo_contrato) %>" data-csrf-token="<%= form_authenticity_token %>">
+                    <i class="ph-trash-simple me-2"></i><%= t("common.actions.delete") %>
+                  </a>
+                  <% end %>
+                </div>
+              </div>
+            </td>
+            
+              <td><%= tipo_contrato.descricao %></td>
+            
+              <td><%= tipo_contrato.carga_horaria %></td>
+            
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="card-footer">
+    <%= pagy_navigation(@pagy) %>
+  </div>
+</div>
+<!-- Modal de Filtros -->
+<div class="modal fade" id="filters_modal" tabindex="-1" aria-labelledby="filters_modal_label" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- Cabeçalho do Modal -->
+      <div class="modal-header">
+        <h5 class="modal-title" id="filters_modal_label"><%= t("common.filters") %></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label=""></button>
+      </div>
+      <!-- Formulário de Pesquisa -->
+      <%= search_form_for @q, url: tipos_contratos_path, html: { class: "d-flex flex-column gap-3", autocomplete: "off" } do |f| %>
+      <!-- Corpo do Modal -->
+      <div class="modal-body">
+        <div class="row">
+          
+            <div class="col-12 mb-3">
+              <%= f.label :descricao_cont, t("activerecord.attributes.tipo_contrato.descricao"), class: "form-label" %>
+              <%= f.search_field :descricao_cont, class: "form-control" %>
+            </div>
+          
+            <div class="col-12 mb-3">
+              <%= f.label :carga_horaria_cont, t("activerecord.attributes.tipo_contrato.carga_horaria"), class: "form-label" %>
+              <%= f.search_field :carga_horaria_cont, class: "form-control" %>
+            </div>
+          
+        </div>
+      </div>
+      <!-- Modal footer -->
+      <div class="modal-footer justify-content-start">
+        <%= f.submit t("common.apply_filters"), class: "btn btn-primary" %>
+        <button type="button" class="btn btn-light" data-bs-dismiss="modal"><%= t("common.back") %></button>
+      </div>
+      <% end %>
+    </div>
+  </div>
+</div>

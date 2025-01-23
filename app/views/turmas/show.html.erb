@@ -1,0 +1,14 @@
+<%= simple_form_for(@turma, url: "#", method: "get", html: { disabled: true }) do |f| %>
+<%= f.error_notification %>
+<%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+<%= render "shared/notice" %>
+<div class="card">
+  <div class="card-body">
+    <%= render "turma", f: f, disabled: true %>
+  </div>
+  <div class="card-footer">
+    <%= link_to t("common.actions.edit"), edit_turma_path(@turma), class: "btn btn-secondary" %>
+    <%= link_to t("common.back"), turmas_path, class: "btn btn-light" %>
+  </div>
+</div>
+<% end %>

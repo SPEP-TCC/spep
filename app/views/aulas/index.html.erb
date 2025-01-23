@@ -1,0 +1,147 @@
+<style>
+  .grade-horarios-container {
+  display: flex;
+  gap: 20px;
+}
+
+.grades-curriculares {
+  width: 20%;
+  background-color: #f9f9f9;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.grades-curriculares h3 {
+  margin-bottom: 10px;
+}
+
+.grades-curriculares .draggable-list {
+  list-style: none;
+  padding: 0;
+}
+
+.grades-curriculares .draggable {
+  padding: 8px;
+  margin-bottom: 5px;
+  background-color: #e1f5fe;
+  border: 1px solid #81d4fa;
+  border-radius: 4px;
+  cursor: grab;
+}
+
+.grade-horarios {
+  width: 75%;
+  overflow-x: auto;
+}
+
+.grade-horarios table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.grade-horarios th,
+.grade-horarios td {
+  border: 1px solid #ddd;
+  text-align: center;
+  padding: 8px;
+}
+
+.grade-horarios .dropzone {
+  height: 60px;
+  background-color: #f1f1f1;
+}
+
+</style>
+<div class="grade-horarios-container">
+  <!-- Lista de Grades Curriculares -->
+  <div class="grades-curriculares">
+    <h3>Grades Curriculares</h3>
+    <ul class="draggable-list">
+      <% @grades_curriculares.each do |grade| %>
+        <li class="draggable" data-id="<%= grade.id %>">
+          <%= grade.disciplina.nome %> - <%= grade.carga_horaria %>h
+        </li>
+      <% end %>
+    </ul>
+  </div>
+
+  <!-- Grade de Horários -->
+  <div class="grade-horarios">
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          <% @dias.each do |dia| %>
+            <th>Dia <%= dia %></th>
+          <% end %>
+        </tr>
+      </thead>
+      <tbody>
+        <% @horarios.each do |horario| %>
+          <tr>
+            <td><%= horario.strftime("%H:%M") %></td>
+            <% @dias.each do |dia| %>
+              <td data-dia="<%= dia %>" data-horario="<%= horario %>" class="dropzone">
+                <% aulas_do_horario = @aulas.select { |a| a.dia == dia && a.horario_inicio == horario } %>
+                <% aulas_do_horario.each do |aula| %>
+                  <div class="aula">
+                    <%= aula.grade_curricular.disciplina.nome %>
+                  </div>
+                <% end %>
+              </td>
+            <% end %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+<script>
+  import { Draggable } from '@shopify/draggable';
+
+document.addEventListener('DOMContentLoaded', () => {
+  // Configuração de drag and drop
+  const containers = document.querySelectorAll('.dropzone');
+  const draggableItems = document.querySelectorAll('.draggable');
+
+  const draggable = new Draggable(draggableItems, {
+    draggable: '.draggable',
+  });
+
+  draggable.on('drag:stop', (event) => {
+    const { source, sourceContainer } = event;
+    const gradeId = source.dataset.id;
+    const target = event.source.parentElement;
+
+    if (target.classList.contains('dropzone')) {
+      const dia = target.dataset.dia;
+      const horario = target.dataset.horario;
+
+      // Enviar a requisição para salvar no backend
+      fetch('/aulas', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          grade_curricular_id: gradeId,
+          dia: dia,
+          horario_inicio: horario,
+        }),
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            target.innerHTML += `<div>${data.grade_nome}</div>`;
+            source.remove(); // Remove o item da lista lateral
+          } else {
+            alert(data.error);
+          }
+        })
+        .catch(error => console.error('Erro ao salvar aula:', error));
+    }
+  });
+});
+
+</script>

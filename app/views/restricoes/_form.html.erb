@@ -1,0 +1,17 @@
+<!-- Form Customizado -->
+<%= simple_form_for(@restricao) do |f| %>
+  <!-- Área de notificações -->
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+  <%= render "shared/notice" %>
+  <!-- Card e formulário -->
+  <div class="card">
+    <div class="card-body">      
+      <%= render "restricao", f: f %>
+    </div>
+    <div class="card-footer">
+      <%= btn_submit(f) %>
+      <%= link_to t("common.back"), restricoes_path, class: "btn btn-light" %>
+    </div>
+  </div>
+<% end %>

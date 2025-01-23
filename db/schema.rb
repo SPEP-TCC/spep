@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_12_28_221317) do
+ActiveRecord::Schema[7.2].define(version: 2025_01_23_024541) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -18,7 +18,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_28_221317) do
     t.string "descricao"
     t.integer "capacidade"
     t.boolean "periculosidade"
-    t.bigint "instituicao_id", null: false
+    t.bigint "instituicao_id"
     t.string "created_by"
     t.string "updated_by"
     t.datetime "deleted_at"
@@ -29,7 +29,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_28_221317) do
 
   create_table "areas", force: :cascade do |t|
     t.string "descricao"
-    t.bigint "etapa_id", null: false
+    t.bigint "etapa_id"
     t.string "created_by"
     t.string "updated_by"
     t.datetime "deleted_at"
@@ -39,8 +39,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_28_221317) do
   end
 
   create_table "aulas", force: :cascade do |t|
-    t.bigint "grade_curricular_id", null: false
-    t.bigint "ambiente_id", null: false
+    t.bigint "grade_curricular_id"
+    t.bigint "ambiente_id"
     t.integer "dia"
     t.time "horario_inicio"
     t.time "horario_fim"
@@ -54,8 +54,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_28_221317) do
   end
 
   create_table "curriculo_ementa_disciplinas", force: :cascade do |t|
-    t.bigint "curriculo_ementa_id", null: false
-    t.bigint "disciplina_id", null: false
+    t.bigint "curriculo_ementa_id"
+    t.bigint "disciplina_id"
     t.string "created_by"
     t.string "updated_by"
     t.datetime "deleted_at"
@@ -77,10 +77,10 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_28_221317) do
 
   create_table "cursos", force: :cascade do |t|
     t.string "descricao"
-    t.bigint "etapa_id", null: false
-    t.bigint "curriculo_ementa_id", null: false
-    t.bigint "instituicao_id", null: false
-    t.bigint "modalidade_id", null: false
+    t.bigint "etapa_id"
+    t.bigint "curriculo_ementa_id"
+    t.bigint "instituicao_id"
+    t.bigint "modalidade_id"
     t.string "created_by"
     t.string "updated_by"
     t.datetime "deleted_at"
@@ -107,7 +107,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_28_221317) do
   end
 
   create_table "disponibilidade_salas", force: :cascade do |t|
-    t.bigint "ambiente_id", null: false
+    t.bigint "ambiente_id"
     t.integer "dia"
     t.time "horario_inicio"
     t.time "horario_fim"
@@ -121,7 +121,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_28_221317) do
 
   create_table "etapas", force: :cascade do |t|
     t.string "descricao"
-    t.bigint "nivel_id", null: false
+    t.bigint "nivel_id"
     t.string "created_by"
     t.string "updated_by"
     t.datetime "deleted_at"
@@ -131,12 +131,13 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_28_221317) do
   end
 
   create_table "grades_curriculares", force: :cascade do |t|
-    t.bigint "disciplina_id", null: false
+    t.bigint "disciplina_id"
     t.integer "carga_horaria"
     t.integer "periodo_calendario"
     t.boolean "optativa"
-    t.bigint "matriz_curricular_aplicada_id", null: false
-    t.bigint "user_id", null: false
+    t.integer "carga_horaria_total"
+    t.bigint "matriz_curricular_aplicada_id"
+    t.bigint "user_id"
     t.string "created_by"
     t.string "updated_by"
     t.datetime "deleted_at"
@@ -152,6 +153,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_28_221317) do
     t.string "inep"
     t.string "endereco"
     t.integer "duracao_aula"
+    t.integer "horario_inicio_aula"
+    t.integer "horario_fim_aulas"
     t.integer "tempos_aula"
     t.string "created_by"
     t.string "updated_by"
@@ -163,12 +166,12 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_28_221317) do
   create_table "matrizes_curriculares_aplicadas", force: :cascade do |t|
     t.string "descricao"
     t.integer "ano_letivo"
-    t.bigint "turno_id", null: false
-    t.bigint "curso_id", null: false
+    t.bigint "turno_id"
+    t.bigint "curso_id"
     t.boolean "ativo"
     t.string "created_by"
     t.string "updated_by"
-    t.datetime "delete_at"
+    t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["curso_id"], name: "index_matrizes_curriculares_aplicadas_on_curso_id"
@@ -203,8 +206,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_28_221317) do
   end
 
   create_table "restricoes", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.bigint "turno_id", null: false
+    t.bigint "user_id"
+    t.bigint "turno_id"
     t.integer "dia"
     t.time "horario"
     t.string "created_by"
@@ -240,7 +243,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_28_221317) do
   create_table "turmas", force: :cascade do |t|
     t.string "descricao"
     t.integer "vagas"
-    t.bigint "matriz_curricular_aplicada_id", null: false
+    t.bigint "matriz_curricular_aplicada_id"
     t.integer "numero_efetivo_estudantes"
     t.boolean "sala_recorrente"
     t.bigint "turno_id"

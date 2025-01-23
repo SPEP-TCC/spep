@@ -1,0 +1,14 @@
+<%= simple_form_for(@curriculo_ementa_disciplina, url: "#", method: "get", html: { disabled: true }) do |f| %>
+<%= f.error_notification %>
+<%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+<%= render "shared/notice" %>
+<div class="card">
+  <div class="card-body">
+    <%= render "curriculo_ementa_disciplina", f: f, disabled: true %>
+  </div>
+  <div class="card-footer">
+    <%= link_to t("common.actions.edit"), edit_curriculo_ementa_disciplina_path(@curriculo_ementa_disciplina), class: "btn btn-secondary" %>
+    <%= link_to t("common.back"), curriculo_ementa_disciplinas_path, class: "btn btn-light" %>
+  </div>
+</div>
+<% end %>

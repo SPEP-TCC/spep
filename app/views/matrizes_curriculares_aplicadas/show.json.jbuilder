@@ -1,0 +1,1 @@
+json.partial! "matrizes_curriculares_aplicadas/matriz_curricular_aplicada", matriz_curricular_aplicada: @matriz_curricular_aplicada

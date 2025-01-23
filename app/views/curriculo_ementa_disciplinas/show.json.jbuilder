@@ -1,0 +1,1 @@
+json.partial! "curriculo_ementa_disciplinas/curriculo_ementa_disciplina", curriculo_ementa_disciplina: @curriculo_ementa_disciplina
