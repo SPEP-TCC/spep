@@ -40,43 +40,12 @@
               <td><%%= <%= singular_table_name %>.<%= attribute.name %> %></td>
             <% end %>
           </tr>
-          <%% end %>
-        </tbody>
-      </table>
-    </div>
-  </div>
-  <div class="card-footer">
-    <%%= pagy_navigation(@pagy) %>
+        <% end %>
+      </tbody>
+    </table>
   </div>
 </div>
-<!-- Modal de Filtros -->
-<div class="modal fade" id="filters_modal" tabindex="-1" aria-labelledby="filters_modal_label" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <!-- Cabeçalho do Modal -->
-      <div class="modal-header">
-        <h5 class="modal-title" id="filters_modal_label"><%%= t("common.filters") %></h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label=""></button>
-      </div>
-      <!-- Formulário de Pesquisa -->
-      <%%= search_form_for @q, url: <%= plural_table_name %>_path, html: { class: "d-flex flex-column gap-3", autocomplete: "off" } do |f| %>
-      <!-- Corpo do Modal -->
-      <div class="modal-body">
-        <div class="row">
-          <% attributes.each do |attribute| %>
-            <div class="col-12 mb-3">
-              <%%= f.label :<%= attribute.name %>_cont, t("activerecord.attributes.<%= singular_table_name %>.<%= attribute.name %>"), class: "form-label" %>
-              <%%= f.search_field :<%= attribute.name %>_cont, class: "form-control" %>
-            </div>
-          <% end %>
-        </div>
-      </div>
-      <!-- Modal footer -->
-      <div class="modal-footer justify-content-start">
-        <%%= f.submit t("common.apply_filters"), class: "btn btn-primary" %>
-        <button type="button" class="btn btn-light" data-bs-dismiss="modal"><%%= t("common.back") %></button>
-      </div>
-      <%% end %>
-    </div>
-  </div>
+<div class="card-footer">
+  <%= pagy_navigation(@pagy) %>
+</div>
 </div>

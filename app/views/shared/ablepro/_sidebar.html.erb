@@ -1,13 +1,9 @@
 <nav class="pc-sidebar">
   <div class="navbar-wrapper">
-    <!--div class="m-header"><a href="/" class="b-brand text-primary">
-        <span class="text-white fs-3"><strong>SUE</strong></span>
-        <span class="badge bg-light-success rounded-pill ms-2 theme-version">v0.0.7</span></a>
-    </div-->
     <div class="m-header">
       <a href="/" class="b-brand text-primary">
         <img src="/layout/assets/img/logo-branca.png" alt="Logo SUE" class="logo-img" style="height: 60px; width: auto;">
-        <span class="badge bg-light-success rounded-pill ms-2 theme-version">v1.0.0</span>
+        <!--span class="badge bg-light-success rounded-pill ms-2 theme-version">v1.0.0</span-->
       </a>
     </div>
     <div class="navbar-content pc-trigger simplebar-scrollable-y" data-simplebar="init">
@@ -26,8 +22,9 @@
                       <div class="flex-grow-1 ms-3 me-2">
                         <h6 class="mb-0">Vitória</h6>
                         <small>Administratora</small></div>
-                      <a class="btn btn-icon btn-link-secondary avtar" data-bs-toggle="collapse" href="#pc_sidebar_userlink"><svg class="pc-icon"><use xlink:href="#custom-sort-outline"></use></svg></a></div>
-                    <div class="collapse pc-user-links" id="pc_sidebar_userlink">
+                      <!--a class="btn btn-icon btn-link-secondary avtar" data-bs-toggle="collapse" href="#pc_sidebar_userlink"><svg class="pc-icon"><use xlink:href="#custom-sort-outline"></use></svg></a-->
+                    </div>
+                    <!--div class="collapse pc-user-links" id="pc_sidebar_userlink">
                       <div class="pt-3">
                         <a href="#!">
                           <i class="ti ti-user"></i><span data-i18n="Minha Conta">Minha Conta</span>
@@ -39,43 +36,48 @@
                           <i class="ti ti-power"></i><span data-i18n="Logout">Logout</span>
                         </a>
                       </div>
-                    </div>
+                    </div-->
                   </div>
                 </div>
                 <ul class="pc-navbar" style="display: block;">
-                  <li class="pc-item pc-caption"><label>Curso</label>
+                  <li class="pc-item pc-caption">
+                    <label>HORÁRIO</label>
                     <svg class="pc-icon"><use xlink:href="#custom-presentation-chart"></use></svg>
                   </li>
                   <li class="pc-item">
-                    <a href="/cursos" class="pc-link">
+                    <a href="/aulas" class="pc-link">
                       <span class="pc-micon">
                         <i class="fas fa-user-graduate"></i>
                       </span>
-                      <span class="pc-mtext" data-i18n="Cursos">Cursos</span>
+                      <span class="pc-mtext" data-i18n="Aulas">Aulas</span>
                     </a>
                   </li>
+                  <!--------------------------------------------------------------------------->
                   <li class="pc-item pc-caption">
                     <label>PROFESSOR</label>
-                    <svg class="pc-icon"><use xlink:href="#custom-layer"></use>
-                    </svg>
+                    <svg class="pc-icon"><use xlink:href="#custom-layer"></use></svg>
                   </li>
                   <li class="pc-item">
-                    <a href="/grades_curriculares" class="pc-link">
+                    <a href="/disciplinas" class="pc-link">
                       <span class="pc-micon">
                         <i class="fas fa-chalkboard-teacher"></i>
                       </span>
-                      <span class="pc-mtext" data-i18n="Grades Curriculares">Grades Curriculares</span>
+                      <span class="pc-mtext" data-i18n="Disciplinas">Disciplinas</span>
                     </a>
                   </li>
                   <li class="pc-item">
-                    <a href="/curriculos_ementas" class="pc-link">
+                    <a href="/restricoes" class="pc-link">
                       <span class="pc-micon">
                         <i class="fas fa-atlas"></i>
                       </span>
-                      <span class="pc-mtext" data-i18n="Curriculos Ementas">Curriculos Ementas</span>
+                      <span class="pc-mtext" data-i18n="Restrições">Restrições</span>
                     </a>
                   </li>
-                  <li class="pc-item pc-caption"><label>MATRIZ CURRICULAR</label> <svg class="pc-icon"><use xlink:href="#custom-box-1"></use></svg></li>
+                  <!--------------------------------------------------------------------------->
+                  <li class="pc-item pc-caption">
+                    <label>MATRIZ CURRICULAR</label>
+                    <svg class="pc-icon"><use xlink:href="#custom-box-1"></use></svg>
+                  </li>
                   <li class="pc-item">
                     <a href="/turnos" class="pc-link">
                       <span class="pc-micon">
@@ -100,11 +102,6 @@
                       <span class="pc-mtext" data-i18n="Disciplinas">Disciplinas</span>
                     </a>
                   </li>
-                  <%# <li class="pc-item pc-caption"><label>TURMA</label> <svg class="pc-icon"><use xlink:href="#custom-element-plus"></use></svg></li> %>
-                  <%# <li class="pc-item"><a href="../forms/form2_wizard.html" class="pc-link"><span class="pc-micon"><svg class="pc-icon"><use xlink:href="#custom-password-check"></use></svg> </span><span class="pc-mtext" data-i18n="wizard">wizard</span></a></li> %>
-                  <li class="pc-item pc-caption">
-                    <label>ADMINISTRAÇÃO</label><svg class="pc-icon"><use xlink:href="#custom-text-align-justify-center"></use></svg>
-                  </li>
                   <li class="pc-item">
                     <a href="/turmas" class="pc-link">
                       <span class="pc-micon">
@@ -113,122 +110,34 @@
                       <span class="pc-mtext" data-i18n="Turmas">Turmas</span>
                     </a>
                   </li>
+                  <%# <li class="pc-item pc-caption"><label>TURMA</label> <svg class="pc-icon"><use xlink:href="#custom-element-plus"></use></svg></li> %>
+                  <%# <li class="pc-item"><a href="../forms/form2_wizard.html" class="pc-link"><span class="pc-micon"><svg class="pc-icon"><use xlink:href="#custom-password-check"></use></svg> </span><span class="pc-mtext" data-i18n="wizard">wizard</span></a></li> %>
+                  <!--------------------------------------------------------------------------->
+                  <li class="pc-item pc-caption">
+                    <label>TABELAS REFERENCIAIS</label>
+                    <svg class="pc-icon"><use xlink:href="#custom-text-align-justify-center"></use></svg>
+                  </li>
+                  <!--------------------------------------------------------------------------->
                   <li class="pc-item pc-hasmenu">
                     <a href="#!" class="pc-link">
                       <span class="pc-micon">
                         <i class="fas fa-city"></i>
                       </span>
-                      <span class="pc-mtext" data-i18n="Estruturas">Estruturas</span>
+                      <span class="pc-mtext" data-i18n="Referenciais">Referenciais</span>
                       <span class="pc-arrow"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></span></a>
                     <ul class="pc-submenu" style="display: none;">
-                      <li class="pc-item"><a class="pc-link" href="/ambientes" data-i18n="Ambientes">Ambientes</a></li>
+                      <li class="pc-item"><a class="pc-link" href="/areas" data-i18n="Áreas">Áreas</a></li>
+                      <li class="pc-item"><a class="pc-link" href="/curriculos_ementas" data-i18n="Curriculos Ementas">Currículos Ementas</a></li>
+                      <li class="pc-item"><a class="pc-link" href="/etapas" data-i18n="Etapas">Etapas</a></li>
                       <li class="pc-item"><a class="pc-link" href="/instituicoes" data-i18n="Instituições">Instituições</a></li>
+                      <li class="pc-item"><a class="pc-link" href="/metodologias" data-i18n="Metodologias">Metodologias</a></li>
+                      <li class="pc-item"><a class="pc-link" href="/modalidades" data-i18n="Modalidades">Modalidades</a></li>
+                      <li class="pc-item"><a class="pc-link" href="/niveis" data-i18n="Níveis">Níveis</a></li>
+                      <li class="pc-item"><a class="pc-link" href="/tipos_contratos" data-i18n="Tipos de Contratos">Tipos de Contratos</a></li>
+                      <li class="pc-item"><a class="pc-link" href="/turnos" data-i18n="Turnos">Turnos</a></li>
+                      <li class="pc-item"><a class="pc-link" href="/subarea" data-i18n="Subárea">Subárea</a></li>
                     </ul>
                   </li>
-                  <%# <li class="pc-item">
-                    <a href="/g_dependentes" class="pc-link">
-                      <span class="pc-micon">
-                        <i class="fas fa-child"></i>
-                      </span>
-                      <span class="pc-mtext" data-i18n="Dependentes">Dependentes</span>
-                    </a>
-                  </li> %>
-                  <!-- <li class="pc-item pc-caption"><label>REFERENCIAIS</label> <svg class="pc-icon"><use xlink:href="#custom-text-align-justify-center"></use></svg></li>
-                </li>
-                <li class="pc-item pc-hasmenu">
-                  <a href="#!" class="pc-link">
-                    <span class="pc-micon">
-                      <i class="fas fa-globe"></i>
-                    </span>
-                    <span class="pc-mtext" data-i18n="GLOBAIS">GLOBAIS</span>
-                    <span class="pc-arrow"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></span></a>
-                  <ul class="pc-submenu" style="display: none;">
-                    <li class="pc-item pc-hasmenu"><a class="pc-link" href="#"><span data-i18n="Regiões">Regiões</span> <span class="pc-arrow"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></span></a>
-                      <ul class="pc-submenu" style="display: none;">
-                        <li class="pc-item"><a class="pc-link" href="/g_paises" data-i18n="Pais">Pais</a></li>
-                        <li class="pc-item"><a class="pc-link" href="/g_estados" data-i18n="Estados">Estados</a></li>
-                        <li class="pc-item"><a class="pc-link" href="/g_municipios" data-i18n="Munícipios">Munícipios</a></li>
-                        <li class="pc-item"><a class="pc-link" href="/g_distritos" data-i18n="Distritos">Distritos</a></li>
-                        <li class="pc-item"><a class="pc-link" href="/g_localidades" data-i18n="Localidades">Localidades</a></li>
-                      </ul>
-                    </li>
-                    <li class="pc-item pc-hasmenu"><a class="pc-link" href="#"><span data-i18n="Pessoas">Pessoas</span> <span class="pc-arrow"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></span></a>
-                      <ul class="pc-submenu" style="display: none;">
-                        <li class="pc-item"><a class="pc-link" href="/g_racas" data-i18n="Raças">Raças</a></li>
-                        <li class="pc-item"><a class="pc-link" href="/g_nacionalidades" data-i18n="Nacionalidades">Nacionalidades</a></li>
-                        <li class="pc-item"><a class="pc-link" href="/g_deficiencias" data-i18n="Deficiências">Deficiências</a></li>
-                        <li class="pc-item"><a class="pc-link" href="/g_parentescos" data-i18n="Parentescos">Parentescos</a></li>
-                        <li class="pc-item"><a class="pc-link" href="/g_tipos_moradias" data-i18n="Tipos de Moradia">Tipos de Moradia</a></li>
-                        <li class="pc-item"><a class="pc-link" href="/g_estados_civis" data-i18n="Estados Civis">Estados Civis</a></li>
-                        <li class="pc-item"><a class="pc-link" href="/g_generos" data-i18n="Gêneros">Gêneros</a></li>
-                        <li class="pc-item"><a class="pc-link" href="/g_tipos_certidoes_civis" data-i18n="Tipos de Certidões Civis">Tipos de Certidões Civis</a></li>
-                      </ul>
-                    </li>
-                  </ul>
-                </li>
-                <li class="pc-item pc-hasmenu">
-                  <a href="#!" class="pc-link">
-                    <span class="pc-micon">
-                      <i class="fas fa-graduation-cap"></i>
-                    </span>
-                    <span class="pc-mtext" data-i18n="ESCOLARES">ESCOLARES</span>
-                    <span class="pc-arrow"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></span></a>
-                  <ul class="pc-submenu" style="display: none;">
-                    <li class="pc-item pc-hasmenu"><a class="pc-link" href="#"><span data-i18n="Matrizes Curriculares">Matrizes Curriculares</span> <span class="pc-arrow"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></span></a>
-                      <ul class="pc-submenu" style="display: none;">
-                        <li class="pc-item"><a class="pc-link" href="/e_tipos_matrizes" data-i18n="Tipos de Matrizes">Tipos de Matrizes</a></li>
-                        <li class="pc-item"><a class="pc-link" href="/e_modalidades" data-i18n="Modalidades">Modalidades</a></li>
-                        <li class="pc-item"><a class="pc-link" href="/e_status_matrizes_curriculares" data-i18n="Status">Status</a></li>
-                        <li class="pc-item"><a class="pc-link" href="/e_formas_acessos" data-i18n="Formas de Acesso">Formas de Acesso</a></li>
-                        <li class="pc-item"><a class="pc-link" href="/e_niveis" data-i18n="Nível">Nível</a></li>
-                        <li class="pc-item"><a class="pc-link" href="/e_etapas" data-i18n="Etapas">Etapas</a></li>
-                        <li class="pc-item"><a class="pc-link" href="/e_fases" data-i18n="Fases">Fases</a></li>
-                        <li class="pc-item"><a class="pc-link" href="/e_tipos_turnos" data-i18n="Tipos de Turnos">Tipos de Turnos</a></li>
-                        <li class="pc-item"><a class="pc-link" href="/e_anos" data-i18n="Anos">Anos</a></li>
-                        <li class="pc-item"><a class="pc-link" href="/e_periodos_grades" data-i18n="Períodos Grades">Períodos Grades</a></li>
-                        <li class="pc-item"><a class="pc-link" href="/e_periodos_matrizes_curriculares" data-i18n="Períodos Matrizes">Períodos Matrizes</a></li>
-                      </ul>
-                    </li>
-                    <li class="pc-item pc-hasmenu"><a class="pc-link" href="#"><span data-i18n="Componentes Curriculares">Componentes Curriculares</span> <span class="pc-arrow"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></span></a>
-                      <ul class="pc-submenu" style="display: none;">
-                        <li class="pc-item"><a class="pc-link" href="/e_tipos_bases" data-i18n="Tipos de Bases">Tipos de Bases</a></li>
-                        <li class="pc-item"><a class="pc-link" href="/e_areas_conhecimentos" data-i18n="Áreas do Conhecimento">Áreas do Conhecimento</a></li>
-                        <li class="pc-item"><a class="pc-link" href="/e_tipos_notas" data-i18n="Tipos de Notas">Tipos de Notas</a></li>
-                        <li class="pc-item"><a class="pc-link" href="/e_metodologias" data-i18n="Metodologias">Metodologias</a></li>
-                      </ul>
-                    </li>
-                    <li class="pc-item pc-hasmenu"><a class="pc-link" href="#"><span data-i18n="Unidades">Unidades</span> <span class="pc-arrow"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></span></a>
-                      <ul class="pc-submenu" style="display: none;">
-                        <li class="pc-item"><a class="pc-link" href="/g_tipos_ruas" data-i18n="Tipos de Ruas">Tipos de Ruas</a></li>
-                        <li class="pc-item"><a class="pc-link" href="/g_naturezas_unidades" data-i18n="Natureza">Natureza</a></li>
-                      </ul>
-                    </li>
-                  </ul>
-                </li>
-                <li class="pc-item pc-hasmenu">
-                  <a href="#!" class="pc-link">
-                    <span class="pc-micon">
-                      <i class="fas fa-building"></i>
-                    </span>
-                    <span class="pc-mtext" data-i18n="PREDIAIS">PREDIAIS</span>
-                    <span class="pc-arrow"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></span></a>
-                  <ul class="pc-submenu" style="display: none;">
-                    <li class="pc-item"><a class="pc-link" href="/g_predios_localizacoes" data-i18n="Localizações">Localizações</a></li>
-                    <li class="pc-item"><a class="pc-link" href="/g_mantenedores_proprietarios" data-i18n="Proprietários/Mantenedores">Proprietários/Mantenedores</a></li>
-                    <li class="pc-item"><a class="pc-link" href="/g_especificidades" data-i18n="Especificidades">Especificidades</a></li>
-                    <li class="pc-item"><a class="pc-link" href="/g_tipos_abastecimentos" data-i18n="Tipos de Abastecimento">Tipos de Abastecimento</a></li>
-                    <li class="pc-item"><a class="pc-link" href="/g_tipos_predios" data-i18n="Tipos de Prédios">Tipos de Prédios</a></li>
-                    <li class="pc-item"><a class="pc-link" href="/g_tipologias" data-i18n="Tipologias">Tipologias</a></li>
-                    <li class="pc-item"><a class="pc-link" href="/g_situacoes_predios" data-i18n="Situações dos Prédios">Situações dos Prédios</a></li>
-                    <li class="pc-item"><a class="pc-link" href="/g_predios_estruturas" data-i18n="Estruturas dos Prédios">Estruturas dos Prédios</a></li>
-                    <li class="pc-item"><a class="pc-link" href="/g_tipos_energias_eletricas" data-i18n="Tipos de Energia Elétrica">Tipos de Energia Elétrica</a></li>
-                    <li class="pc-item"><a class="pc-link" href="/g_tipos_esgotos_sanitarios" data-i18n="Tipos de Esgoto Sanitário">Tipos de Esgoto Sanitário</a></li>
-                    <li class="pc-item"><a class="pc-link" href="/g_tipos_destinacoes_lixos" data-i18n="Tipos de Destinação do Lixo">Tipos de Destinação do Lixo</a></li>
-                    <li class="pc-item"><a class="pc-link" href="/g_tipos_tratamentos_lixos" data-i18n="Tipos de Tratamento do Lixo">Tipos de Tratamento do Lixo</a></li>
-                    <li class="pc-item"><a class="pc-link" href="/g_tipos_ambientes_prediais" data-i18n="Tipos de Ambientes Prediais">Tipos de Ambientes Prediais</a></li>
-                    <li class="pc-item"><a class="pc-link" href="/g_andares" data-i18n="Andares">Andares</a></li>
-                  </ul>
-                </li> -->
                 </ul>
               </div>
             </div>
