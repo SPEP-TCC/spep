@@ -9,28 +9,27 @@ pt-BR:
     back: Voltar
     controllers:
       home: "Home"
-      ambientes: "ambientes"
-      areas: "areas"
-      curriculos_ementas: "curriculos_ementas"
-      g_localidades: "Localidades"
-      cursos: "cursos"
-      turnos: "turnos"
-      disciplinas: "disciplinas"
-      etapas: "etapas"
-      grades_curriculares: "grades_curriculares"
-      matrizes_curriculares_aplicadas: "matrizes_curriculares_aplicadas"
-      metodologias: "metodologias"
-      modalidades: "modalidades"
-      niveis: "niveis"
-      instituicoes: "instituicoes"
-      tipos_contratos: "tipos_contratos"
-      turnos: "turnos"
-      turmas: "turmas"
-      curriculo_ementa_disciplinas: "curriculo_ementa_disciplinas"
-      restricoes: "restricoes"
-      disponibilidade_salas: "disponibilidade_salas"
-      aulas: "aulas"
-      subareas: "subareas"
+      ambientes: "Ambientes"
+      areas: "Áreas"
+      curriculos_ementas: "Currículos Ementas"
+      cursos: "Cursos"
+      turnos: "Turnos"
+      disciplinas: "Disciplinas"
+      etapas: "Etapas"
+      grades_curriculares: "Grades Curriculares"
+      matrizes_curriculares_aplicadas: "Matrizes Curriculares Aplicadas"
+      metodologias: "Metodologias"
+      modalidades: "Modalidades"
+      niveis: "Níveis"
+      instituicoes: "Instituições"
+      tipos_contratos: "Tipos de Contratos"
+      turnos: "Turnos"
+      turmas: "Turmas"
+      curriculo_ementa_disciplinas: "Currículo Ementa Disciplinas"
+      restricoes: "Restrições"
+      disponibilidade_salas: "Disponibilidade Salas"
+      aulas: "Aulas"
+      subareas: "Subareas"
     actions:
       index: "Lista"
       new: "Incluir"
@@ -49,131 +48,154 @@ pt-BR:
   activerecord:
     models:
       ambiente:
-        one: "País"
-        other: "Países"
+        one: "Ambiente"
+        other: "Ambientes"
       area: 
-        one: "Tipo de Rua"
-        other: "Tipos de Ruas"
+        one: "Área"
+        other: "Áreas"
       curriculo_ementa: 
-        one: "Natureza Unidade"
-        other: "Naturezas Unidades"
+        one: "Currículo Ementa"
+        other: "Currículos Ementas"
       curso: 
-        one: "Estado"
-        other: "Estados"
+        one: "Curso"
+        other: "Cursos"
       disciplina: 
-        one: "Município"
-        other: "Municípios"
+        one: "Disciplina"
+        other: "Disciplinas"
       etapa: 
-        one: "Município"
-        other: "Municípios"
+        one: "Etapa"
+        other: "Etapas"
       grade_curricular: 
-        one: "Município"
-        other: "Municípios"
+        one: "Grade Curricular"
+        other: "Grades Curriculares"
       matriz_curricular_aplicada: 
-        one: "Município"
-        other: "Municípios"
+        one: "Matriz Curricular Aplicada"
+        other: "Matrizes Curriculares Aplicadas"
       metodologia: 
-        one: "Município"
-        other: "Municípios"
+        one: "Metodologia"
+        other: "Metodologias"
       modalidade: 
-        one: "Município"
-        other: "Municípios"
+        one: "Modalidade"
+        other: "Modalidades"
       nivel: 
-        one: "Município"
-        other: "Municípios"
+        one: "Nível"
+        other: "Níveis"
       instituicao: 
-        one: "Município"
-        other: "Municípios"
+        one: "Instituição"
+        other: "Instituições"
       tipo_contrato: 
-        one: "Município"
-        other: "Municípios"
+        one: "Tipo de Contrato"
+        other: "Tipos de Contratos"
       turno: 
-        one: "Município"
-        other: "Municípios"
+        one: "Turno"
+        other: "Turnos"
       turma: 
-        one: "Município"
-        other: "Municípios"
+        one: "Turma"
+        other: "Turmas"
       curriculo_ementa_disciplina: 
-        one: "Município"
-        other: "Municípios"
+        one: "Currículo Ementa Disciplina"
+        other: "Currículos Ementas Disciplinas"
       restricao: 
-        one: "Município"
-        other: "Municípios"
+        one: "Restrição"
+        other: "Restrições"
       disponibilidade_sala: 
-        one: "Município"
-        other: "Municípios"
+        one: "Disponibilidade de Sala"
+        other: "Disponibilidade de Salas"
       aula: 
-        one: "Município"
-        other: "Municípios"
+        one: "Aula"
+        other: "Aulas"
       subarea: 
-        one: "Município"
-        other: "Municípios"
+        one: "Subarea"
+        other: "Subareas"
     attributes:
-      g_pais:
+      ambiente:
         descricao: "Descrição"
-      g_tipo_rua:
+        capacidade: "Capacidade"
+        periculosidade: "Periculosidade"
+        instituicao: "Instituição"
+      area: 
         descricao: "Descrição"
-      g_natureza_unidade:
+        etapa: "Etapa"
+      curriculo_ementa: 
         descricao: "Descrição"
-      g_estado:
+        ano_documento: "Ano do Documento"
+      curso: 
         descricao: "Descrição"
-        g_pais: "País"
-      g_municipio:
+        etapa: "Etapa"
+        curriculo_ementa: "Currículo Ementa"
+        instituicao: "Instituição"
+        modalidade: "Modalidade"
+      disciplina: 
         descricao: "Descrição"
-        g_estado: "Estado"
-      g_distrito:
+        codigo: "Código"
+        area: "Área"
+        subarea: "Subarea"
+      etapa: 
         descricao: "Descrição"
-        g_municipio: "Município"
-      g_localidade:
+        nivel: "Nível"
+      grade_curricular: 
+        disciplina: "Disciplina"
+        carga_horaria: "Carga Horária"
+        periodo_calendario: "Período"
+        optativa: "Optativa"
+        carga_horaria_total: "Carga Horária Total"
+        matriz_curricular_aplicada: "Matriz Curricular Aplicada"
+        user: "Professor"
+      matriz_curricular_aplicada: 
         descricao: "Descrição"
-        g_distrito: "Município"
-      g_entidade:
+        ano_letivo: "Ano Letivo"
+        turno: "Turno"
+        curso: "Curso"
+        ativo: "Matriz Ativa?"
+      metodologia: 
+        descricao: "Descrição"
+      modalidade: 
+        descricao: "Descrição"
+      nivel: 
+        descricao: "Descrição"
+      instituicao: 
         nome: "Nome"
-        g_estado: "Estado"
-        g_municipio: "Município"
-        email: "E-mail"
-        cnpj: "CNPJ"
-        cep: "CEP"
-        bairro: "Bairro"
-        rua: "Rua"
-        numero: "Número"
-      g_unidade:
-        descricao: "Descrição"
-        g_entidade: "Entidade"
-        g_municipio: "Município"
-        g_natureza_unidade: "Natureza unidade"
-      g_unidade_educacional:
-        nome: "Nome Jurídico"
         inep: "INEP"
-        nome_fantasia: "Nome fantasia"
-        g_natureza_unidade: "Natureza Unidade"
-        rua: "Rua"
-        bairro: "Bairro"
-        cep: "CEP"
-        numero: "Número"
-        email_unidade: "E-mail unidade"
-        telefone_unidade: "Telefone unidade"
-        responsavel_diretor: "Responsável/Diretor"
-        email_responsavel: "E-mail responsável"
-        telefone_responsavel: "Telefone responsável"
-        complemento: "Complemento"
-        g_tipo_rua: "Tipo rua"
-        status: "Status"
-        cnpj: "CNPJ"
-        inscricao_estadual: "Inscrição estadual"
-        g_coligada: "Entidade Gestora"
-      e_tipo_turno:
+        endereco: "Endereço"
+        duracao_aula: "Duração da Aula (Minutos)"
+        horario_inicio_aula: "Horário de Início"
+        horario_fim_aulas: "Horário de Término"
+        tempos_aula: "Quantidade de Aulas/Dia"
+      tipo_contrato: 
         descricao: "Descrição"
-      e_turno:
+        carga_horaria: "Carga Horária"
+      turno: 
         descricao: "Descrição"
-        hora_inicial: "Hora inicial"
-        hora_final: "Hora final"
-        g_unidade_educacional: "Unidade educacional"
-        e_tipo_turno: "Tipo de turno"
-        g_coligada: "Entidade Gestora"
-      e_modalidade:
+      turma: 
         descricao: "Descrição"
-        codigo_modalidade: "Código"  
+        vagas: "Quantidade da Vagas"
+        matriz_curricular_aplicada: "Matriz Curricular Aplicada"
+        numero_efetivo_estudantes: "Quantidade Matriculados"
+        sala_recorrente: "Tem Sala Recorrente?"
+        turno: "Turno"
+        ambiente: "Sala"
+      curriculo_ementa_disciplina: 
+        curriculo_ementa: "Currículo Ementa"
+        disciplina: "Disciplina"
+      restricao: 
+        user: "Professor"
+        turno: "Turno"
+        dia: "Dia"
+        horario: "Horário"
+      disponibilidade_sala: 
+        ambiente: "Sala"
+        dia: "Dia"
+        horario_inicio: "Horário de Início"
+        horario_fim: "Horário de Término"
+      aula: 
+        grade_curricular: "Grade Curricular"
+        ambiente: "Ambiente"
+        dia: "Dia da Semana"
+        horario_inicio: "Horário de Início"
+        horario_fim: "Horáriodo Término"
+      subarea: 
+        descricao: "Descrição"
+        area: "Área"
     errors:
       messages:        
         record_invalid: 'A validação falhou: %{errors}'        

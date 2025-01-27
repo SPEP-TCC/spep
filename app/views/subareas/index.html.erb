@@ -2,7 +2,7 @@
   <div class="card-header border-0 d-flex justify-content-between">
     <!-- Botão para abrir o modal de filtros -->
     <%= render "shared/index_header_buttons", index_url: subareas_path do %>
-    <%= link_to t("common.actions.new"), new_subarea_path, class: "btn btn-primary" %>
+      <%= link_to t("common.actions.new"), new_subarea_path, class: "btn btn-primary" %>
     <% end %>
   </div>
   <div class="card-body">
@@ -11,39 +11,33 @@
         <thead>
           <tr>
             <th class="text-center col-1 opacity-75"><%= t("common.table_th_actions") %></th>
-            
-              <th class="opacity-75"><%= sort_link(@q, :descricao, t("activerecord.attributes.subarea.descricao")) %></th>
-            
-              <th class="opacity-75"><%= sort_link(@q, :area, t("activerecord.attributes.subarea.area")) %></th>
-            
+            <th class="opacity-75"><%= sort_link(@q, :descricao, t("activerecord.attributes.subarea.descricao")) %></th>
+            <th class="opacity-75"><%= sort_link(@q, :area, t("activerecord.attributes.subarea.area")) %></th>
           </tr>
         </thead>
         <tbody>
           <% @subareas.each do |subarea| %>
-          <tr>
-            <td class="text-center">
-              <div class="dropdown-toggle">
-                <a href="#" class="text-body dropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                  <i class="ti ti-settings fs-4"></i>
-                </a>
-                <div class="dropdown-menu">
-                  <div class="dropdown-header"><%= t("common.table_dropdown_options") %></div>
-                  <%= link_to content_tag(:i, "", class: "ph-eye me-2") + t("common.actions.show"), subarea_path(subarea), class: "dropdown-item" %>
-                  <%= link_to content_tag(:i, "", class: "ph-pen me-2") + t("common.actions.edit"), edit_subarea_path(subarea), class: "dropdown-item" %>
-                  <%= form_for subarea, method: :delete do |f| %>
-                  <a class="dropdown-item hand-pointer" data-confirm-delete="<%= subarea_path(subarea) %>" data-csrf-token="<%= form_authenticity_token %>">
-                    <i class="ph-trash-simple me-2"></i><%= t("common.actions.delete") %>
+            <tr>
+              <td class="text-center">
+                <div class="dropdown-toggle">
+                  <a href="#" class="text-body dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="ti ti-settings fs-4"></i>
                   </a>
-                  <% end %>
+                  <div class="dropdown-menu">
+                    <div class="dropdown-header"><%= t("common.table_dropdown_options") %></div>
+                    <%= link_to content_tag(:i, "", class: "ph-eye me-2") + t("common.actions.show"), subarea_path(subarea), class: "dropdown-item" %>
+                    <%= link_to content_tag(:i, "", class: "ph-pen me-2") + t("common.actions.edit"), edit_subarea_path(subarea), class: "dropdown-item" %>
+                    <%= form_for subarea, method: :delete do |f| %>
+                      <a class="dropdown-item hand-pointer" data-confirm-delete="<%= subarea_path(subarea) %>" data-csrf-token="<%= form_authenticity_token %>">
+                        <i class="ph-trash-simple me-2"></i><%= t("common.actions.delete") %>
+                      </a>
+                    <% end %>
+                  </div>
                 </div>
-              </div>
-            </td>
-            
+              </td>
               <td><%= subarea.descricao %></td>
-            
               <td><%= subarea.area %></td>
-            
-          </tr>
+            </tr>
           <% end %>
         </tbody>
       </table>
@@ -64,27 +58,24 @@
       </div>
       <!-- Formulário de Pesquisa -->
       <%= search_form_for @q, url: subareas_path, html: { class: "d-flex flex-column gap-3", autocomplete: "off" } do |f| %>
-      <!-- Corpo do Modal -->
-      <div class="modal-body">
-        <div class="row">
-          
+        <!-- Corpo do Modal -->
+        <div class="modal-body">
+          <div class="row">
             <div class="col-12 mb-3">
               <%= f.label :descricao_cont, t("activerecord.attributes.subarea.descricao"), class: "form-label" %>
               <%= f.search_field :descricao_cont, class: "form-control" %>
             </div>
-          
             <div class="col-12 mb-3">
               <%= f.label :area_cont, t("activerecord.attributes.subarea.area"), class: "form-label" %>
               <%= f.search_field :area_cont, class: "form-control" %>
             </div>
-          
+          </div>
         </div>
-      </div>
-      <!-- Modal footer -->
-      <div class="modal-footer justify-content-start">
-        <%= f.submit t("common.apply_filters"), class: "btn btn-primary" %>
-        <button type="button" class="btn btn-light" data-bs-dismiss="modal"><%= t("common.back") %></button>
-      </div>
+        <!-- Modal footer -->
+        <div class="modal-footer justify-content-start">
+          <%= f.submit t("common.apply_filters"), class: "btn btn-primary" %>
+          <button type="button" class="btn btn-light" data-bs-dismiss="modal"><%= t("common.back") %></button>
+        </div>
       <% end %>
     </div>
   </div>

@@ -17,7 +17,7 @@ module ApplicationHelper
 
   def btn_submit(form)
     text = form.object.new_record? ? "Incluir" : "Atualizar"
-    button_tag(type: "submit", class: "btn btn-primary") do
+    button_tag(type: "submit", class: "btn btn-primary", style: "background-color: #4B6F44;") do
       safe_join([ text ])
     end
   end

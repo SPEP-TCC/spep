@@ -18,9 +18,9 @@
     <%# Fim layout antigo %>
     <%= stylesheet_link_tag "/layout/able/assets/css/style.css", id: "main-style-link", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag "/layout/able/assets/css/style-preset.css",                 "data-turbo-track": "reload" %>
-    <%= stylesheet_link_tag "application",                                              "data-turbo-track": "reload" %>
+    <%#= stylesheet_link_tag "application",                                              "data-turbo-track": "reload" %>
     <%# JS %>
-    <%= javascript_include_tag "/layout/able/assets/js/tech-stack.js",                    "data-turbo-track": "reload" %>
+    <%= javascript_include_tag "/layout/able/assets/js/tech-stack.js",                     "data-turbo-track": "reload" %>
     <%= javascript_include_tag "/layout/able/assets/js/plugins/popper.min.js",             "data-turbo-track": "reload" %>
     <%= javascript_include_tag "/layout/able/assets/js/plugins/simplebar.min.js",          "data-turbo-track": "reload" %>
     <%= javascript_include_tag "/layout/able/assets/js/plugins/bootstrap.min.js",          "data-turbo-track": "reload" %>
@@ -31,9 +31,51 @@
     <%= javascript_include_tag "/layout/able/assets/js/theme.js",                          "data-turbo-track": "reload" %>
     <%= javascript_include_tag "/layout/able/assets/js/multi-lang.js",                     "data-turbo-track": "reload" %>
     <%= javascript_include_tag "/layout/able/assets/js/plugins/feather.min.js",            "data-turbo-track": "reload" %>
+    <%# Importando o wizard.min.js %>
+    <%= javascript_include_tag "/layout/assets/js/jquery/jquery.min.js",                "data-turbo-track": "reload" %>
+    <%= javascript_include_tag "/layout/assets/js/jquery/jquery.mask.min.js",           "data-turbo-track": "reload" %>
+    <%= javascript_include_tag "/layout/assets/js/jquery/jquery.maskMoney.min.js",      "data-turbo-track": "reload" %>
+    <%= javascript_include_tag "/layout/assets/js/plugins/wizard.min.js", "data-turbo-track": "reload" %>
+    <%= javascript_include_tag "/layout/able/assets/js/plugins/choices.min.js", "data-turbo-track": "reload" %>
     <%= javascript_include_tag "/layout/assets/js/custom.js",                              "data-turbo-track": "reload" %>
+    <style>
+      .hand-pointer,
+      .nav-item,
+      .hand-pointer:hover,
+      .nav-item:hover {
+        cursor: pointer;
+      }
+
+      .sort_link,
+      .sort_link:hover {
+        text-decoration: none;
+        color: var(--bs-table-color-state, var(--bs-table-color-type, var(--bs-table-color)));
+      }
+
+      .keyup {
+        text-transform: uppercase;
+      }
+
+      .downcase {
+        text-transform: lowercase;
+      }
+
+      thead th, .table thead th {
+        background: transparent;
+        opacity: 0.75;
+      }
+
+      td a {
+        color: var(--bs-table-color-state, var(--bs-table-color-type, var(--bs-table-color)));
+      }
+
+      .table-striped > tbody > tr:nth-of-type(odd) > * {
+        --bs-table-color-type: var(--bs-table-striped-color);
+        --bs-table-bg-type: #f9fbff
+      }
+    </style>
   </head>
-  <body style="background-color:#008000" data-pc-preset="preset-1" data-pc-sidebar-caption="true" data-pc-layout="vertical" data-pc-direction="ltr" data-pc-theme_contrast="" data-pc-theme="light" data-pc-direction="ltr">
+  <body style="background-color:#355E3B" data-pc-preset="preset-1" data-pc-sidebar-caption="true" data-pc-layout="vertical" data-pc-direction="ltr" data-pc-theme_contrast="" data-pc-theme="light" data-pc-direction="ltr">
     <%= render "shared/ablepro/sidebar" %>
     <%= render "shared/ablepro/header" %>
     <%= render "shared/ablepro/offcanvas" %>

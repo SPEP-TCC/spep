@@ -1,27 +1,14 @@
 <div class="row">
-
   <div class="col-12">
-  
     <%= f.input :descricao, input_html: { class: "keyup", disabled: local_assigns[:disabled] } %>
-  
   </div>
-
   <div class="col-12">
-  
     <%= f.input :capacidade, input_html: { class: "keyup", disabled: local_assigns[:disabled] } %>
-  
   </div>
-
   <div class="col-12">
-  
     <%= f.input :periculosidade, input_html: { class: "keyup", disabled: local_assigns[:disabled] } %>
-  
   </div>
-
   <div class="col-12">
-  
-    <%= f.association :instituicao, input_html: { class: "keyup", disabled: local_assigns[:disabled] } %>
-  
+    <%= f.association :instituicao, input_html: { class: "keyup choice", disabled: local_assigns[:disabled] } %>
   </div>
-
 </div>
