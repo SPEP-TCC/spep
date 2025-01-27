@@ -5,7 +5,8 @@
 # Example:
 Instituicao.find_or_create_by([
     { nome: "IFRO - CAMPUS CALAMA", duracao_aula: 50, tempos_aula: 16, inep: "11109807",
-      endereco: "AVENIDA CALAMA, 4985 LOTE 994, QUADRA 169. FLODOALDO PONTES PINTO." },
+      endereco: "AVENIDA CALAMA, 4985 LOTE 994, QUADRA 169. FLODOALDO PONTES PINTO.", horario_inicio_aula: "7:30",
+      horario_fim_aulas: "22:40" },
     { nome: "EEEFM ESTUDO E TRABALHO", duracao_aula: 50, tempos_aula: 10, inep: "11001046",
       endereco: "RUA ALEXANDRE GUIMARÃES, BAIRRO AREAL, Nº1340" }
 ])
@@ -90,5 +91,28 @@ Disciplina.find_or_create_by([
     { descricao: "LINGUA INGLESA",  area_id: 2 },
     { descricao: "LINGUA INGLESA",  area_id: 3 },
     { descricao: "MATEMATICA",  area_id: 2 },
-    { descricao: "BANCOS DE DADOS",  subarea_id: 10 }
+    { descricao: "BANCOS DE DADOS",  subarea_id: 10 },
+    { descricao: "ESTRUTURAS DE DADOS",  subarea_id: 10 },
+    { descricao: "ALGORITMOS",  subarea_id: 3 },
+    { descricao: "ENGENHARIA DE SOFTWARE",  subarea_id: 8 }
+])
+Curso.find_or_create_by([
+    { descricao: "ANALISE E DESENVOLVIMENTO DE SISTEMAS", etapa_id: 4, curriculo_ementa_id: 1,
+    modalidade_id: 9, instituicao_id: 1 }
+])
+
+MatrizCurricularAplicada.find_or_create_by([
+    { descricao: "MATRIZ CURRICULAR IFRO ADS 2022", ano_letivo: 2022,
+    turno_id: 3, curso_id: 1, ativo: true }
+])
+
+GradeCurricular.find_or_create_by([
+    { disciplina_id: 8, carga_horaria: 10, periodo_calendario: 1, optativa: false,
+    carga_horaria_total: 56, matriz_curricular_aplicada_id: 1, user_id: 1 },
+    { disciplina_id: 9, carga_horaria: 15, periodo_calendario: 1, optativa: false,
+    carga_horaria_total: 56, matriz_curricular_aplicada_id: 1, user_id: 1 },
+    { disciplina_id: 10, carga_horaria: 10, periodo_calendario: 1, optativa: false,
+    carga_horaria_total: 40, matriz_curricular_aplicada_id: 1, user_id: 1 },
+    { disciplina_id: 11, carga_horaria: 6, periodo_calendario: 1, optativa: false,
+    carga_horaria_total: 25, matriz_curricular_aplicada_id: 1, user_id: 1 }
 ])
