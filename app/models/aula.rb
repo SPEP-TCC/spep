@@ -4,6 +4,7 @@ class Aula < ApplicationRecord
 
   ### adicionar user_id a aula
   before_save :ocupar_ambiente
+  before_save :verificar_aula_noite
   before_save :verificar_restricao_professor
 
   def ocupar_ambiente
@@ -33,13 +34,14 @@ class Aula < ApplicationRecord
     horario_fim_insti = instituicao.horario_fim_aulas
     horario_inicio_insti = instituicao.horario_inicio_aulas
     aula_salva_anterior = Aula.find_by(user_id: self.user_id)
-    aula_salva_anterior = aula_salva_anterior.dia + 1
-    if self.horario_fim == horario_fim_insti
-      if aula_salva_anterior.horario_inicio == horario_inicio_insti
-        errors.add(:base, "Professor já alocado na primeira aula do dia seguinte.")
-        throw[:abort]
-      end
-
+    aula_salva_anterior_primeira = aula_salva_anterior.dia + 1
+    aula_salva_anterior_ultima = aula_salva_anterior.dia - 1
+    if self.horario_fim == horario_fim_insti && if aula_salva_anterior_primeira.horario_inicio == horario_inicio_insti
+      errors.add(:base, "Professor já alocado na primeira aula do dia seguinte.")
+      throw[:abort]
+    elsif self.horario_inicio == horario_inicio_insti && aula_salva_anterior_ultima.horario_fim == horario_fim_insti
+      errors.add(:base, "Professor já alocado na última aula do dia anterior.")
+      throw[:abort]
     end
   end
 end

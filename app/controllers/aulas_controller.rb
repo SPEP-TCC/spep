@@ -1,7 +1,5 @@
-# frozen_string_literal: true
-
 class AulasController < ApplicationController
-  before_action :set_aula, only: %i[show edit update destroy]
+  before_action :set_aula, only: %i[ show edit update destroy]
 
   rescue_from ActiveRecord::RecordNotFound, with: :handle_not_found
 
@@ -14,7 +12,7 @@ class AulasController < ApplicationController
                  .where(ambiente: { instituicao_id: @instituicao.id })
 
     @grades_curriculares = GradeCurricular.joins(matriz_curricular_aplicada: { curso: :instituicao })
-    .where(instituicoes: { id: @instituicao.id })
+                                          .where(instituicoes: { id: @instituicao.id })
   end
 
   def new

@@ -100,48 +100,48 @@
 <script>
   import { Draggable } from '@shopify/draggable';
 
-document.addEventListener('DOMContentLoaded', () => {
-  // Configuração de drag and drop
-  const containers = document.querySelectorAll('.dropzone');
-  const draggableItems = document.querySelectorAll('.draggable');
+  document.addEventListener('DOMContentLoaded', () => {
+    // Configuração de drag and drop
+    const containers = document.querySelectorAll('.dropzone');
+    const draggableItems = document.querySelectorAll('.draggable');
 
-  const draggable = new Draggable(draggableItems, {
-    draggable: '.draggable',
-  });
+    const draggable = new Draggable(draggableItems, {
+      draggable: '.draggable',
+    });
 
-  draggable.on('drag:stop', (event) => {
-    const { source, sourceContainer } = event;
-    const gradeId = source.dataset.id;
-    const target = event.source.parentElement;
+    draggable.on('drag:stop', (event) => {
+      const { source, sourceContainer } = event;
+      const gradeId = source.dataset.id;
+      const target = event.source.parentElement;
 
-    if (target.classList.contains('dropzone')) {
-      const dia = target.dataset.dia;
-      const horario = target.dataset.horario;
+      if (target.classList.contains('dropzone')) {
+        const dia = target.dataset.dia;
+        const horario = target.dataset.horario;
 
-      // Enviar a requisição para salvar no backend
-      fetch('/aulas', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          grade_curricular_id: gradeId,
-          dia: dia,
-          horario_inicio: horario,
-        }),
-      })
-        .then(response => response.json())
-        .then(data => {
-          if (data.success) {
-            target.innerHTML += `<div>${data.grade_nome}</div>`;
-            source.remove(); // Remove o item da lista lateral
-          } else {
-            alert(data.error);
-          }
+        // Enviar a requisição para salvar no backend
+        fetch('/aulas', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            grade_curricular_id: gradeId,
+            dia: dia,
+            horario_inicio: horario,
+          }),
         })
-        .catch(error => console.error('Erro ao salvar aula:', error));
-    }
+          .then(response => response.json())
+          .then(data => {
+            if (data.success) {
+              target.innerHTML += `<div>${data.grade_nome}</div>`;
+              source.remove(); // Remove o item da lista lateral
+            } else {
+              alert(data.error);
+            }
+          })
+          .catch(error => console.error('Erro ao salvar aula:', error));
+      }
+    });
   });
-});
 
 </script>
