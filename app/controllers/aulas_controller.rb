@@ -6,7 +6,7 @@ class AulasController < ApplicationController
   def index
     @instituicao = Instituicao.find(1)
     @dias = (1..5).to_a # Segunda a sexta
-    @horarios = calcular_horarios(@instituicao.horario_inicio_aulas, @instituicao.duracao_aula, @instituicao.horario_fim_aulas)
+    @horarios = calcular_horarios(@instituicao.horario_inicio_aula, @instituicao.duracao_aula, @instituicao.horario_fim_aulas)
 
     @aulas = Aula.includes(:grade_curricular, :ambiente)
                  .where(ambiente: { instituicao_id: @instituicao.id })
