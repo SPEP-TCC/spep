@@ -2,13 +2,13 @@
   <div class="col-12">
     <%= f.association :user, input_html: { class: "keyup choice", disabled: local_assigns[:disabled] } %>
   </div>
-  <div class="col-12">
+  <div class="col-12 col-lg-4">
     <%= f.association :turno, input_html: { class: "keyup choice", disabled: local_assigns[:disabled] } %>
   </div>
-  <div class="col-12">
+  <div class="col-12 col-lg-4">
     <%= f.input :dia, input_html: { class: "keyup", disabled: local_assigns[:disabled] } %>
   </div>
-  <div class="col-12">
+  <div class="col-12 col-lg-4">
     <%= f.input :horario, input_html: { class: "keyup", disabled: local_assigns[:disabled] } %>
   </div>
 </div>

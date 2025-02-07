@@ -6,10 +6,10 @@
   <%= render "shared/notice" %>
   <!-- Card e formulário -->
   <div class="card">
-    <div class="card-body">      
+    <div class="card-body">
       <%= render "nivel", f: f %>
     </div>
-    <div class="card-footer">
+    <div class="card-footer text-end">
       <%= btn_submit(f) %>
       <%= link_to t("common.back"), niveis_path, class: "btn btn-light" %>
     </div>

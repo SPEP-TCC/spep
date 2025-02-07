@@ -6,12 +6,12 @@
   <%= render "shared/notice" %>
   <!-- Card e formulário -->
   <div class="card">
-    <div class="card-body">      
+    <div class="card-body">
       <%= render "curriculo_ementa", f: f %>
     </div>
-    <div class="card-footer">
-      <%= btn_submit(f) %>
+    <div class="card-footer text-end">
       <%= link_to t("common.back"), curriculos_ementas_path, class: "btn btn-light" %>
+      <%= btn_submit(f) %>
     </div>
   </div>
 <% end %>

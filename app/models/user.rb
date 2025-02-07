@@ -7,4 +7,8 @@ class User < ApplicationRecord
   has_many :grades_curriculares
   has_many :restricoes
   has_many :turnos, through: :restricoes
+
+  def to_s
+    self.descricao
+  end
 end
