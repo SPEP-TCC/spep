@@ -1,3 +1,4 @@
+require "time"
 class AulasController < ApplicationController
   before_action :set_aula, only: %i[ show edit update destroy]
 
@@ -13,6 +14,8 @@ class AulasController < ApplicationController
 
     @grades_curriculares = GradeCurricular.joins(matriz_curricular_aplicada: { curso: :instituicao })
                                           .where(instituicoes: { id: @instituicao.id })
+    @ambientes = Ambiente.where(instituicao_id: 1).select(:id, :descricao).to_json
+    render layout: false
   end
 
   def new
@@ -28,7 +31,7 @@ class AulasController < ApplicationController
     if @aula.save
       redirect_to aulas_path, notice: t("messages.created_successfully")
     else
-      render :new, status: :unprocessable_entity
+      render json: @aula.errors.full_messages, status: :unprocessable_entity
     end
   end
 
@@ -36,7 +39,7 @@ class AulasController < ApplicationController
     if @aula.update(aula_params)
       redirect_to aulas_path, notice: t("messages.updated_successfully"), status: :see_other
     else
-      render :edit, status: :unprocessable_entity
+      render json: @aula.errors.full_messages, status: :unprocessable_entity
     end
   end
 
@@ -44,17 +47,21 @@ class AulasController < ApplicationController
     if @aula.destroy
       redirect_to aulas_url, notice: t("messages.deleted_successfully")
     else
-      redirect_to aulas_url, alert: t("messages.delete_failed_due_to_dependencies")
+      render json: @aula.errors.full_messages, status: :unprocessable_entity
     end
   end
 
+
   def calcular_horarios(horario_inicio, duracao_aula, ultima_aula)
     horarios = []
-    horario_atual = horario_inicio
+    horario_atual = Time.parse(horario_inicio)
+    ultima_aula = Time.parse(ultima_aula)
+
     while horario_atual < ultima_aula
-      horarios << horario_atual
+      horarios << horario_atual.strftime("%H:%M") # Format as HH:MM
       horario_atual += duracao_aula.minutes
     end
+
     horarios
   end
 

@@ -11,6 +11,14 @@ Instituicao.find_or_create_by([
       endereco: "RUA ALEXANDRE GUIMARÃES, BAIRRO AREAL, Nº1340" }
 ])
 
+Ambiente.find_or_create_by([
+    { descricao: "Sala de aula 1", capacidade: 40, periculosidade: false, instituicao_id: 1 },
+    { descricao: "Sala de aula 2", capacidade: 35, periculosidade: false, instituicao_id: 1 },
+    { descricao: "Sala de aula 3", capacidade: 30, periculosidade: false, instituicao_id: 1 },
+    { descricao: "Laboratório 1", capacidade: 20, periculosidade: true, instituicao_id: 1 },
+    { descricao: "Laboratório 2", capacidade: 25, periculosidade: false, instituicao_id: 1 }
+])
+
 [ "MATUTINO", "VESPERTINO", "NOTURNO", "INTEGRAL" ].each do |turno_desc|
     Turno.find_or_create_by!(descricao: turno_desc)
 end

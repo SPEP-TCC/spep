@@ -44,4 +44,14 @@ class Aula < ApplicationRecord
         throw[:abort]
     end
   end
+
+=begin
+  def verificar_turnos
+    manha = Instituicao.find_by(id: self.grade_curricular.matriz_curricular_aplicada.curso.instituicao_id).horario_inicio_aula
+    horarios = nil
+    until horarios <= 12 do
+      horario
+    end
+  end
+=end
 end
