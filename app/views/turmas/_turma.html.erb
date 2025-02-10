@@ -9,15 +9,15 @@
     <%= f.input :numero_efetivo_estudantes, input_html: { class: "keyup", disabled: local_assigns[:disabled] } %>
   </div>
   <div class="col-12 col-lg-9">
-    <%= f.association :matriz_curricular_aplicada, input_html: { class: "keyup", disabled: local_assigns[:disabled] } %>
+    <%= f.association :matriz_curricular_aplicada, input_html: { class: "keyup choice", disabled: local_assigns[:disabled] } %>
   </div>
   <div class="col-12">
     <%= f.input :sala_recorrente, input_html: { class: "keyup", disabled: local_assigns[:disabled] } %>
   </div>
   <div class="col-12 col-lg-4">
-    <%= f.association :turno, input_html: { class: "keyup", disabled: local_assigns[:disabled] } %>
+    <%= f.association :turno, input_html: { class: "keyup choice", disabled: local_assigns[:disabled] } %>
   </div>
   <div class="col-12 col-lg-8">
-    <%= f.association :ambiente, input_html: { class: "keyup", disabled: local_assigns[:disabled] } %>
+    <%= f.association :ambiente, input_html: { class: "keyup choice", disabled: local_assigns[:disabled] } %>
   </div>
 </div>

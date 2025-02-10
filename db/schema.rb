@@ -163,11 +163,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_27_024232) do
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-<<<<<<< HEAD
-    t.string "horario_inicio_aula"
-    t.string "horario_fim_aulas"
-=======
->>>>>>> 47236fa812c48eb5a64ac4449530f9b419834d0a
   end
 
   create_table "matrizes_curriculares_aplicadas", force: :cascade do |t|
