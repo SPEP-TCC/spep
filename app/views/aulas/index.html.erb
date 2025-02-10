@@ -34,7 +34,6 @@
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/@shopify/draggable@1.0.0-beta.8/lib/draggable.bundle.js"></script>
-    <script src="script.js"></script>
 </body>
 </html>
 <style>
@@ -122,6 +121,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const horariosTable = document.getElementById("horarios-table")
   const notificationsList = document.getElementById("notifications-list")
 
+  function addNotification(message, type = "success") {
+    const li = document.createElement("li")
+    li.textContent = message
+    li.className = type
+    notificationsList.appendChild(li)
+  }
+
   const grades_curriculares = [
     { id: 1, nome: "Matemática", carga_horaria: 60 },
     { id: 2, nome: "Português", carga_horaria: 60 },
@@ -188,58 +194,92 @@ document.addEventListener("DOMContentLoaded", () => {
 
   //  This is a placeholder.  You MUST replace this with the actual initialization of your Draggable library.
   //  The specific initialization will depend on the library you are using.  Consult the library's documentation.
+
+  let selectedGrade = null;
+  let selectedAmbiente = null;
+
   const draggable = new Draggable.Draggable([gradesList, ambientesList], {
-  draggable: ".draggable",
-  mirror: {
-    constrainDimensions: true,
-  },
-})
+    draggable: ".draggable",
+    dropzone: ".dropzone",
+    mirror: {
+      constrainDimensions: true,
+    },
+  });
 
-draggable.on("drag:start", (event) => {
-  const item = event.source // Correct event target reference
-  if (item.getAttribute("data-type") === "grade") {
-    selectedGrade = item
-  } else if (item.getAttribute("data-type") === "ambiente") {
-    selectedAmbiente = item
-  }
-})
-
-draggable.on("drag:stop", (event) => {
-  const dropzone = document.elementFromPoint(event.sensorEvent.clientX, event.sensorEvent.clientY)
-  if (dropzone && dropzone.classList.contains("dropzone")) {
-    if (selectedGrade && selectedAmbiente) {
-      const gradeId = selectedGrade.getAttribute("data-id")
-      const ambienteId = selectedAmbiente.getAttribute("data-id")
-      const dia = dropzone.getAttribute("data-dia")
-      const horario = dropzone.getAttribute("data-horario")
-
-      // Simulating API call
-      setTimeout(() => {
-        const success = Math.random() > 0.3 // 70% success rate
-        if (success) {
-          dropzone.innerHTML = `${selectedGrade.textContent}<br>${selectedAmbiente.textContent}`
-          addNotification(
-            `Aula adicionada: ${selectedGrade.textContent} em ${selectedAmbiente.textContent} no dia ${dia} às ${horario}`
-          )
-        } else {
-          addNotification("Erro ao adicionar aula. Tente novamente.", "error")
-        }
-      }, 500)
-
-      selectedGrade = null
-      selectedAmbiente = null
-    } else {
-      addNotification("Selecione uma grade curricular e um ambiente antes de adicionar à grade de horários.", "warning")
+  draggable.on("drag:start", (event) => {
+    console.log("Drag started:", event);
+    const item = event.source;
+    if (item.getAttribute("data-type") === "grade") {
+      selectedGrade = item;
+    } else if (item.getAttribute("data-type") === "ambiente") {
+      selectedAmbiente = item;
     }
-  }
-})
+  });
 
+  draggable.on("drag:stop", (event) => {
+    console.log("Drag stopped:", event);
+  });
 
-  function addNotification(message, type = "success") {
-    const li = document.createElement("li")
-    li.textContent = message
-    li.className = type
-    notificationsList.appendChild(li)
+  draggable.on("droppable:dropped", (event) => {
+    console.log("Item dropped:", event);
+    const dropzone = event.dropzone;
+  
+    if (dropzone) {
+      console.log("Selected Grade:", selectedGrade);
+      console.log("Selected Ambiente:", selectedAmbiente);
+  
+      if (selectedGrade && selectedAmbiente) {
+        const dia = dropzone.getAttribute("data-dia");
+        const horario = dropzone.getAttribute("data-horario");
+  
+        const data = {
+          aula: {
+            grade_curricular_id: selectedGrade.getAttribute("data-id"),
+            ambiente_id: selectedAmbiente.getAttribute("data-id"),
+            dia: dia,
+            horario_inicio: horario, // Assuming it's the start time
+            horario_fim: calcularHorarioFim(horario, selectedGrade.getAttribute("data-id")),
+            user_id: selectedGrade.getAttribute("data-user-id"), // Ensure you have user_id in the element
+          },
+        };
+  
+        fetch("/aulas", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content,
+          },
+          body: JSON.stringify(data),
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Erro ao salvar a aula");
+            }
+            return response.json();
+          })
+          .then((result) => {
+            dropzone.innerHTML = `${selectedGrade.textContent}<br>${selectedAmbiente.textContent}`;
+            addNotification(
+              `Aula adicionada: ${selectedGrade.textContent} em ${selectedAmbiente.textContent} no dia ${dia} às ${horario}`
+            );
+          })
+          .catch((error) => {
+            addNotification("Erro ao salvar a aula. Tente novamente.", "error");
+            console.error(error);
+          });
+  
+        selectedGrade = null;
+        selectedAmbiente = null;
+      } else {
+        addNotification("Selecione uma grade curricular e um ambiente antes de adicionar à grade de horários.", "warning");
+      }
+    }
+  });
+ 
+  function calcularHorarioFim(horarioInicio, gradeId) {
+    let [hour, minute] = horarioInicio.split(":").map(Number);
+    hour += 1; // Add 1 hour to the start time
+    return `${hour.toString().padStart(2, "0")}:${minute.toString().padStart(2, "0")}`;
   }
-})
+});
 </script>
