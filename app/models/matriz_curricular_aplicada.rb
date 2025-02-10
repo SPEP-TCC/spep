@@ -3,4 +3,8 @@ class MatrizCurricularAplicada < ApplicationRecord
   belongs_to :curso
   has_many :grades_curriculares
   has_many :turmas
+
+  def to_s
+    self.descricao
+  end
 end

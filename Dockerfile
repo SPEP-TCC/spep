@@ -1,4 +1,3 @@
-# Imagem base
 FROM ruby:3.3.3
 
 # Configurações iniciais
@@ -13,6 +12,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     npm && \
     rm -rf /var/lib/apt/lists/*
 
+# Instalar Yarn
+RUN npm install -g yarn
+
 # Copiar apenas o Gemfile para instalar dependências
 COPY Gemfile Gemfile.lock ./
 
@@ -22,6 +24,7 @@ RUN bundle install
 # Copiar código da aplicação (para permitir cache das gems acima)
 COPY . .
 
+# Instalar dependências JS
 RUN yarn install
 
 # Remover PID antigo e iniciar o servidor

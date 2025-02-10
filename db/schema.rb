@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_01_30_011248) do
+ActiveRecord::Schema[7.2].define(version: 2025_01_27_024232) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -155,14 +155,19 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_30_011248) do
     t.string "inep"
     t.string "endereco"
     t.integer "duracao_aula"
+    t.time "horario_inicio_aula"
+    t.time "horario_fim_aulas"
     t.integer "tempos_aula"
     t.string "created_by"
     t.string "updated_by"
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+<<<<<<< HEAD
     t.string "horario_inicio_aula"
     t.string "horario_fim_aulas"
+=======
+>>>>>>> 47236fa812c48eb5a64ac4449530f9b419834d0a
   end
 
   create_table "matrizes_curriculares_aplicadas", force: :cascade do |t|
