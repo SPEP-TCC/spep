@@ -21,22 +21,9 @@
                       <div class="flex-shrink-0"><img src="/layout/able/assets/images/user/avatar-1.jpg" alt="user-image" class="user-avtar wid-45 rounded-circle"></div>
                       <div class="flex-grow-1 ms-3 me-2">
                         <h6 class="mb-0">Vitória</h6>
-                        <small>Administratora</small></div>
-                      <!--a class="btn btn-icon btn-link-secondary avtar" data-bs-toggle="collapse" href="#pc_sidebar_userlink"><svg class="pc-icon"><use xlink:href="#custom-sort-outline"></use></svg></a-->
-                    </div>
-                    <!--div class="collapse pc-user-links" id="pc_sidebar_userlink">
-                      <div class="pt-3">
-                        <a href="#!">
-                          <i class="ti ti-user"></i><span data-i18n="Minha Conta">Minha Conta</span>
-                        </a>
-                        <a href="#!">
-                          <i class="ti ti-settings"></i> <span data-i18n="Configurações">Configurações</span>
-                        </a>
-                        <a href="#!">
-                          <i class="ti ti-power"></i><span data-i18n="Logout">Logout</span>
-                        </a>
+                        <small>Administratora</small>
                       </div>
-                    </div-->
+                    </div>
                   </div>
                 </div>
                 <ul class="pc-navbar" style="display: block;">
@@ -47,7 +34,7 @@
                   <li class="pc-item">
                     <a href="/aulas" class="pc-link">
                       <span class="pc-micon">
-                        <i class="fas fa-user-graduate"></i>
+                        <img src="/icons/clock.png" alt="Aulas" width="22" height="22">
                       </span>
                       <span class="pc-mtext" data-i18n="Aulas">Aulas</span>
                     </a>
@@ -60,7 +47,7 @@
                   <li class="pc-item">
                     <a href="/disciplinas" class="pc-link">
                       <span class="pc-micon">
-                        <i class="fas fa-chalkboard-teacher"></i>
+                        <img src="/icons/books.png" alt="Disciplinas" width="22" height="22">
                       </span>
                       <span class="pc-mtext" data-i18n="Disciplinas">Disciplinas</span>
                     </a>
@@ -68,7 +55,7 @@
                   <li class="pc-item">
                     <a href="/restricoes" class="pc-link">
                       <span class="pc-micon">
-                        <i class="fas fa-atlas"></i>
+                        <img src="/icons/user-x.png" alt="Restrições" width="22" height="22">
                       </span>
                       <span class="pc-mtext" data-i18n="Restrições">Restrições</span>
                     </a>
@@ -81,7 +68,7 @@
                   <li class="pc-item">
                     <a href="/ambientes" class="pc-link">
                       <span class="pc-micon">
-                        <i class="fas fa-clock"></i>
+                        <img src="/icons/chalkboard (1).png" alt="Ambientes" width="22" height="22">
                       </span>
                       <span class="pc-mtext" data-i18n="Ambientes">Ambientes</span>
                     </a>
@@ -89,7 +76,7 @@
                   <li class="pc-item">
                     <a href="/disponibilidade_salas" class="pc-link">
                       <span class="pc-micon">
-                        <i class="fas fa-book-reader"></i>
+                        <img src="/icons/home-check.png" alt="Disponibilidade de Salas" width="22" height="22">
                       </span>
                       <span class="pc-mtext" data-i18n="Disponibilidade de Salas">Disponibilidade de Salas</span>
                     </a>
@@ -97,7 +84,7 @@
                   <li class="pc-item">
                     <a href="/cursos" class="pc-link">
                       <span class="pc-micon">
-                        <i class="fas fa-book"></i>
+                        <img src="/icons/school (1).png" alt="Cursos" width="22" height="22">
                       </span>
                       <span class="pc-mtext" data-i18n="Cursos">Cursos</span>
                     </a>
@@ -113,7 +100,7 @@
                   <li class="pc-item pc-hasmenu">
                     <a href="#!" class="pc-link">
                       <span class="pc-micon">
-                        <i class="fas fa-city"></i>
+                        <img src="/icons/blocks.png" alt="Referenciais" width="22" height="22">
                       </span>
                       <span class="pc-mtext" data-i18n="Referenciais">Referenciais</span>
                       <span class="pc-arrow"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></span></a>
@@ -146,3 +133,14 @@
     </div>
   </div>
 </nav>
+<style>
+  .pc-link {
+    display: flex;
+    align-items: center; /* Alinha os itens verticalmente */
+    gap: 8px; /* Adiciona um espaçamento entre o ícone e o texto */
+  }
+
+  .pc-micon img {
+    display: block; /* Evita espaçamentos extras */
+  }
+</style>
