@@ -1,248 +1,243 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Grade Horários</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="csrf-token" content="<%= form_authenticity_token %>">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grade Horários</title>
+  <!-- FullCalendar CSS -->
+
+  <link href="https://unpkg.com/fullcalendar@6.1.8/main.min.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+    .container {
+      display: flex;
+      gap: 20px;
+    }
+    .grades-curriculares,
+    .notifications {
+      width: 20%;
+      background-color: #f9f9f9;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+    .main-content {
+      width: 60%;
+    }
+    .draggable-list {
+      list-style: none;
+      padding: 0;
+    }
+    .draggable {
+      padding: 8px;
+      margin-bottom: 5px;
+      background-color: #e1f5fe;
+      border: 1px solid #81d4fa;
+      border-radius: 4px;
+      cursor: grab;
+      touch-action: none;
+    }
+    /* Modal Styles */
+    #modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 500;
+    }
+    #event-modal {
+      display: none;
+      position: fixed;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      background: #fff;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      z-index: 1000;
+      width: 300px;
+    }
+    #calendar {
+      max-width: 100%;
+      margin: 0 auto;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <div class="grades-curriculares">
-            <h3>Grades Curriculares</h3>
-            <ul id="grades-list" class="draggable-list"></ul>
-        </div>
-        <div class="main-content">
-            <div class="ambientes">
-                <h3>Ambientes</h3>
-                <ul id="ambientes-list" class="draggable-list"></ul>
-            </div>
-            <div class="grade-horarios">
-                <table id="horarios-table">
-                    <thead>
-                        <tr>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
-            </div>
-        </div>
-        <div class="notifications">
-            <h3>Notificações</h3>
-            <ul id="notifications-list"></ul>
-        </div>
+  <div class="container">
+    <!-- Left column: Grades Curriculares list (for reference) -->
+    <div class="grades-curriculares">
+      <h3>Grades Curriculares</h3>
+      <ul id="grades-list" class="draggable-list"></ul>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/@shopify/draggable@1.0.0-beta.8/lib/draggable.bundle.js"></script>
-</body>
-</html>
-<style>
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 20px;
-}
-
-.container {
-  display: flex;
-  gap: 20px;
-}
-
-.grades-curriculares,
-.notifications {
-  width: 20%;
-  background-color: #f9f9f9;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-}
-
-.main-content {
-  width: 60%;
-}
-
-.ambientes {
-  margin-bottom: 20px;
-}
-
-.draggable-list {
-  list-style: none;
-  padding: 0;
-}
-
-.draggable {
-  padding: 8px;
-  margin-bottom: 5px;
-  background-color: #e1f5fe;
-  border: 1px solid #81d4fa;
-  border-radius: 4px;
-  cursor: grab;
-}
-
-.grade-horarios {
-  overflow-x: auto;
-}
-
-.grade-horarios table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.grade-horarios th,
-.grade-horarios td {
-  border: 1px solid #ddd;
-  text-align: center;
-  padding: 8px;
-}
-
-.dropzone {
-  height: 60px;
-  background-color: #f1f1f1;
-}
-
-.notifications ul {
-  max-height: 400px;
-  overflow-y: auto;
-}
-
-.notifications li {
-  margin-bottom: 10px;
-  padding: 5px;
-  background-color: #e8f5e9;
-  border: 1px solid #a5d6a7;
-  border-radius: 4px;
-}
-</style>
-<script>
-
-document.addEventListener("DOMContentLoaded", () => {
-  const gradesList = document.getElementById("grades-list")
-  const ambientesList = document.getElementById("ambientes-list")
-  const horariosTable = document.getElementById("horarios-table")
-  const notificationsList = document.getElementById("notifications-list")
-
-  function addNotification(message, type = "success") {
-    const li = document.createElement("li")
-    li.textContent = message
-    li.className = type
-    notificationsList.appendChild(li)
-  }
-
-  const grades_curriculares = [
-    { id: 1, nome: "Matemática", carga_horaria: 60 },
-    { id: 2, nome: "Português", carga_horaria: 60 },
-    { id: 3, nome: "História", carga_horaria: 45 },
-    { id: 4, nome: "Geografia", carga_horaria: 45 },
-    { id: 5, nome: "Ciências", carga_horaria: 60 },
-  ]
-
-  var ambientesRaw = '<%= raw(json_escape(@ambientes.html_safe))%>'
-  const ambientes = JSON.parse(ambientesRaw)
-  var diasRaw = '<%= raw(json_escape(@dias))%>'
-  const dias = JSON.parse(diasRaw)
-  //const horarios = ["08:00", "09:00", "10:00", "11:00", "13:00", "14:00", "15:00", "16:00"]
-  var horariosRaw = '<%= raw(json_escape(@horarios))%>'
-  console.log(horariosRaw);
-  const horarios = JSON.parse(horariosRaw)
-
-  // Populate grades curriculares
-  grades_curriculares.forEach((grade) => {
-    const li = document.createElement("li")
-    li.className = "draggable"
-    li.setAttribute("data-id", grade.id)
-    li.setAttribute("data-type", "grade")
-    li.textContent = `${grade.nome} - ${grade.carga_horaria}h`
-    gradesList.appendChild(li)
-  })
-
-  // Populate ambientes
-  ambientes.forEach((ambiente) => {
-    const li = document.createElement("li")
-    li.className = "draggable"
-    li.setAttribute("data-id", ambiente.id)
-    li.setAttribute("data-type", "ambiente")
-    li.textContent = ambiente.descricao
-    ambientesList.appendChild(li)
-  })
-
-  // Create table header
-  const headerRow = horariosTable.querySelector("thead tr")
-  dias.forEach((dia) => {
-    const th = document.createElement("th")
-    th.textContent = `Dia ${dia}`
-    headerRow.appendChild(th)
-  })
-
-  // Create table body
-  const tbody = horariosTable.querySelector("tbody")
-  horarios.forEach((horario) => {
-    const tr = document.createElement("tr")
-    const tdHorario = document.createElement("td")
-    tdHorario.textContent = horario
-    tr.appendChild(tdHorario)
-
-    dias.forEach((dia) => {
-      const td = document.createElement("td")
-      td.className = "dropzone"
-      td.setAttribute("data-dia", dia)
-      td.setAttribute("data-horario", horario)
-      tr.appendChild(td)
-    })
-
-    tbody.appendChild(tr)
-  })
-
-  //  This is a placeholder.  You MUST replace this with the actual initialization of your Draggable library.
-  //  The specific initialization will depend on the library you are using.  Consult the library's documentation.
-
-  let selectedGrade = null;
-  let selectedAmbiente = null;
-
-  const draggable = new Draggable.Draggable([gradesList, ambientesList], {
-    draggable: ".draggable",
-    dropzone: ".dropzone",
-    mirror: {
-      constrainDimensions: true,
-    },
-  });
-
-  draggable.on("drag:start", (event) => {
-    console.log("Drag started:", event);
-    const item = event.source;
-    if (item.getAttribute("data-type") === "grade") {
-      selectedGrade = item;
-    } else if (item.getAttribute("data-type") === "ambiente") {
-      selectedAmbiente = item;
-    }
-  });
-
-  draggable.on("drag:stop", (event) => {
-    console.log("Drag stopped:", event);
-  });
-
-  draggable.on("droppable:dropped", (event) => {
-    console.log("Item dropped:", event);
-    const dropzone = event.dropzone;
+    
+    <!-- Main column: The FullCalendar scheduling interface -->
+    <div class="main-content">
+      <div id="calendar"></div>
+    </div>
+    
+    <!-- Right column: Notifications -->
+    <div class="notifications">
+      <h3>Notificações</h3>
+      <ul id="notifications-list"></ul>
+    </div>
+  </div>
   
-    if (dropzone) {
-      console.log("Selected Grade:", selectedGrade);
-      console.log("Selected Ambiente:", selectedAmbiente);
+  <!-- Modal for creating a new aula -->
+  <div id="modal-overlay"></div>
+  <div id="event-modal">
+    <h3>Criar Aula</h3>
+    <div>
+      <label for="grade-select">Grade Curricular:</label>
+      <select id="grade-select"></select>
+    </div>
+    <br>
+    <div>
+      <label for="ambiente-select">Ambiente:</label>
+      <select id="ambiente-select"></select>
+    </div>
+    <br>
+    <button id="save-event">Salvar</button>
+    <button id="cancel-event">Cancelar</button>
+  </div>
   
-      if (selectedGrade && selectedAmbiente) {
-        const dia = dropzone.getAttribute("data-dia");
-        const horario = dropzone.getAttribute("data-horario");
-  
+  <!-- Include FullCalendar and its interaction plugin -->
+  <script src="/layout/assets/js/vendor/ui/fullcalendar/main.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/interaction/main.global.min.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // Reference elements
+      const gradesList = document.getElementById("grades-list");
+      const notificationsList = document.getElementById("notifications-list");
+      const gradeSelect = document.getElementById("grade-select");
+      const ambienteSelect = document.getElementById("ambiente-select");
+      const eventModal = document.getElementById("event-modal");
+      const modalOverlay = document.getElementById("modal-overlay");
+      let currentEventStart = null; // To store the clicked time slot
+      
+      // Helper: Display notifications on the page.
+      function addNotification(message, type = "success") {
+        const li = document.createElement("li");
+        li.textContent = message;
+        li.className = type;
+        notificationsList.appendChild(li);
+      }
+      
+      // --- Sample Data Setup ---
+      
+      // Grades Curriculares (from your backend or hard-coded for now)
+      const grades_curriculares = [
+        { id: 1, nome: "Matemática", carga_horaria: 60 },
+        { id: 2, nome: "Português", carga_horaria: 60 },
+        { id: 3, nome: "História", carga_horaria: 45 },
+        { id: 4, nome: "Geografia", carga_horaria: 45 },
+        { id: 5, nome: "Ciências", carga_horaria: 60 },
+      ];
+      
+      // Populate the left-side Grades list (for reference)
+      grades_curriculares.forEach((grade) => {
+        const li = document.createElement("li");
+        li.className = "draggable";
+        li.setAttribute("data-id", grade.id);
+        li.setAttribute("data-type", "grade");
+        li.textContent = `${grade.nome} - ${grade.carga_horaria}h`;
+        gradesList.appendChild(li);
+      });
+      
+      // Populate the modal dropdown for grades.
+      grades_curriculares.forEach((grade) => {
+        const option = document.createElement("option");
+        option.value = grade.id;
+        option.textContent = `${grade.nome} - ${grade.carga_horaria}h`;
+        gradeSelect.appendChild(option);
+      });
+      
+      // Ambientes (assumed to be passed from your backend)
+      var ambientesRaw = '<%= raw(json_escape(@ambientes.html_safe)) %>';
+      const ambientes = JSON.parse(ambientesRaw);
+      
+      // Populate the modal dropdown for ambientes.
+      ambientes.forEach((ambiente) => {
+        const option = document.createElement("option");
+        option.value = ambiente.id;
+        option.textContent = ambiente.descricao;
+        ambienteSelect.appendChild(option);
+      });
+      
+      // Helper: Calculate end time (here, assuming a 1‑hour duration).
+      function calcularHorarioFim(horarioInicio) {
+        const date = new Date(horarioInicio);
+        date.setHours(date.getHours() + 1);
+        return date;
+      }
+      
+      // --- Initialize FullCalendar ---
+      const calendarEl = document.getElementById("calendar");
+      const calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'timeGridWeek',
+        selectable: true,
+        editable: true,
+        headerToolbar: {
+          left: 'prev,next today',
+          center: 'title',
+          right: 'timeGridWeek,timeGridDay'
+        },
+        // When a user clicks on a time slot…
+        dateClick: function(info) {
+          currentEventStart = info.date;
+          openEventModal();
+        },
+        // (Optional) You can also allow event dragging/resizing and then update via AJAX.
+      });
+      calendar.render();
+      
+      // --- Modal Functions ---
+      function openEventModal() {
+        modalOverlay.style.display = "block";
+        eventModal.style.display = "block";
+      }
+      function closeEventModal() {
+        modalOverlay.style.display = "none";
+        eventModal.style.display = "none";
+      }
+      
+      // --- Modal Button Handlers ---
+      document.getElementById("save-event").addEventListener("click", () => {
+        const gradeId = gradeSelect.value;
+        const ambienteId = ambienteSelect.value;
+        const gradeText = gradeSelect.options[gradeSelect.selectedIndex].text;
+        const ambienteText = ambienteSelect.options[ambienteSelect.selectedIndex].text;
+        
+        // Compute start and end times for the new event
+        const start = currentEventStart;
+        const end = calcularHorarioFim(start);
+        
+        // Add the new event to FullCalendar
+        calendar.addEvent({
+          title: `${gradeText} / ${ambienteText}`,
+          start: start,
+          end: end
+        });
+        
+        // Prepare the data to save (adjust the format as needed)
         const data = {
           aula: {
-            grade_curricular_id: selectedGrade.getAttribute("data-id"),
-            ambiente_id: selectedAmbiente.getAttribute("data-id"),
-            dia: dia,
-            horario_inicio: horario, // Assuming it's the start time
-            horario_fim: calcularHorarioFim(horario, selectedGrade.getAttribute("data-id")),
-            user_id: selectedGrade.getAttribute("data-user-id"), // Ensure you have user_id in the element
+            grade_curricular_id: gradeId,
+            ambiente_id: ambienteId,
+            dia: start.toISOString().split('T')[0],
+            // Format the times as HH:MM – adjust if needed.
+            horario_inicio: start.toTimeString().split(' ')[0].substring(0, 5),
+            horario_fim: end.toTimeString().split(' ')[0].substring(0, 5)
           },
         };
-  
+        
+        // Send the new "aula" to your server via fetch/AJAX.
         fetch("/aulas", {
           method: "POST",
           headers: {
@@ -258,28 +253,21 @@ document.addEventListener("DOMContentLoaded", () => {
             return response.json();
           })
           .then((result) => {
-            dropzone.innerHTML = `${selectedGrade.textContent}<br>${selectedAmbiente.textContent}`;
-            addNotification(
-              `Aula adicionada: ${selectedGrade.textContent} em ${selectedAmbiente.textContent} no dia ${dia} às ${horario}`
-            );
+            addNotification(`Aula adicionada: ${gradeText} em ${ambienteText} no dia ${data.aula.dia} às ${data.aula.horario_inicio}`);
           })
           .catch((error) => {
             addNotification("Erro ao salvar a aula. Tente novamente.", "error");
             console.error(error);
           });
-  
-        selectedGrade = null;
-        selectedAmbiente = null;
-      } else {
-        addNotification("Selecione uma grade curricular e um ambiente antes de adicionar à grade de horários.", "warning");
-      }
-    }
-  });
- 
-  function calcularHorarioFim(horarioInicio, gradeId) {
-    let [hour, minute] = horarioInicio.split(":").map(Number);
-    hour += 1; // Add 1 hour to the start time
-    return `${hour.toString().padStart(2, "0")}:${minute.toString().padStart(2, "0")}`;
-  }
-});
-</script>
+        
+        closeEventModal();
+      });
+      
+      document.getElementById("cancel-event").addEventListener("click", () => {
+        closeEventModal();
+      });
+      
+    });
+  </script>
+</body>
+</html>

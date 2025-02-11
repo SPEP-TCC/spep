@@ -3,7 +3,7 @@
 class AddUserToAula < ActiveRecord::Migration[7.2]
   def up
     unless column_exists?(:aulas, :user_id)
-      add_reference :aulas, :user, foreign_key: true
+      add_reference :aulas, :user, foreign_key: true, null: true
     end
   end
 
