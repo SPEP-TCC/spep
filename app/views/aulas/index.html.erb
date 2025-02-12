@@ -1,273 +1,416 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <meta name="csrf-token" content="<%= form_authenticity_token %>">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Grade Horários</title>
-  <!-- FullCalendar CSS -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendário Escolar</title>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
 
-  <link href="https://unpkg.com/fullcalendar@6.1.8/main.min.css" rel="stylesheet">
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 20px;
-    }
-    .container {
-      display: flex;
-      gap: 20px;
-    }
-    .grades-curriculares,
-    .notifications {
-      width: 20%;
-      background-color: #f9f9f9;
-      padding: 10px;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-    }
-    .main-content {
-      width: 60%;
-    }
-    .draggable-list {
-      list-style: none;
-      padding: 0;
-    }
-    .draggable {
-      padding: 8px;
-      margin-bottom: 5px;
-      background-color: #e1f5fe;
-      border: 1px solid #81d4fa;
-      border-radius: 4px;
-      cursor: grab;
-      touch-action: none;
-    }
-    /* Modal Styles */
-    #modal-overlay {
-      display: none;
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0, 0, 0, 0.5);
-      z-index: 500;
-    }
-    #event-modal {
-      display: none;
-      position: fixed;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      background: #fff;
-      padding: 20px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      z-index: 1000;
-      width: 300px;
-    }
-    #calendar {
-      max-width: 100%;
-      margin: 0 auto;
-    }
-  </style>
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .schedule-container {
+            display: flex;
+            margin-top: 20px;
+            gap: 20px;
+        }
+
+        .subjects-list, .teachers-list {
+            width: 200px;
+            padding: 15px;
+            background-color: #fff;
+            border-radius: 8px;
+            border: 1px solid #eee;
+        }
+
+        .subject-card, .teacher-card {
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            cursor: move;
+            text-align: center;
+        }
+
+        .subject-card p, .teacher-card p {
+            margin: 2px 0;
+            font-size: 14px;
+        }
+
+        .schedule {
+            flex-grow: 1;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        .schedule th, .schedule td {
+            border: 1px solid #ddd;
+            padding: 4px;
+            text-align: center;
+        }
+
+        .schedule thead {
+            background-color: #f8f9fa;
+        }
+
+        .schedule th:first-child, .schedule td:first-child {
+            background-color: #f8f9fa;
+            font-weight: bold;
+            width: 120px;
+        }
+
+        .schedule td {
+            height: 40px !important; /* Garante que a altura seja aplicada */
+            padding: 4px !important; /* Reduz espaçamento interno */
+            vertical-align: middle;
+        }
+
+        .time-slot {
+            min-height: 80px;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .time-slot:empty {
+            border: 2px dashed #ddd;
+        }
+
+        .time-slot:not(:empty) {
+            border: none;
+        }
+
+        .select2-container {
+            margin-bottom: 20px;
+        }
+
+        .subject-card[data-subject="matematica"] { background-color: #ffcdd2; }
+        .subject-card[data-subject="portugues"] { background-color: #c8e6c9; }
+        .subject-card[data-subject="historia"] { background-color: #bbdefb; }
+        .subject-card[data-subject="geografia"] { background-color: #fff9c4; }
+
+        .teacher-card {
+            background-color: #e3f2fd;
+        }
+
+        .search-container {
+            margin-bottom: 22px;
+            display: flex;
+            align-items: center;
+            background: #fff;
+            border-radius: 8px;
+            padding: 5px 10px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-container input {
+            border: none;
+            outline: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            width: 100%;
+            font-size: 14px;
+        }
+
+        .search-container i {
+            margin-right: 8px;
+            color: #999;
+        }
+
+        .search-container img {
+            width: 20px;
+            height: 20px;
+            margin-right: 8px;
+        }
+
+        .info-text {
+            font-size: 12px;
+            color: #666;
+            text-align: center;
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <!-- Left column: Grades Curriculares list (for reference) -->
-    <div class="grades-curriculares">
-      <h3>Grades Curriculares</h3>
-      <ul id="grades-list" class="draggable-list"></ul>
+    <div class="container">
+        <select id="turma-select" style="width: 100%; max-width: 250px;">
+            <option value="">Selecione uma turma</option>
+            <option value="turma1">Turma A</option>
+            <option value="turma2">Turma B</option>
+            <option value="turma3">Turma C</option>
+        </select>
+
+        <div style="background-color: #f8d7da; color: #363636; padding: 12px; margin: 15px 0; border: 1px solid #f5c2c7; border-radius: 4px; text-align: center; font-weight: bold;">
+            Dê dois cliques para remover itens do calendário
+        </div>
+
+        <div class="schedule-container">
+            <div id="subjects-list" class="subjects-list">
+                <h3 style="text-align: center;">Matérias</h3>
+                <div class="search-container">
+                    <input type="text" id="subject-search" placeholder="Pesquisar matéria...">
+                    <img src="img\search.png" alt="Lupa">
+                </div>
+                <!-- <div class="info-text">Dê dois cliques para remover a matéria.</div> -->
+            </div>
+            <table id="schedule" class="schedule">
+              <thead></thead>
+              <tbody></tbody>
+            </table>
+
+            <div id="teachers-list" class="teachers-list">
+                <h3 style="text-align: center;">Professores</h3>
+                <div class="search-container">
+                    <input type="text" id="teacher-search" placeholder="Pesquisar professor...">
+                    <img src="img\search.png" alt="Lupa">
+                </div>
+                <!-- <div class="info-text">Dê dois cliques para remover o professor.</div> -->
+            </div>
+        </div>
     </div>
-    
-    <!-- Main column: The FullCalendar scheduling interface -->
-    <div class="main-content">
-      <div id="calendar"></div>
-    </div>
-    
-    <!-- Right column: Notifications -->
-    <div class="notifications">
-      <h3>Notificações</h3>
-      <ul id="notifications-list"></ul>
-    </div>
-  </div>
-  
-  <!-- Modal for creating a new aula -->
-  <div id="modal-overlay"></div>
-  <div id="event-modal">
-    <h3>Criar Aula</h3>
-    <div>
-      <label for="grade-select">Grade Curricular:</label>
-      <select id="grade-select"></select>
-    </div>
-    <br>
-    <div>
-      <label for="ambiente-select">Ambiente:</label>
-      <select id="ambiente-select"></select>
-    </div>
-    <br>
-    <button id="save-event">Salvar</button>
-    <button id="cancel-event">Cancelar</button>
-  </div>
-  
-  <!-- Include FullCalendar and its interaction plugin -->
-  <script src="/layout/assets/js/vendor/ui/fullcalendar/main.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/interaction/main.global.min.js"></script>
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      // Reference elements
-      const gradesList = document.getElementById("grades-list");
-      const notificationsList = document.getElementById("notifications-list");
-      const gradeSelect = document.getElementById("grade-select");
-      const ambienteSelect = document.getElementById("ambiente-select");
-      const eventModal = document.getElementById("event-modal");
-      const modalOverlay = document.getElementById("modal-overlay");
-      let currentEventStart = null; // To store the clicked time slot
-      
-      // Helper: Display notifications on the page.
-      function addNotification(message, type = "success") {
-        const li = document.createElement("li");
-        li.textContent = message;
-        li.className = type;
-        notificationsList.appendChild(li);
-      }
-      
-      // --- Sample Data Setup ---
-      
-      // Grades Curriculares (from your backend or hard-coded for now)
-      const grades_curriculares = [
-        { id: 1, nome: "Matemática", carga_horaria: 60 },
-        { id: 2, nome: "Português", carga_horaria: 60 },
-        { id: 3, nome: "História", carga_horaria: 45 },
-        { id: 4, nome: "Geografia", carga_horaria: 45 },
-        { id: 5, nome: "Ciências", carga_horaria: 60 },
-      ];
-      
-      // Populate the left-side Grades list (for reference)
-      grades_curriculares.forEach((grade) => {
-        const li = document.createElement("li");
-        li.className = "draggable";
-        li.setAttribute("data-id", grade.id);
-        li.setAttribute("data-type", "grade");
-        li.textContent = `${grade.nome} - ${grade.carga_horaria}h`;
-        gradesList.appendChild(li);
-      });
-      
-      // Populate the modal dropdown for grades.
-      grades_curriculares.forEach((grade) => {
-        const option = document.createElement("option");
-        option.value = grade.id;
-        option.textContent = `${grade.nome} - ${grade.carga_horaria}h`;
-        gradeSelect.appendChild(option);
-      });
-      
-      // Ambientes (assumed to be passed from your backend)
-      var ambientesRaw = '<%= raw(json_escape(@ambientes.html_safe)) %>';
-      const ambientes = JSON.parse(ambientesRaw);
-      
-      // Populate the modal dropdown for ambientes.
-      ambientes.forEach((ambiente) => {
-        const option = document.createElement("option");
-        option.value = ambiente.id;
-        option.textContent = ambiente.descricao;
-        ambienteSelect.appendChild(option);
-      });
-      
-      // Helper: Calculate end time (here, assuming a 1‑hour duration).
-      function calcularHorarioFim(horarioInicio) {
-        const date = new Date(horarioInicio);
-        date.setHours(date.getHours() + 1);
-        return date;
-      }
-      
-      // --- Initialize FullCalendar ---
-      const calendarEl = document.getElementById("calendar");
-      const calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: 'timeGridWeek',
-        selectable: true,
-        editable: true,
-        headerToolbar: {
-          left: 'prev,next today',
-          center: 'title',
-          right: 'timeGridWeek,timeGridDay'
-        },
-        // When a user clicks on a time slot…
-        dateClick: function(info) {
-          currentEventStart = info.date;
-          openEventModal();
-        },
-        // (Optional) You can also allow event dragging/resizing and then update via AJAX.
-      });
-      calendar.render();
-      
-      // --- Modal Functions ---
-      function openEventModal() {
-        modalOverlay.style.display = "block";
-        eventModal.style.display = "block";
-      }
-      function closeEventModal() {
-        modalOverlay.style.display = "none";
-        eventModal.style.display = "none";
-      }
-      
-      // --- Modal Button Handlers ---
-      document.getElementById("save-event").addEventListener("click", () => {
-        const gradeId = gradeSelect.value;
-        const ambienteId = ambienteSelect.value;
-        const gradeText = gradeSelect.options[gradeSelect.selectedIndex].text;
-        const ambienteText = ambienteSelect.options[ambienteSelect.selectedIndex].text;
-        
-        // Compute start and end times for the new event
-        const start = currentEventStart;
-        const end = calcularHorarioFim(start);
-        
-        // Add the new event to FullCalendar
-        calendar.addEvent({
-          title: `${gradeText} / ${ambienteText}`,
-          start: start,
-          end: end
-        });
-        
-        // Prepare the data to save (adjust the format as needed)
-        const data = {
-          aula: {
-            grade_curricular_id: gradeId,
-            ambiente_id: ambienteId,
-            dia: start.toISOString().split('T')[0],
-            // Format the times as HH:MM – adjust if needed.
-            horario_inicio: start.toTimeString().split(' ')[0].substring(0, 5),
-            horario_fim: end.toTimeString().split(' ')[0].substring(0, 5)
-          },
-        };
-        
-        // Send the new "aula" to your server via fetch/AJAX.
-        fetch("/aulas", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content,
-          },
-          body: JSON.stringify(data),
-        })
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error("Erro ao salvar a aula");
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.14.0/Sortable.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#turma-select').select2();
+
+/*             const subjects = [
+                { id: 1, name: 'Matemática', room: 'Sala 101', type: 'matematica', weeklyMinutes: 250 },
+                { id: 2, name: 'Português', room: 'Sala 102', type: 'portugues', weeklyMinutes: 200 },
+                { id: 3, name: 'História', room: 'Sala 103', type: 'historia', weeklyMinutes: 150 },
+                { id: 4, name: 'Geografia', room: 'Sala 104', type: 'geografia', weeklyMinutes: 100 }
+            ]; */
+
+            var subjects = JSON.parse('<%= raw(json_escape(@grades_curriculares)) %>');
+            console.log(subjects);
+            var teachers = JSON.parse('<%= raw(json_escape(@professores)) %>');
+            console.log(teachers);
+
+
+            function createSubjectCards() {
+                const subjectsList = document.getElementById('subjects-list');
+                subjects.forEach(subject => {
+                    const cardCount = Math.floor(subject.weeklyMinutes / 50); // Calcula a quantidade de cards
+                    for (let i = 0; i < cardCount; i++) {
+                        const card = document.createElement('div');
+                        card.className = 'subject-card';
+                        card.setAttribute('data-id', `${subject.id}-${i}`); // ID único para cada card
+                        card.setAttribute('data-subject', subject.type);
+                        card.innerHTML = `
+                            <p><strong>${subject.name}</strong></p>
+                            <p>${subject.room}</p>
+                            <p>Aula ${i + 1}/${cardCount}</p>
+                        `;
+                        subjectsList.appendChild(card);
+                    }
+                });
             }
-            return response.json();
-          })
-          .then((result) => {
-            addNotification(`Aula adicionada: ${gradeText} em ${ambienteText} no dia ${data.aula.dia} às ${data.aula.horario_inicio}`);
-          })
-          .catch((error) => {
-            addNotification("Erro ao salvar a aula. Tente novamente.", "error");
-            console.error(error);
-          });
-        
-        closeEventModal();
-      });
-      
-      document.getElementById("cancel-event").addEventListener("click", () => {
-        closeEventModal();
-      });
-      
-    });
-  </script>
+
+            function createTeacherCards() {
+                const teachersList = document.getElementById('teachers-list');
+                teachers.forEach(teacher => {
+                    const cardCount = Math.floor(teacher.weeklyminutes / 50); // Calcula a quantidade de cards
+                    for (let i = 0; i < cardCount; i++) {
+                        const card = document.createElement('div');
+                        card.className = 'teacher-card';
+                        card.setAttribute('data-id', `${teacher.id}-${i}`); // ID único para cada card
+                        card.innerHTML = `
+                            <p><strong>${teacher.name}</strong></p>
+                            <p>Aula ${i + 1}/${cardCount}</p>
+                        `;
+                        teachersList.appendChild(card);
+                    }
+                });
+            }
+
+            function createScheduleTable() {
+              const timeSlots = JSON.parse('<%= raw(json_escape(@horarios)) %>');
+              const daysOfWeek = JSON.parse('<%= raw(json_escape(@dias)) %>');
+          
+              const table = document.getElementById('schedule');
+          
+              // Build the table header dynamically.
+              const thead = table.querySelector('thead');
+              thead.innerHTML = ''; // Clear any existing content.
+              const headerRow = document.createElement('tr');
+          
+              // Create the first header cell for the time label.
+              const timeHeaderCell = document.createElement('th');
+              timeHeaderCell.textContent = 'Horário';
+              headerRow.appendChild(timeHeaderCell);
+          
+              // The daysOfWeek JSON is an object like { 1: "Segunda-Feira", 2: "Terça-Feira", ... }.
+              // We can sort the keys (if needed) to ensure the correct order.
+              const sortedDayKeys = Object.keys(daysOfWeek).sort((a, b) => parseInt(a) - parseInt(b));
+              sortedDayKeys.forEach(key => {
+                const dayHeaderCell = document.createElement('th');
+                dayHeaderCell.textContent = daysOfWeek[key];
+                headerRow.appendChild(dayHeaderCell);
+              });
+          
+              thead.appendChild(headerRow);
+          
+              // Build the table body dynamically.
+              const tbody = table.querySelector('tbody');
+              tbody.innerHTML = ''; // Clear any existing rows.
+          
+              timeSlots.forEach(timeSlot => {
+                const row = document.createElement('tr');
+          
+                // Create the time slot cell.
+                const timeCell = document.createElement('td');
+                timeCell.textContent = timeSlot;
+                row.appendChild(timeCell);
+          
+                // Create a cell for each day.
+                sortedDayKeys.forEach(() => {
+                  const cell = document.createElement('td');
+                  const slotDiv = document.createElement('div');
+                  slotDiv.className = 'time-slot';
+                  cell.appendChild(slotDiv);
+                  row.appendChild(cell);
+                });
+          
+                tbody.appendChild(row);
+              });
+            }
+
+            function initializeSortable() {
+                // Sortable para matérias
+                new Sortable(document.getElementById('subjects-list'), {
+                    group: {
+                        name: 'subjects',
+                        pull: 'clone',
+                        put: false
+                    },
+                    sort: false,
+                    animation: 150
+                });
+
+                // Sortable para professores
+                new Sortable(document.getElementById('teachers-list'), {
+                    group: {
+                        name: 'teachers',
+                        pull: 'clone',
+                        put: false
+                    },
+                    sort: false,
+                    animation: 150
+                });
+
+                // Sortable para os slots de tempo no calendário
+                document.querySelectorAll('.time-slot').forEach(timeSlot => {
+                    new Sortable(timeSlot, {
+                        group: {
+                            name: 'shared',
+                            put: function(to, from, item) {
+                                // Permite apenas um card de matéria e um card de professor por horário
+                                const hasSubject = Array.from(to.el.children).some(child => child.classList.contains('subject-card'));
+                                const hasTeacher = Array.from(to.el.children).some(child => child.classList.contains('teacher-card'));
+
+                                if (item.classList.contains('subject-card') && hasSubject) {
+                                    return false; // Não permite mais de um card de matéria
+                                }
+                                if (item.classList.contains('teacher-card') && hasTeacher) {
+                                    return false; // Não permite mais de um card de professor
+                                }
+                                return true;
+                            }
+                        },
+                        animation: 150,
+                        onAdd: function(evt) {
+                            const item = evt.item;
+                            if (item.classList.contains('subject-card')) {
+                                // Se for uma matéria, remove o card original da lista de matérias disponíveis
+                                const originalId = item.getAttribute('data-id');
+                                const originalCard = document.querySelector(`.subjects-list .subject-card[data-id="${originalId}"]`);
+                                if (originalCard) {
+                                    originalCard.remove();
+                                }
+
+                                // Permite remover a matéria do calendário com duplo clique
+                                item.addEventListener('dblclick', function() {
+                                    if (confirm('Deseja remover esta matéria?')) {
+                                        const subjectsList = document.getElementById('subjects-list');
+                                        subjectsList.appendChild(item); // Devolve o card para a lista de matérias disponíveis
+                                    }
+                                });
+                            } else if (item.classList.contains('teacher-card')) {
+                                // Se for um professor, remove o card original da lista de professores disponíveis
+                                const originalId = item.getAttribute('data-id');
+                                const originalCard = document.querySelector(`.teachers-list .teacher-card[data-id="${originalId}"]`);
+                                if (originalCard) {
+                                    originalCard.remove();
+                                }
+
+                                // Permite remover o professor do calendário com duplo clique
+                                item.addEventListener('dblclick', function() {
+                                    if (confirm('Deseja remover este professor?')) {
+                                        const teachersList = document.getElementById('teachers-list');
+                                        teachersList.appendChild(item); // Devolve o card para a lista de professores disponíveis
+                                    }
+                                });
+                            }
+                        }
+                    });
+                });
+            }
+
+            // Função para filtrar matérias
+            document.getElementById('subject-search').addEventListener('input', function(e) {
+                const searchTerm = e.target.value.toLowerCase();
+                const cards = document.querySelectorAll('#subjects-list .subject-card');
+                cards.forEach(card => {
+                    const subjectName = card.querySelector('p').textContent.toLowerCase();
+                    if (subjectName.includes(searchTerm)) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+
+            // Função para filtrar professores
+            document.getElementById('teacher-search').addEventListener('input', function(e) {
+                const searchTerm = e.target.value.toLowerCase();
+                const cards = document.querySelectorAll('#teachers-list .teacher-card');
+                cards.forEach(card => {
+                    const teacherName = card.querySelector('p').textContent.toLowerCase();
+                    if (teacherName.includes(searchTerm)) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+
+            createSubjectCards();
+            createTeacherCards();
+            createScheduleTable();
+            initializeSortable();
+        });
+    </script>
 </body>
 </html>

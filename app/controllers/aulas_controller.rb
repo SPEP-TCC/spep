@@ -6,15 +6,21 @@ class AulasController < ApplicationController
 
   def index
     @instituicao = Instituicao.find(1)
-    @dias = (1..5).to_a # Segunda a sexta
+    @dias = { 1 => "Segunda-Feira", 2 => "Terça-Feira", 3 => "Quarta-Feira", 4 => "Quinta-Feira", 5 => "Sexta-Feira" }.to_json
     @horarios = calcular_horarios(@instituicao.horario_inicio_aula, @instituicao.duracao_aula, @instituicao.horario_fim_aulas)
+    @professores = User.joins(:tipo_contrato).select("users.id", "users.nome AS name",
+                                            "(tipos_contratos.carga_horaria * 60) AS weeklyMinutes").to_json
+
+    @grades_curriculares = GradeCurricular.joins(:disciplina, :ambiente).select(
+                                                                        "grades_curriculares.id,
+                                                                        disciplinas.descricao AS name,
+                                                                        ambientes.descricao AS room,
+                                                                        (grades_curriculares.carga_horaria * 60) AS weeklyMinutes"
+                                                                      ).to_json
+
 
     @aulas = Aula.includes(:grade_curricular, :ambiente)
                  .where(ambiente: { instituicao_id: @instituicao.id })
-
-    @grades_curriculares = GradeCurricular.joins(matriz_curricular_aplicada: { curso: :instituicao })
-                                          .where(instituicoes: { id: @instituicao.id })
-    @ambientes = Ambiente.where(instituicao_id: 1).select(:id, :descricao).to_json
     render layout: false
   end
 
@@ -63,6 +69,10 @@ class AulasController < ApplicationController
     end
 
     horarios
+  end
+
+  def calcular_minutos_ch(min)
+    min = min * 60
   end
 
   private

@@ -116,11 +116,11 @@ MatrizCurricularAplicada.find_or_create_by([
 
 GradeCurricular.find_or_create_by([
     { disciplina_id: 8, carga_horaria: 10, periodo_calendario: 1, optativa: false,
-    carga_horaria_total: 56, matriz_curricular_aplicada_id: 1, user_id: 1 },
+    carga_horaria_total: 56, matriz_curricular_aplicada_id: 1, ambiente_id: 1 },
     { disciplina_id: 9, carga_horaria: 15, periodo_calendario: 1, optativa: false,
-    carga_horaria_total: 56, matriz_curricular_aplicada_id: 1, user_id: 1 },
+    carga_horaria_total: 56, matriz_curricular_aplicada_id: 1, ambiente_id: 1 },
     { disciplina_id: 10, carga_horaria: 10, periodo_calendario: 1, optativa: false,
-    carga_horaria_total: 40, matriz_curricular_aplicada_id: 1, user_id: 1 },
+    carga_horaria_total: 40, matriz_curricular_aplicada_id: 1, ambiente_id: 2 },
     { disciplina_id: 11, carga_horaria: 6, periodo_calendario: 1, optativa: false,
-    carga_horaria_total: 25, matriz_curricular_aplicada_id: 1, user_id: 1 }
+    carga_horaria_total: 25, matriz_curricular_aplicada_id: 1, ambiente_id: 2 }
 ])

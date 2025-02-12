@@ -145,6 +145,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_27_024232) do
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "ambiente_id"
+    t.index ["ambiente_id"], name: "index_grades_curriculares_on_ambiente_id"
     t.index ["disciplina_id"], name: "index_grades_curriculares_on_disciplina_id"
     t.index ["matriz_curricular_aplicada_id"], name: "index_grades_curriculares_on_matriz_curricular_aplicada_id"
     t.index ["user_id"], name: "index_grades_curriculares_on_user_id"
@@ -304,6 +306,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_27_024232) do
   add_foreign_key "disciplinas", "subareas"
   add_foreign_key "disponibilidade_salas", "ambientes"
   add_foreign_key "etapas", "niveis"
+  add_foreign_key "grades_curriculares", "ambientes"
   add_foreign_key "grades_curriculares", "disciplinas"
   add_foreign_key "grades_curriculares", "matrizes_curriculares_aplicadas"
   add_foreign_key "grades_curriculares", "users"
