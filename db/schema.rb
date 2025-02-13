@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_01_27_024232) do
+ActiveRecord::Schema[7.2].define(version: 2025_02_13_012338) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -150,6 +150,18 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_27_024232) do
     t.index ["disciplina_id"], name: "index_grades_curriculares_on_disciplina_id"
     t.index ["matriz_curricular_aplicada_id"], name: "index_grades_curriculares_on_matriz_curricular_aplicada_id"
     t.index ["user_id"], name: "index_grades_curriculares_on_user_id"
+  end
+
+  create_table "grades_curriculares_turmas", force: :cascade do |t|
+    t.bigint "grade_curricular_id"
+    t.bigint "turma_id"
+    t.string "created_by"
+    t.string "updated_by"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["grade_curricular_id"], name: "index_grades_curriculares_turmas_on_grade_curricular_id"
+    t.index ["turma_id"], name: "index_grades_curriculares_turmas_on_turma_id"
   end
 
   create_table "instituicoes", force: :cascade do |t|
@@ -310,6 +322,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_27_024232) do
   add_foreign_key "grades_curriculares", "disciplinas"
   add_foreign_key "grades_curriculares", "matrizes_curriculares_aplicadas"
   add_foreign_key "grades_curriculares", "users"
+  add_foreign_key "grades_curriculares_turmas", "grades_curriculares"
+  add_foreign_key "grades_curriculares_turmas", "turmas"
   add_foreign_key "matrizes_curriculares_aplicadas", "cursos"
   add_foreign_key "matrizes_curriculares_aplicadas", "turnos"
   add_foreign_key "restricoes", "turnos"

@@ -124,3 +124,21 @@ GradeCurricular.find_or_create_by([
     { disciplina_id: 11, carga_horaria: 6, periodo_calendario: 1, optativa: false,
     carga_horaria_total: 25, matriz_curricular_aplicada_id: 1, ambiente_id: 2 }
 ])
+
+Turma.find_or_create_by([
+    { descricao: "TURMA ADS 2022 - 1", vagas: 40, matriz_curricular_aplicada_id: 1, numero_efetivo_estudantes: 32,
+    sala_recorrente: false },
+    { descricao: "TURMA ADS 2022 - 2", vagas: 40, matriz_curricular_aplicada_id: 1, numero_efetivo_estudantes: 20,
+    sala_recorrente: false },
+    { descricao: "TURMA ADS 2023 - 1", vagas: 40, matriz_curricular_aplicada_id: 1, numero_efetivo_estudantes: 27,
+    sala_recorrente: false }
+])
+
+ GradeCurricularTurma.find_or_create_by([
+    { grade_curricular_id: 1, turma_id: 1 },
+    { grade_curricular_id: 2, turma_id: 1 },
+    { grade_curricular_id: 3, turma_id: 1 },
+    { grade_curricular_id: 4, turma_id: 1 },
+    { grade_curricular_id: 1, turma_id: 2 },
+    { grade_curricular_id: 2, turma_id: 2 }
+])

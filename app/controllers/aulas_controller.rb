@@ -11,12 +11,16 @@ class AulasController < ApplicationController
     @professores = User.joins(:tipo_contrato).select("users.id", "users.nome AS name",
                                             "(tipos_contratos.carga_horaria * 60) AS weeklyMinutes").to_json
 
-    @grades_curriculares = GradeCurricular.joins(:disciplina, :ambiente).select(
-                                                                        "grades_curriculares.id,
-                                                                        disciplinas.descricao AS name,
-                                                                        ambientes.descricao AS room,
-                                                                        (grades_curriculares.carga_horaria * 60) AS weeklyMinutes"
-                                                                      ).to_json
+    @grades_curriculares = GradeCurricularTurma.joins(:turma, grade_curricular: [ :disciplina, :ambiente ])
+                                                .select(
+                                                        "grades_curriculares.id,
+                                                        disciplinas.descricao AS name,
+                                                        ambientes.id AS room_id,
+                                                        ambientes.descricao AS room,
+                                                        turmas.id AS turma_id,
+                                                        turmas.descricao AS turma,
+                                                        (grades_curriculares.carga_horaria * 60) AS weeklyMinutes"
+                                                ).to_json
 
 
     @aulas = Aula.includes(:grade_curricular, :ambiente)
@@ -35,7 +39,7 @@ class AulasController < ApplicationController
     @aula = Aula.new(aula_params)
 
     if @aula.save
-      redirect_to aulas_path, notice: t("messages.created_successfully")
+      redirect_to request.referer, notice: t("messages.created_successfully")
     else
       render json: @aula.errors.full_messages, status: :unprocessable_entity
     end
@@ -43,7 +47,7 @@ class AulasController < ApplicationController
 
   def update
     if @aula.update(aula_params)
-      redirect_to aulas_path, notice: t("messages.updated_successfully"), status: :see_other
+      redirect_to request.referer, notice: t("messages.updated_successfully"), status: :see_other
     else
       render json: @aula.errors.full_messages, status: :unprocessable_entity
     end

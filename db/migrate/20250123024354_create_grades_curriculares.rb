@@ -10,7 +10,7 @@ class CreateGradesCurriculares < ActiveRecord::Migration[7.2]
         t.boolean :optativa
         t.integer :carga_horaria_total
         t.references :matriz_curricular_aplicada, foreign_key: true
-        t.references :user, foreign_key: true
+        t.references :user, foreign_key: true, null: true
         t.string :created_by
         t.string :updated_by
         t.datetime :deleted_at

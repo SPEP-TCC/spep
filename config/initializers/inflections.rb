@@ -20,6 +20,7 @@ ActiveSupport::Inflector.inflections do |inflect|
   inflect.irregular "disponibilidade_sala", "disponibilidade_salas"
   inflect.irregular "aula", "aulas"
   inflect.irregular "subarea", "subareas"
+  inflect.irregular "grade_curricular_turma", "grades_curriculares_turmas"
 end
 
 # These inflection rules are supported but not enabled by default:
