@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-<head>
+  <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <%= csrf_meta_tags %>
@@ -8,531 +8,552 @@
     <title>Calendário Escolar</title>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-            background-color: #f5f5f5;
-        }
+      body {
+          font-family: Arial, sans-serif;
+          margin: 0;
+          padding: 20px;
+          background-color: #f5f5f5;
+      }
 
-        .container {
-            max-width: 1600px;
-            margin: 0 auto;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
+      .container {
+          max-width: 1600px;
+          margin: 0 auto;
+          background-color: #fff;
+          padding: 20px;
+          border-radius: 8px;
+          box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      }
 
-        h1 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 20px;
-        }
+      h1 {
+          text-align: center;
+          color: #333;
+          margin-bottom: 20px;
+      }
 
-        .schedule-container {
-            display: flex;
-            margin-top: 20px;
-            gap: 20px;
-        }
+      .schedule-container {
+          display: flex;
+          margin-top: 20px;
+          gap: 20px;
+      }
 
-        .subjects-list, .teachers-list {
-            width: 200px;
-            padding: 15px;
-            background-color: #fff;
-            border-radius: 8px;
-            border: 1px solid #eee;
-        }
+      .subjects-list, .teachers-list {
+          width: 200px;
+          padding: 15px;
+          background-color: #fff;
+          border-radius: 8px;
+          border: 1px solid #eee;
+      }
 
-        .subject-card, .teacher-card {
-            padding: 10px;
-            margin-bottom: 10px;
-            border-radius: 4px;
-            cursor: move;
-            text-align: center;
-        }
+      .subject-card, .teacher-card {
+          padding: 10px;
+          margin-bottom: 10px;
+          border-radius: 4px;
+          cursor: move;
+          text-align: center;
+      }
 
-        .subject-card p, .teacher-card p {
-            margin: 2px 0;
-            font-size: 14px;
-        }
+      .subject-card p, .teacher-card p {
+          margin: 2px 0;
+          font-size: 14px;
+      }
 
-        .schedule {
-            flex-grow: 1;
-            border-collapse: collapse;
-            background: white;
-        }
+      .schedule {
+          flex-grow: 1;
+          border-collapse: collapse;
+          background: white;
+      }
 
-        .schedule th, .schedule td {
-            border: 1px solid #ddd;
-            padding: 4px;
-            text-align: center;
-        }
+      .schedule th, .schedule td {
+          border: 1px solid #ddd;
+          padding: 4px;
+          text-align: center;
+      }
 
-        .schedule thead {
-            background-color: #f8f9fa;
-        }
+      .schedule thead {
+          background-color: #f8f9fa;
+      }
 
-        .schedule th:first-child, .schedule td:first-child {
-            background-color: #f8f9fa;
-            font-weight: bold;
-            width: 120px;
-        }
+      .schedule th:first-child, .schedule td:first-child {
+          background-color: #f8f9fa;
+          font-weight: bold;
+          width: 120px;
+      }
 
-        .schedule td {
-            height: 40px !important; /* Garante que a altura seja aplicada */
-            padding: 4px !important; /* Reduz espaçamento interno */
-            vertical-align: middle;
-        }
+      .schedule td {
+          height: 40px !important; /* Garante que a altura seja aplicada */
+          padding: 4px !important; /* Reduz espaçamento interno */
+          vertical-align: middle;
+      }
 
-        .time-slot {
-            min-height: 80px;
-            border-radius: 4px;
-            transition: background-color 0.2s;
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
+      .time-slot {
+          min-height: 80px;
+          border-radius: 4px;
+          transition: background-color 0.2s;
+          display: flex;
+          flex-direction: column;
+          gap: 5px;
+      }
 
-        .time-slot:empty {
-            border: 2px dashed #ddd;
-        }
+      .time-slot:empty {
+          border: 2px dashed #ddd;
+      }
 
-        .time-slot:not(:empty) {
-            border: none;
-        }
+      .time-slot:not(:empty) {
+          border: none;
+      }
 
-        .select2-container {
-            margin-bottom: 20px;
-        }
+      .select2-container {
+          margin-bottom: 20px;
+      }
 
-        .subject-card[data-subject="matematica"] { background-color: #ffcdd2; }
-        .subject-card[data-subject="portugues"] { background-color: #c8e6c9; }
-        .subject-card[data-subject="historia"] { background-color: #bbdefb; }
-        .subject-card[data-subject="geografia"] { background-color: #fff9c4; }
+      /* Cores claras para as matérias */
+      .subject-card[data-subject="matematica"] { background-color: #ffebee; }
+      .subject-card[data-subject="portugues"] { background-color: #f1f8e9; }
+      .subject-card[data-subject="historia"] { background-color: #e3f2fd; }
+      .subject-card[data-subject="geografia"] { background-color: #fffde7; }
+      .subject-card[data-subject="ciencias"] { background-color: #f3e5f5; }
+      .subject-card[data-subject="ingles"] { background-color: #fff3e0; }
+      .subject-card[data-subject="artes"] { background-color: #e0f7fa; }
+      .subject-card[data-subject="educacao-fisica"] { background-color: #ffccbc; }
 
-        .teacher-card {
-            background-color: #e3f2fd;
-        }
+      /* Cores claras para os professores */
+      .teacher-card[data-teacher="professor1"] { background-color: #e3f2fd; }
+      .teacher-card[data-teacher="professor2"] { background-color: #f0f4c3; }
+      .teacher-card[data-teacher="professor3"] { background-color: #ffccbc; }
+      .teacher-card[data-teacher="professor4"] { background-color: #d1c4e9; }
 
-        .search-container {
-            margin-bottom: 22px;
-            display: flex;
-            align-items: center;
-            background: #fff;
-            border-radius: 8px;
-            padding: 5px 10px;
-            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-        }
+      .search-container {
+          margin-bottom: 22px;
+          display: flex;
+          align-items: center;
+          background: #fff;
+          border-radius: 8px;
+          padding: 5px 10px;
+          box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+      }
 
-        .search-container input {
-            border: none;
-            outline: none;
-            padding: 8px 12px;
-            border-radius: 6px;
-            width: 100%;
-            font-size: 14px;
-        }
+      .search-container input {
+          border: none;
+          outline: none;
+          padding: 8px 12px;
+          border-radius: 6px;
+          width: 100%;
+          font-size: 14px;
+      }
 
-        .search-container i {
-            margin-right: 8px;
-            color: #999;
-        }
+      .search-container i {
+          margin-right: 8px;
+          color: #999;
+      }
 
-        .search-container img {
-            width: 20px;
-            height: 20px;
-            margin-right: 8px;
-        }
+      .search-container img {
+          width: 20px;
+          height: 20px;
+          margin-right: 8px;
+      }
 
-        .info-text {
-            font-size: 12px;
-            color: #666;
-            text-align: center;
-            margin-top: 10px;
-        }
+      .info-text {
+          font-size: 12px;
+          color: #666;
+          text-align: center;
+          margin-top: 10px;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="container">
-        <select id="turma-select" style="width: 100%; max-width: 250px;">
-        </select>
-
-        <div style="background-color: #f8d7da; color: #363636; padding: 12px; margin: 15px 0; border: 1px solid #f5c2c7; border-radius: 4px; text-align: center; font-weight: bold;">
-            Dê dois cliques para remover itens do calendário
+      <select id="turma-select" style="width: 100%; max-width: 250px;">
+      </select>
+      <div style="background-color: #f8d7da; color: #363636; padding: 12px; margin: 15px 0; border: 1px solid #f5c2c7; border-radius: 4px; text-align: center; font-weight: bold;">
+        Dê dois cliques para remover itens do calendário
+      </div>
+      <div class="schedule-container">
+        <div id="subjects-list" class="subjects-list">
+          <h3 style="text-align: center;">Matérias</h3>
+          <div class="search-container">
+            <input type="text" id="subject-search" placeholder="Pesquisar matéria...">
+            <img src="/layout/assets/img/search.png" alt="Lupa">
+          </div>
+          <!-- <div class="info-text">Dê dois cliques para remover a matéria.</div> -->
         </div>
-
-        <div class="schedule-container">
-            <div id="subjects-list" class="subjects-list">
-                <h3 style="text-align: center;">Matérias</h3>
-                <div class="search-container">
-                    <input type="text" id="subject-search" placeholder="Pesquisar matéria...">
-                    <img src="img\search.png" alt="Lupa">
-                </div>
-                <!-- <div class="info-text">Dê dois cliques para remover a matéria.</div> -->
-            </div>
-
-            <table id="schedule" class="schedule">
-                <thead></thead>
-                <tbody></tbody>
-            </table>
-
-            <div id="teachers-list" class="teachers-list">
-                <h3 style="text-align: center;">Professores</h3>
-                <div class="search-container">
-                    <input type="text" id="teacher-search" placeholder="Pesquisar professor...">
-                    <img src="img\search.png" alt="Lupa">
-                </div>
-                <!-- <div class="info-text">Dê dois cliques para remover o professor.</div> -->
-            </div>
+        <table id="schedule" class="schedule">
+          <thead></thead>
+          <tbody></tbody>
+        </table>
+        <div id="teachers-list" class="teachers-list">
+          <h3 style="text-align: center;">Professores</h3>
+          <div class="search-container">
+            <input type="text" id="teacher-search" placeholder="Pesquisar professor...">
+            <img src="/layout/assets/img/search.png" alt="Lupa">
+          </div>
+          <!-- <div class="info-text">Dê dois cliques para remover o professor.</div> -->
         </div>
+      </div>
     </div>
-
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.14.0/Sortable.min.js"></script>
     <script>
-        $(document).ready(function() {
-            function createTurmaOptions() {
-              const turmaSelect = $('#turma-select');
-              // Clear any existing options and add the default one.
-              turmaSelect.empty();
-              turmaSelect.append($('<option>', { value: '', text: 'Selecione uma turma' }));
+      $(document).ready(function() {
+          // Lista de cores claras para matérias e professores
+          const lightColors = [
+              '#FFCDD2', '#EF9A9A', // Tons de vermelho
+              '#E1BEE7', '#CE93D8', // Tons de roxo
+              '#C5CAE9', '#9FA8DA', // Tons de azul
+              '#BBDEFB', '#90CAF9', // Tons de azul claro
+              '#B2EBF2', '#80DEEA', // Tons de ciano
+              '#B2DFDB', '#80CBC4', // Tons de verde água
+              '#DCEDC8', '#C5E1A5', // Tons de verde claro
+              '#FFF9C4', '#FFF59D', // Tons de amarelo
+              '#FFE0B2', '#FFCC80', // Tons de laranja
+          ];
 
-              // Create an object to store distinct turmas.
-              let turmas = {};
+          // Função para obter uma cor única com base no índice
+          function getColor(index) {
+              return lightColors[index % lightColors.length];
+          }
 
-              // Loop through subjects to gather distinct turma objects.
-              subjects.forEach(subject => {
-                // Use the turma_id as key. 
-                // Assuming each subject has a `turma` object with a `descricao` property.
-                const turmaId = subject.turma_id;
-                if (!turmas[turmaId]) {
-                  turmas[turmaId] = subject.turma.descricao;
-                }
-              });
+          function createTurmaOptions() {
+            const turmaSelect = $('#turma-select');
+            // Clear any existing options and add the default one.
+            turmaSelect.empty();
+            turmaSelect.append($('<option>', { value: '', text: 'Selecione uma turma' }));
 
-              // Append an option for each distinct turma.
-              for (let id in turmas) {
-                turmaSelect.append($('<option>', { value: id, text: turmas[id] }));
+            // Create an object to store distinct turmas.
+            let turmas = {};
+
+            // Loop through subjects to gather distinct turma objects.
+            subjects.forEach(subject => {
+              // Use the turma_id as key.
+              // Assuming each subject has a `turma` object with a `descricao` property.
+              const turmaId = subject.turma_id;
+              if (!turmas[turmaId]) {
+                turmas[turmaId] = subject.turma.descricao;
               }
+            });
+
+            // Append an option for each distinct turma.
+            for (let id in turmas) {
+              turmaSelect.append($('<option>', { value: id, text: turmas[id] }));
             }
+          }
 
-            var subjects = JSON.parse('<%= raw(json_escape(@grades_curriculares)) %>');
-            console.log(subjects);
+          var subjects = JSON.parse('<%= raw(json_escape(@grades_curriculares)) %>');
+          console.log(subjects);
 
-            createTurmaOptions();
-            $('#turma-select').select2();
+          createTurmaOptions();
+          $('#turma-select').select2();
 
+          var teachers = JSON.parse('<%= raw(json_escape(@professores)) %>');
+          console.log(teachers);
 
-            var teachers = JSON.parse('<%= raw(json_escape(@professores)) %>');
-            console.log(teachers);
-            
-            function createSubjectCards() {
-                const subjectsList = document.getElementById('subjects-list');
-                subjects.forEach(subject => {
-                    const maxUses = Math.floor(subject.weeklyminutes / 50);
-                    const card = document.createElement('div');
-                    card.className = 'subject-card';
-                    card.setAttribute('data-id', subject.id);
-                    // Save the turma id so you can filter by it.
-                    card.setAttribute('data-max-uses', maxUses);
-                    card.setAttribute('data-current-uses', '0');
-                    card.setAttribute('data-turma-id', subject.turma_id);
-                    card.setAttribute('data-ambiente-id', subject.room_id);
-                    card.innerHTML = `
-                        <p><strong>${subject.name}</strong></p>
-                        <p>${subject.room}</p>
-                        <p>Aula 0/${maxUses}</p>
-                    `;
-                    subjectsList.appendChild(card);
-                });
-            }
+          function createSubjectCards() {
+              const subjectsList = document.getElementById('subjects-list');
+              subjects.forEach((subject, index) => {
+                  const maxUses = Math.floor(subject.weeklyminutes / 50);
+                  const card = document.createElement('div');
+                  card.className = 'subject-card';
+                  card.setAttribute('data-id', subject.id);
+                  card.setAttribute('data-subject', subject.name.toLowerCase().replace(/ /g, '-')); // Adiciona o nome da matéria como atributo
+                  card.setAttribute('data-max-uses', maxUses);
+                  card.setAttribute('data-current-uses', '0');
+                  card.setAttribute('data-turma-id', subject.turma_id);
+                  card.setAttribute('data-ambiente-id', subject.room_id);
+                  card.style.backgroundColor = getColor(index); // Aplica uma cor única
+                  card.innerHTML = `
+                      <p><strong>${subject.name}</strong></p>
+                      <p>${subject.room}</p>
+                      <p>Aula 0/${maxUses}</p>
+                  `;
+                  subjectsList.appendChild(card);
+              });
+          }
 
+          function createTeacherCards() {
+              const teachersList = document.getElementById('teachers-list');
+              teachers.forEach((teacher, index) => {
+                  const maxUses = Math.floor(teacher.weeklyminutes / 50);
+                  const card = document.createElement('div');
+                  card.className = 'teacher-card';
+                  card.setAttribute('data-id', teacher.id);
+                  card.setAttribute('data-teacher', teacher.name.toLowerCase().replace(/ /g, '-')); // Adiciona o nome do professor como atributo
+                  card.setAttribute('data-max-uses', maxUses);
+                  card.setAttribute('data-current-uses', '0');
+                  card.style.backgroundColor = getColor(index); // Aplica uma cor única
+                  card.innerHTML = `
+                      <p><strong>${teacher.name}</strong></p>
+                      <p>Aula 0/${maxUses}</p>
+                  `;
+                  teachersList.appendChild(card);
+              });
+          }
 
-            function createTeacherCards() {
-                const teachersList = document.getElementById('teachers-list');
-                teachers.forEach(teacher => {
-                    const maxUses = Math.floor(teacher.weeklyminutes / 50);
-                    const card = document.createElement('div');
-                    card.className = 'teacher-card';
-                    card.setAttribute('data-id', teacher.id);
-                    card.setAttribute('data-max-uses', maxUses);
-                    card.setAttribute('data-current-uses', '0');
-                    card.innerHTML = `
-                        <p><strong>${teacher.name}</strong></p>
-                        <p>Aula 0/${maxUses}</p>
-                    `;
-                    teachersList.appendChild(card);
-                });
-            }
+          function createScheduleTable() {
+            const timeSlots = JSON.parse('<%= raw(json_escape(@horarios)) %>');
+            const daysOfWeek = JSON.parse('<%= raw(json_escape(@dias)) %>');
+            const table = document.getElementById('schedule');
 
-            function createScheduleTable() {
-              const timeSlots = JSON.parse('<%= raw(json_escape(@horarios)) %>');
-              const daysOfWeek = JSON.parse('<%= raw(json_escape(@dias)) %>');
-              const table = document.getElementById('schedule');
+            // Build table header
+            const thead = table.querySelector('thead');
+            thead.innerHTML = '';
+            const headerRow = document.createElement('tr');
+            const timeHeaderCell = document.createElement('th');
+            timeHeaderCell.textContent = 'Horário';
+            headerRow.appendChild(timeHeaderCell);
 
-              // Build table header
-              const thead = table.querySelector('thead');
-              thead.innerHTML = '';
-              const headerRow = document.createElement('tr');
-              const timeHeaderCell = document.createElement('th');
-              timeHeaderCell.textContent = 'Horário';
-              headerRow.appendChild(timeHeaderCell);
+            const sortedDayKeys = Object.keys(daysOfWeek).sort((a, b) => parseInt(a) - parseInt(b));
+            sortedDayKeys.forEach(key => {
+              const dayHeaderCell = document.createElement('th');
+              dayHeaderCell.textContent = daysOfWeek[key];
+              headerRow.appendChild(dayHeaderCell);
+            });
+            thead.appendChild(headerRow);
 
-              const sortedDayKeys = Object.keys(daysOfWeek).sort((a, b) => parseInt(a) - parseInt(b));
+            // Build table body
+            const tbody = table.querySelector('tbody');
+            tbody.innerHTML = '';
+
+            timeSlots.forEach(timeSlot => {
+              const row = document.createElement('tr');
+              // Create time label cell
+              const timeCell = document.createElement('td');
+              timeCell.textContent = timeSlot;
+              row.appendChild(timeCell);
+
+              // Create a cell for each day
               sortedDayKeys.forEach(key => {
-                const dayHeaderCell = document.createElement('th');
-                dayHeaderCell.textContent = daysOfWeek[key];
-                headerRow.appendChild(dayHeaderCell);
+                const cell = document.createElement('td');
+                const slotDiv = document.createElement('div');
+                slotDiv.className = 'time-slot';
+                // Save schedule info
+                slotDiv.setAttribute('data-day', key);
+                slotDiv.setAttribute('data-horario-inicio', timeSlot);
+                slotDiv.setAttribute('data-horario-fim', timeSlot); // adjust if needed
+
+                // Create a unique key for the cell (e.g. "day-time")
+                slotDiv.setAttribute('data-cell-key', key + '-' + timeSlot);
+                cell.appendChild(slotDiv);
+                row.appendChild(cell);
               });
-              thead.appendChild(headerRow);
+              tbody.appendChild(row);
+            });
+          }
 
-              // Build table body
-              const tbody = table.querySelector('tbody');
-              tbody.innerHTML = '';
+          var scheduleAssignments = {};
 
-              timeSlots.forEach(timeSlot => {
-                const row = document.createElement('tr');
-                // Create time label cell
-                const timeCell = document.createElement('td');
-                timeCell.textContent = timeSlot;
-                row.appendChild(timeCell);
-
-                // Create a cell for each day
-                sortedDayKeys.forEach(key => {
-                  const cell = document.createElement('td');
-                  const slotDiv = document.createElement('div');
-                  slotDiv.className = 'time-slot';
-                  // Save schedule info
-                  slotDiv.setAttribute('data-day', key);
-                  slotDiv.setAttribute('data-horario-inicio', timeSlot);
-                  slotDiv.setAttribute('data-horario-fim', timeSlot); // adjust if needed
-
-                  // Create a unique key for the cell (e.g. "day-time")
-                  slotDiv.setAttribute('data-cell-key', key + '-' + timeSlot);
-                  cell.appendChild(slotDiv);
-                  row.appendChild(cell);
-                });
-                tbody.appendChild(row);
+          function initializeSortable() {
+            document.querySelectorAll('.time-slot').forEach(timeSlot => {
+              // If a Sortable instance exists on this element, destroy it.
+              new Sortable(document.getElementById('subjects-list'), {
+                group: {
+                  name: 'subjects',
+                  pull: 'clone',
+                  put: false
+                },
+                sort: false,
+                animation: 150
               });
-            }
 
-            var scheduleAssignments = {};
-            
-            function initializeSortable() {
-              document.querySelectorAll('.time-slot').forEach(timeSlot => {
-                // If a Sortable instance exists on this element, destroy it.
-                new Sortable(document.getElementById('subjects-list'), {
-                  group: {
-                    name: 'subjects',
-                    pull: 'clone',
-                    put: false
-                  },
-                  sort: false,
-                  animation: 150
-                });
-                
-                new Sortable(document.getElementById('teachers-list'), {
-                  group: {
-                    name: 'teachers',
-                    pull: 'clone',
-                    put: false
-                  },
-                  sort: false,
-                  animation: 150
-                });
-                
-                if (timeSlot._sortableInstance) {
-                  timeSlot._sortableInstance.destroy();
-                }
-                // Create a new Sortable instance and store it on the element.
-                timeSlot._sortableInstance = new Sortable(timeSlot, {
-                  group: {
-                    name: 'shared',
-                    put: function(to, from, item) {
-                      const hasSubject = Array.from(to.el.children).some(child =>
-                        child !== item && child.classList.contains('subject-card')
-                      );
-                      const hasTeacher = Array.from(to.el.children).some(child =>
-                        child !== item && child.classList.contains('teacher-card')
-                      );
-                      if (item.classList.contains('subject-card') && hasSubject) return false;
-                      if (item.classList.contains('teacher-card') && hasTeacher) return false;
-                      return true;
-                    }
-                  },
-                  animation: 150,
-                  onAdd: function(evt) {
-                    const slotEl = evt.to;
-                    // Get the unique cell key.
-                    const cellKey = slotEl.getAttribute('data-cell-key');
+              new Sortable(document.getElementById('teachers-list'), {
+                group: {
+                  name: 'teachers',
+                  pull: 'clone',
+                  put: false
+                },
+                sort: false,
+                animation: 150
+              });
 
-                    // Get the currently selected turma.
-                    const selectedTurma = $('#turma-select').val();
-                    if (!selectedTurma) {
-                      alert("Por favor, selecione uma turma antes de alocar.");
-                      return;
-                    }
+              if (timeSlot._sortableInstance) {
+                timeSlot._sortableInstance.destroy();
+              }
+              // Create a new Sortable instance and store it on the element.
+              timeSlot._sortableInstance = new Sortable(timeSlot, {
+                group: {
+                  name: 'shared',
+                  put: function(to, from, item) {
+                    const hasSubject = Array.from(to.el.children).some(child =>
+                      child !== item && child.classList.contains('subject-card')
+                    );
+                    const hasTeacher = Array.from(to.el.children).some(child =>
+                      child !== item && child.classList.contains('teacher-card')
+                    );
+                    if (item.classList.contains('subject-card') && hasSubject) return false;
+                    if (item.classList.contains('teacher-card') && hasTeacher) return false;
+                    return true;
+                  }
+                },
+                animation: 150,
+                onAdd: function(evt) {
+                  const slotEl = evt.to;
+                  // Get the unique cell key.
+                  const cellKey = slotEl.getAttribute('data-cell-key');
 
-                    // Ensure there's an entry for this turma in scheduleAssignments.
-                    if (!scheduleAssignments[selectedTurma]) {
-                      scheduleAssignments[selectedTurma] = {};
-                    }
-                    // Ensure there's an entry for this cell.
-                    if (!scheduleAssignments[selectedTurma][cellKey]) {
-                      scheduleAssignments[selectedTurma][cellKey] = {};
-                    }
+                  // Get the currently selected turma.
+                  const selectedTurma = $('#turma-select').val();
+                  if (!selectedTurma) {
+                    alert("Por favor, selecione uma turma antes de alocar.");
+                    return;
+                  }
 
-                    // Identify the type of card dropped.
-                    if (evt.item.classList.contains('subject-card')) {
-                      scheduleAssignments[selectedTurma][cellKey].subject = {
-                        id: evt.item.getAttribute('data-id'),
-                        html: evt.item.outerHTML
-                      };
-                    } else if (evt.item.classList.contains('teacher-card')) {
-                      scheduleAssignments[selectedTurma][cellKey].teacher = {
-                        id: evt.item.getAttribute('data-id'),
-                        html: evt.item.outerHTML
-                      };
-                    }
+                  // Ensure there's an entry for this turma in scheduleAssignments.
+                  if (!scheduleAssignments[selectedTurma]) {
+                    scheduleAssignments[selectedTurma] = {};
+                  }
+                  // Ensure there's an entry for this cell.
+                  if (!scheduleAssignments[selectedTurma][cellKey]) {
+                    scheduleAssignments[selectedTurma][cellKey] = {};
+                  }
 
-                    const dia = slotEl.getAttribute('data-day');
-                    const horarioInicio = slotEl.getAttribute('data-horario-inicio');
-                    const horarioFim = slotEl.getAttribute('data-horario-fim');
-
-                    const teacherCard = slotEl.querySelector('.teacher-card');
-                    const subjectCard = slotEl.querySelector('.subject-card');
-
-                    let params = {
-                      dia: dia,
-                      horario_inicio: horarioInicio,
-                      horario_fim: horarioFim,
+                  // Identify the type of card dropped.
+                  if (evt.item.classList.contains('subject-card')) {
+                    scheduleAssignments[selectedTurma][cellKey].subject = {
+                      id: evt.item.getAttribute('data-id'),
+                      html: evt.item.outerHTML
                     };
-
-                    if (subjectCard) {
-                      params.grade_curricular_id = subjectCard.getAttribute('data-id');
-                      params.ambiente_id = subjectCard.getAttribute('data-ambiente-id') || null;
-                    }
-                    if (teacherCard) {
-                      params.user_id = teacherCard.getAttribute('data-id');
-                    }
-
-                    // Perform your AJAX call.
-                    const aulaId = slotEl.getAttribute('data-aula-id');
-                    console.log("slot:", slotEl);
-                    if (aulaId) {
-                      $.ajax({
-                        url: `/aulas/${aulaId}`,
-                        headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
-                        method: 'PATCH',
-                        dataType: 'json',
-                        data: { aula: params },
-                        success: function(response) {
-                          console.log('Aula updated:', response);
-                        },
-                        error: function(error) {
-                          console.error('Error updating aula:', error);
-                        }
-                      });
-                    } else {
-                      $.ajax({
-                        url: '/aulas',
-                        headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
-                        method: 'POST',
-                        dataType: 'json',
-                        data: { aula: params },
-                        success: function(response) {
-                          console.log('Aula created:', response);
-                          slotEl.setAttribute('data-aula-id', response.id);
-                          console.log("response:", response.id)
-                        },
-                        error: function(error) {
-                          console.error('Error creating aula:', error);
-                        }
-                      });
-                    }
+                  } else if (evt.item.classList.contains('teacher-card')) {
+                    scheduleAssignments[selectedTurma][cellKey].teacher = {
+                      id: evt.item.getAttribute('data-id'),
+                      html: evt.item.outerHTML
+                    };
                   }
-                });
+
+                  const dia = slotEl.getAttribute('data-day');
+                  const horarioInicio = slotEl.getAttribute('data-horario-inicio');
+                  const horarioFim = slotEl.getAttribute('data-horario-fim');
+
+                  const teacherCard = slotEl.querySelector('.teacher-card');
+                  const subjectCard = slotEl.querySelector('.subject-card');
+
+                  let params = {
+                    dia: dia,
+                    horario_inicio: horarioInicio,
+                    horario_fim: horarioFim,
+                  };
+
+                  if (subjectCard) {
+                    params.grade_curricular_id = subjectCard.getAttribute('data-id');
+                    params.ambiente_id = subjectCard.getAttribute('data-ambiente-id') || null;
+                  }
+                  if (teacherCard) {
+                    params.user_id = teacherCard.getAttribute('data-id');
+                  }
+
+                  // Perform your AJAX call.
+                  const aulaId = slotEl.getAttribute('data-aula-id');
+                  console.log("slot:", slotEl);
+                  if (aulaId) {
+                    $.ajax({
+                      url: `/aulas/${aulaId}`,
+                      headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+                      method: 'PATCH',
+                      dataType: 'json',
+                      data: { aula: params },
+                      success: function(response) {
+                        console.log('Aula updated:', response);
+                      },
+                      error: function(error) {
+                        console.error('Error updating aula:', error);
+                      }
+                    });
+                  } else {
+                    $.ajax({
+                      url: '/aulas',
+                      headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+                      method: 'POST',
+                      dataType: 'json',
+                      data: { aula: params },
+                      success: function(response) {
+                        console.log('Aula created:', response);
+                        slotEl.setAttribute('data-aula-id', response.id);
+                        console.log("response:", response.id)
+                      },
+                      error: function(error) {
+                        console.error('Error creating aula:', error);
+                      }
+                    });
+                  }
+                }
               });
+            });
+          }
+
+          // Função para filtrar matérias
+          document.getElementById('subject-search').addEventListener('input', function(e) {
+              const searchTerm = e.target.value.toLowerCase();
+              const cards = document.querySelectorAll('#subjects-list .subject-card');
+              cards.forEach(card => {
+                  const subjectName = card.querySelector('p').textContent.toLowerCase();
+                  if (subjectName.includes(searchTerm)) {
+                      card.style.display = 'block';
+                  } else {
+                      card.style.display = 'none';
+                  }
+              });
+          });
+
+          // Função para filtrar professores
+          document.getElementById('teacher-search').addEventListener('input', function(e) {
+              const searchTerm = e.target.value.toLowerCase();
+              const cards = document.querySelectorAll('#teachers-list .teacher-card');
+              cards.forEach(card => {
+                  const teacherName = card.querySelector('p').textContent.toLowerCase();
+                  if (teacherName.includes(searchTerm)) {
+                      card.style.display = 'block';
+                  } else {
+                      card.style.display = 'none';
+                  }
+              });
+          });
+
+          createSubjectCards();
+          createTeacherCards();
+          createScheduleTable();
+          initializeSortable();
+
+          $('#turma-select').on('change', function() {
+            const selectedTurma = $(this).val();
+
+            // Filter subject cards.
+            if (selectedTurma) {
+              $('.subject-card').each(function() {
+                const subjectTurma = $(this).data('turma-id');
+                if (subjectTurma == selectedTurma) {
+                  $(this).show();
+                } else {
+                  $(this).hide();
+                }
+              });
+            } else {
+              $('.subject-card').show();
             }
 
-            // Função para filtrar matérias
-            document.getElementById('subject-search').addEventListener('input', function(e) {
-                const searchTerm = e.target.value.toLowerCase();
-                const cards = document.querySelectorAll('#subjects-list .subject-card');
-                cards.forEach(card => {
-                    const subjectName = card.querySelector('p').textContent.toLowerCase();
-                    if (subjectName.includes(searchTerm)) {
-                        card.style.display = 'block';
-                    } else {
-                        card.style.display = 'none';
-                    }
-                });
+            // Clear all time-slot containers.
+            $('.time-slot').each(function() {
+              $(this).empty();
             });
 
-            // Função para filtrar professores
-            document.getElementById('teacher-search').addEventListener('input', function(e) {
-                const searchTerm = e.target.value.toLowerCase();
-                const cards = document.querySelectorAll('#teachers-list .teacher-card');
-                cards.forEach(card => {
-                    const teacherName = card.querySelector('p').textContent.toLowerCase();
-                    if (teacherName.includes(searchTerm)) {
-                        card.style.display = 'block';
-                    } else {
-                        card.style.display = 'none';
-                    }
-                });
-            });
-
-            createSubjectCards();
-            createTeacherCards();
-            createScheduleTable();
-            initializeSortable();
-            
-            $('#turma-select').on('change', function() {
-              const selectedTurma = $(this).val();
-            
-              // Filter subject cards.
-              if (selectedTurma) {
-                $('.subject-card').each(function() {
-                  const subjectTurma = $(this).data('turma-id');
-                  if (subjectTurma == selectedTurma) {
-                    $(this).show();
-                  } else {
-                    $(this).hide();
+            // Re-populate the schedule for the selected turma.
+            if (scheduleAssignments[selectedTurma]) {
+              for (const cellKey in scheduleAssignments[selectedTurma]) {
+                const cellEl = document.querySelector(`.time-slot[data-cell-key="${cellKey}"]`);
+                if (cellEl) {
+                  const cellData = scheduleAssignments[selectedTurma][cellKey];
+                  if (cellData.subject) {
+                    cellEl.insertAdjacentHTML('beforeend', cellData.subject.html);
                   }
-                });
-              } else {
-                $('.subject-card').show();
-              }
-            
-              // Clear all time-slot containers.
-              $('.time-slot').each(function() {
-                $(this).empty();
-              });
-            
-              // Re-populate the schedule for the selected turma.
-              if (scheduleAssignments[selectedTurma]) {
-                for (const cellKey in scheduleAssignments[selectedTurma]) {
-                  const cellEl = document.querySelector(`.time-slot[data-cell-key="${cellKey}"]`);
-                  if (cellEl) {
-                    const cellData = scheduleAssignments[selectedTurma][cellKey];
-                    if (cellData.subject) {
-                      cellEl.insertAdjacentHTML('beforeend', cellData.subject.html);
-                    }
-                    if (cellData.teacher) {
-                      cellEl.insertAdjacentHTML('beforeend', cellData.teacher.html);
-                    }
+                  if (cellData.teacher) {
+                    cellEl.insertAdjacentHTML('beforeend', cellData.teacher.html);
                   }
                 }
               }
-            
-              // Reinitialize Sortable on the updated cells.
-              initializeSortable();
-            });
+            }
 
-        });
+            // Reinitialize Sortable on the updated cells.
+            initializeSortable();
+          });
+
+      });
     </script>
-</body>
+  </body>
 </html>
