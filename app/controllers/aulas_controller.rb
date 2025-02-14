@@ -13,13 +13,13 @@ class AulasController < ApplicationController
 
     @grades_curriculares = GradeCurricularTurma.joins(:turma, grade_curricular: [ :disciplina, :ambiente ])
                                                 .select(
-                                                        "grades_curriculares.id,
-                                                        disciplinas.descricao AS name,
-                                                        ambientes.id AS room_id,
-                                                        ambientes.descricao AS room,
-                                                        turmas.id AS turma_id,
-                                                        turmas.descricao AS turma,
-                                                        (grades_curriculares.carga_horaria * 60) AS weeklyMinutes"
+                                                        "grades_curriculares.id",
+                                                        "disciplinas.descricao AS name",
+                                                        "ambientes.id AS room_id",
+                                                        "ambientes.descricao AS room",
+                                                        "turmas.id AS turma_id",
+                                                        "turmas.descricao AS turma",
+                                                        "(grades_curriculares.carga_horaria * 60) AS weeklyminutes"
                                                 ).to_json
 
 
@@ -37,17 +37,19 @@ class AulasController < ApplicationController
 
   def create
     @aula = Aula.new(aula_params)
-
-    if @aula.save
-      redirect_to request.referer, notice: t("messages.created_successfully")
-    else
-      render json: @aula.errors.full_messages, status: :unprocessable_entity
+    respond_to do |format|
+      if @aula.save
+        # Wrap the id in a JSON object
+        format.json { render json: { id: @aula.id }, status: :ok }
+      else
+        format.json { render json: @aula.errors.full_messages, status: :unprocessable_entity }
+      end
     end
   end
 
   def update
     if @aula.update(aula_params)
-      redirect_to request.referer, notice: t("messages.updated_successfully"), status: :see_other
+      render request.referer, notice: t("messages.updated_successfully"), status: :see_other
     else
       render json: @aula.errors.full_messages, status: :unprocessable_entity
     end
@@ -73,10 +75,6 @@ class AulasController < ApplicationController
     end
 
     horarios
-  end
-
-  def calcular_minutos_ch(min)
-    min = min * 60
   end
 
   private

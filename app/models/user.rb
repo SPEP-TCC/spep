@@ -10,6 +10,6 @@ class User < ApplicationRecord
   belongs_to :tipo_contrato
 
   def to_s
-    self.descricao
+    self.nome
   end
 end
