@@ -3,9 +3,19 @@
     <div class="row">
       <div class="col my-1">
         <p class="m-0 text-muted">
-          SPEP &copy;
-        </a>
-      </p>
+          <span data-bs-toggle="tooltip" title="Sistema para Gestão de Horários das Escolas Públicas">
+            SGHEP &copy; 2024
+          </span>
+        </p>
+      </div>
     </div>
   </div>
 </footer>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+      return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
+  });
+</script>
