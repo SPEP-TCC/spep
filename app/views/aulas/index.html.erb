@@ -224,44 +224,44 @@
           console.log(teachers);
 
           function createSubjectCards() {
-              const subjectsList = document.getElementById('subjects-list');
-              subjects.forEach((subject, index) => {
-                  const maxUses = Math.floor(subject.weeklyminutes / 50);
-                  const card = document.createElement('div');
-                  card.className = 'subject-card';
-                  card.setAttribute('data-id', subject.id);
-                  card.setAttribute('data-subject', subject.name.toLowerCase().replace(/ /g, '-')); // Adiciona o nome da matéria como atributo
-                  card.setAttribute('data-max-uses', maxUses);
-                  card.setAttribute('data-current-uses', '0');
-                  card.setAttribute('data-turma-id', subject.turma_id);
-                  card.setAttribute('data-ambiente-id', subject.room_id);
-                  card.style.backgroundColor = getColor(index); // Aplica uma cor única
-                  card.innerHTML = `
-                      <p><strong>${subject.name}</strong></p>
-                      <p>${subject.room}</p>
-                      <p>Aula 0/${maxUses}</p>
-                  `;
-                  subjectsList.appendChild(card);
-              });
+            const subjectsList = document.getElementById('subjects-list');
+            subjects.forEach((subject, index) => {
+              const maxUses = Math.floor(subject.weeklyminutes / 50);
+              const card = document.createElement('div');
+              card.className = 'subject-card';
+              card.setAttribute('data-id', subject.id);
+              card.setAttribute('data-subject', subject.name.toLowerCase().replace(/ /g, '-'));
+              card.setAttribute('data-max-uses', maxUses);
+              card.setAttribute('data-current-uses', '0');
+              card.setAttribute('data-turma-id', subject.turma_id);
+              card.setAttribute('data-ambiente-id', subject.room_id);
+              card.style.backgroundColor = getColor(index);
+              card.innerHTML = `
+                <p><strong>${subject.name}</strong></p>
+                <p>${subject.room}</p>
+                <p>Aula 0/${maxUses}</p>
+              `;
+              subjectsList.appendChild(card);
+            });
           }
-
+          
           function createTeacherCards() {
-              const teachersList = document.getElementById('teachers-list');
-              teachers.forEach((teacher, index) => {
-                  const maxUses = Math.floor(teacher.weeklyminutes / 50);
-                  const card = document.createElement('div');
-                  card.className = 'teacher-card';
-                  card.setAttribute('data-id', teacher.id);
-                  card.setAttribute('data-teacher', teacher.name.toLowerCase().replace(/ /g, '-')); // Adiciona o nome do professor como atributo
-                  card.setAttribute('data-max-uses', maxUses);
-                  card.setAttribute('data-current-uses', '0');
-                  card.style.backgroundColor = getColor(index); // Aplica uma cor única
-                  card.innerHTML = `
-                      <p><strong>${teacher.name}</strong></p>
-                      <p>Aula 0/${maxUses}</p>
-                  `;
-                  teachersList.appendChild(card);
-              });
+            const teachersList = document.getElementById('teachers-list');
+            teachers.forEach((teacher, index) => {
+              const maxUses = Math.floor(teacher.weeklyminutes / 50);
+              const card = document.createElement('div');
+              card.className = 'teacher-card';
+              card.setAttribute('data-id', teacher.id);
+              card.setAttribute('data-teacher', teacher.name.toLowerCase().replace(/ /g, '-'));
+              card.setAttribute('data-max-uses', maxUses);
+              card.setAttribute('data-current-uses', '0');
+              card.style.backgroundColor = getColor(index);
+              card.innerHTML = `
+                <p><strong>${teacher.name}</strong></p>
+                <p>Aula 0/${maxUses}</p>
+              `;
+              teachersList.appendChild(card);
+            });
           }
 
           function createScheduleTable() {
@@ -453,6 +453,47 @@
               });
             });
           }
+            // Delegated event listener for double-clicking on dropped cards
+          $(document).on('dblclick', '.time-slot', function(e) {
+            // Check if the target (or one of its parents) is a teacher or subject card.
+            const $card = $(e.target).closest('.subject-card, .teacher-card');
+            if (!$card.length) return; // Not a card: ignore the event.
+          
+            e.preventDefault();
+            
+            const $timeSlot = $(this);
+            const aulaId = $timeSlot.data('aula-id');
+          
+            // If there's no schedule assignment, just remove the card.
+            if (!aulaId) {
+              $card.remove();
+              return;
+            }
+          
+            // Optionally, ask for confirmation before deleting:
+            if (!confirm("Deseja remover essa alocação?")) {
+              return;
+            }
+          
+            // Perform the AJAX DELETE call. Make sure your routes include:
+            // resources :aulas, only: [:create, :update, :destroy]
+            $.ajax({
+              url: `/aulas/${aulaId}`,
+              headers: { 'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content') },
+              method: 'DELETE',
+              dataType: 'json',
+              success: function(response) {
+                console.log('Aula deleted:', response);
+                // Remove the schedule assignment from the UI:
+                $timeSlot.removeAttr('data-aula-id').empty();
+                
+                // Optionally, update any other related UI state or objects (e.g. scheduleAssignments)
+              },
+              error: function(error) {
+                console.error('Error deleting aula:', error);
+              }
+            });
+          });
 
           // Função para filtrar matérias
           document.getElementById('subject-search').addEventListener('input', function(e) {

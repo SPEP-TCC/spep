@@ -48,20 +48,23 @@ class AulasController < ApplicationController
   end
 
   def update
-    if @aula.update(aula_params)
-      render request.referer, notice: t("messages.updated_successfully"), status: :see_other
-    else
-      render json: @aula.errors.full_messages, status: :unprocessable_entity
+    respond_to do |format|
+      if @aula.update(aula_params)
+        format.json { render json: { id: @aula.id }, status: :ok }
+      else
+        format.json { render json: @aula.errors.full_messages, status: :unprocessable_entity }
+      end
     end
   end
 
   def destroy
     if @aula.destroy
-      redirect_to aulas_url, notice: t("messages.deleted_successfully")
+      render json: { message: t("messages.deleted_successfully") }, status: :ok
     else
       render json: @aula.errors.full_messages, status: :unprocessable_entity
     end
   end
+
 
 
   def calcular_horarios(horario_inicio, duracao_aula, ultima_aula)
