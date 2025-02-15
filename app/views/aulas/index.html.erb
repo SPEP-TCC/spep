@@ -106,22 +106,6 @@
           margin-bottom: 20px;
       }
 
-      /* Cores claras para as matérias */
-      .subject-card[data-subject="matematica"] { background-color: #ffebee; }
-      .subject-card[data-subject="portugues"] { background-color: #f1f8e9; }
-      .subject-card[data-subject="historia"] { background-color: #e3f2fd; }
-      .subject-card[data-subject="geografia"] { background-color: #fffde7; }
-      .subject-card[data-subject="ciencias"] { background-color: #f3e5f5; }
-      .subject-card[data-subject="ingles"] { background-color: #fff3e0; }
-      .subject-card[data-subject="artes"] { background-color: #e0f7fa; }
-      .subject-card[data-subject="educacao-fisica"] { background-color: #ffccbc; }
-
-      /* Cores claras para os professores */
-      .teacher-card[data-teacher="professor1"] { background-color: #e3f2fd; }
-      .teacher-card[data-teacher="professor2"] { background-color: #f0f4c3; }
-      .teacher-card[data-teacher="professor3"] { background-color: #ffccbc; }
-      .teacher-card[data-teacher="professor4"] { background-color: #d1c4e9; }
-
       .search-container {
           margin-bottom: 22px;
           display: flex;
@@ -164,7 +148,7 @@
     <div class="container">
       <select id="turma-select" style="width: 100%; max-width: 250px;">
       </select>
-      <div style="background-color: #f8d7da; color: #363636; padding: 12px; margin: 15px 0; border: 1px solid #f5c2c7; border-radius: 4px; text-align: center; font-weight: bold;">
+      <div style="background-color:rgb(163, 192, 153); color: #363636; padding: 12px; margin: 15px 0; border: 1px solidrgb(145, 173, 143); border-radius: 4px; text-align: center; font-weight: bold;">
         Dê dois cliques para remover itens do calendário
       </div>
       <div class="schedule-container">
@@ -197,15 +181,7 @@
       $(document).ready(function() {
           // Lista de cores claras para matérias e professores
           const lightColors = [
-              '#FFCDD2', '#EF9A9A', // Tons de vermelho
-              '#E1BEE7', '#CE93D8', // Tons de roxo
-              '#C5CAE9', '#9FA8DA', // Tons de azul
-              '#BBDEFB', '#90CAF9', // Tons de azul claro
-              '#B2EBF2', '#80DEEA', // Tons de ciano
-              '#B2DFDB', '#80CBC4', // Tons de verde água
-              '#DCEDC8', '#C5E1A5', // Tons de verde claro
-              '#FFF9C4', '#FFF59D', // Tons de amarelo
-              '#FFE0B2', '#FFCC80', // Tons de laranja
+            '#DCEDC8', '#7ca37c', '#49ab81', '#87A96B', '#8FBC8B', '#71BC78',
           ];
 
           // Função para obter uma cor única com base no índice
