@@ -39,7 +39,7 @@
               </td>
               <td><%= ambiente.descricao %></td>
               <td><%= ambiente.capacidade %></td>
-              <td><%= ambiente.periculosidade %></td>
+              <td><%= formatar_boolean(ambiente.periculosidade) %></td>
               <td><%= ambiente.instituicao %></td>
             </tr>
           <% end %>

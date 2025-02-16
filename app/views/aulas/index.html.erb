@@ -364,6 +364,42 @@
                   const slotEl = evt.to;
                   // Get the unique cell key.
                   const cellKey = slotEl.getAttribute('data-cell-key');
+                  const item = evt.item;
+
+                  if (!evt.from.classList.contains('time-slot')) {
+                    const originalId = item.getAttribute('data-id');
+                    const maxUses = parseInt(item.getAttribute('data-max-uses'));
+
+                    // Find the original card in the list
+                    const originalCard = item.classList.contains('subject-card') 
+                      ? document.querySelector(`#subjects-list .subject-card[data-id="${originalId}"]`)
+                      : document.querySelector(`#teachers-list .teacher-card[data-id="${originalId}"]`);
+
+                    if (originalCard) {
+                      const currentUses = parseInt(originalCard.getAttribute('data-current-uses'));
+                      if (currentUses >= maxUses) {
+                        evt.from.appendChild(item);
+                        alert('Limite máximo de alocações atingido para este item!');
+                        return;
+                      }
+                      // Update the count on the original card
+                      const newUses = currentUses + 1;
+                      originalCard.setAttribute('data-current-uses', newUses);
+                      const countText = originalCard.querySelector('p:last-child');
+                      countText.textContent = `Aula ${newUses}/${maxUses}`;
+                      // Create a clone for the schedule
+                      const clone = item.cloneNode(true);
+                      clone.setAttribute('data-instance-number', newUses);
+                      const cloneCountText = clone.querySelector('p:last-child');
+                      cloneCountText.textContent = `Aula ${newUses}/${maxUses}`;
+                      evt.to.replaceChild(clone, item);
+                      evt.from.appendChild(originalCard);
+                      // Hide the original card if max uses reached
+                      if (newUses >= maxUses) {
+                        originalCard.style.display = 'none';
+                      }
+                    }
+                  } // <-- Missing closing brace added here
 
                   // Get the currently selected turma.
                   const selectedTurma = $('#turma-select').val();
@@ -442,7 +478,7 @@
                       success: function(response) {
                         console.log('Aula created:', response);
                         slotEl.setAttribute('data-aula-id', response.id);
-                        console.log("response:", response.id)
+                        console.log("response:", response.id);
                       },
                       error: function(error) {
                         console.error('Error creating aula:', error);
@@ -453,6 +489,7 @@
               });
             });
           }
+
             // Delegated event listener for double-clicking on dropped cards
           $(document).on('dblclick', '.time-slot', function(e) {
             // Check if the target (or one of its parents) is a teacher or subject card.

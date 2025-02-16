@@ -9,6 +9,8 @@ class User < ApplicationRecord
   has_many :turnos, through: :restricoes
   belongs_to :tipo_contrato
 
+  accepts_nested_attributes_for :restricoes, allow_destroy: true
+
   def to_s
     self.nome
   end

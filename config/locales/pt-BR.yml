@@ -30,6 +30,7 @@ pt-BR:
       disponibilidade_salas: "Disponibilidade Salas"
       aulas: "Aulas"
       subareas: "Subareas"
+      users: "Usuários"
     actions:
       index: "Lista"
       new: "Incluir"
@@ -107,6 +108,9 @@ pt-BR:
       subarea: 
         one: "Subarea"
         other: "Subareas"
+      users: 
+        one: "Usuário"
+        other: "Usuários"
     attributes:
       ambiente:
         descricao: "Descrição"
@@ -196,6 +200,14 @@ pt-BR:
       subarea: 
         descricao: "Descrição"
         area: "Área"
+      users: 
+        nome: "Nome"
+        cpf: "CPF"
+        email: "Email"
+        admin: "Administrador"
+        tipo_contrato: "Tipo de Contrato"
+        password: "Senha"
+        password_confirmation: "Confirmação de Senha"
     errors:
       messages:        
         record_invalid: 'A validação falhou: %{errors}'        

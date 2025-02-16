@@ -4,4 +4,8 @@ class Ambiente < ApplicationRecord
   has_many :disponibilidade_salas
   has_many :turmas
   has_many :grades_curriculares
+
+  def to_s
+    descricao
+  end
 end

@@ -19,10 +19,11 @@ Rails.application.routes.draw do
   resources :instituicoes
   resources :curriculos_ementas
   resources :turnos
-  devise_for :users, path: 'auth', path_names: { sign_in: 'login', 
-                                                 sign_out: 'logout',
-                                                 password: 'secret',
-                                                 confirmation: 'verification'} 
+  devise_for :users, path: "auth", path_names: { sign_in: "login",
+                                                 sign_out: "logout",
+                                                 password: "secret",
+                                                 confirmation: "verification" }
+  resources :users
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   root to: "home#index"
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

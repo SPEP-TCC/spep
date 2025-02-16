@@ -78,9 +78,9 @@ module ApplicationHelper
 
   def formatar_boolean(value)
     if value
-      '<span class="badge bg-success bg-opacity-20 text-success ms-2">Sim</span>'.html_safe
+      '<span class="badge bg-success bg-opacity-20 ms-2">Sim</span>'.html_safe
     else
-      '<span class="badge bg-danger bg-opacity-20 text-danger ms-2">Não</span>'.html_safe
+      '<span class="badge bg-danger bg-opacity-20 ms-2">Não</span>'.html_safe
     end
   end
 

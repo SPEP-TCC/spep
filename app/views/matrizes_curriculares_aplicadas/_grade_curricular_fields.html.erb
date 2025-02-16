@@ -1,0 +1,36 @@
+<div class="nested-fields row">
+  <div class="card mb-3">
+    <div class="card-body">
+      <div class="col-12 mb-2 d-lg-none text-end">
+        <%= link_to_remove_association f, class: "btn btn-outline-danger border border-0 btn-remove-card" do %>
+          <i class="ph-x"></i>
+        <% end %>
+      </div>
+      <div class="row">
+        <div class="col-12 col-lg-4 order-lg-1">
+          <%= f.association :disciplina, input_html: { class: "keyup choice" } %>
+        </div>
+        <div class="col-12 col-lg-1 order-lg-1">
+          <%= f.input :carga_horaria, input_html: { class: "keyup" } %>
+        </div>
+        <div class="col-12 col-lg-1 order-lg-1">
+          <%= f.input :periodo_calendario, input_html: { class: "keyup" } %>
+        </div>
+        <div class="col-12 col-lg-2 order-lg-1">
+          <%= f.input :carga_horaria_total, input_html: { class: "keyup" } %>
+        </div>
+        <div class="col-12 col-lg-1 order-lg-1 mt-5">
+          <%= f.input :optativa, input_html: { class: "keyup" } %>
+        </div>
+        <div class="col-12 col-lg-1 order-lg-3 d-none d-lg-flex align-items-center justify-content-end mt-2">
+          <%= link_to_remove_association f, class: "btn btn-outline-danger" do %>
+            <i class="ph-x "></i>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  $(document).on('cocoon:after-insert', (e, insertedItem) => insertedItem.find('.select2').select2({ placeholder: "Selecione uma opção" }));
+</script>
