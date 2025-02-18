@@ -9,148 +9,421 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <style>
       body {
-          font-family: Arial, sans-serif;
-          margin: 0;
-          padding: 20px;
-          background-color: #f5f5f5;
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+        background-color: #f5f5f5;
       }
 
       .container {
-          max-width: 1600px;
-          margin: 0 auto;
-          background-color: #fff;
-          padding: 20px;
-          border-radius: 8px;
-          box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        max-width: 1600px;
+        margin: 0 auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      }
+
+      /* Notification Button */
+      .notification-button {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background-color:rgb(255, 255, 255);
+        border: none;
+        border-radius: 50%;
+        width: 44px;
+        height: 44px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        z-index: 1000;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        transition: all 0.3s ease;
+      }
+
+      .notification-button:hover {
+        background-color:rgb(227, 227, 227);
+        transform: scale(1.05);
+      }
+
+      .notification-icon {
+        color: white;
+        font-size: 20px;
+      }
+
+      .notification-count {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        background-color: #f44336;
+        color: white;
+        border-radius: 50%;
+        width: 22px;
+        height: 22px;
+        font-size: 12px;
+        font-weight: bold;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 2px solid white;
+      }
+
+      /* Offcanvas Panel */
+      .notification-offcanvas {
+        position: fixed;
+        top: 0;
+        right: -350px;
+        width: 350px;
+        height: 100%;
+        background-color: #fff;
+        box-shadow: -2px 0 15px rgba(0,0,0,0.1);
+        transition: right 0.3s ease;
+        z-index: 1001;
+      }
+
+      .notification-offcanvas.open {
+        right: 0;
+      }
+
+      .offcanvas-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 16px 20px;
+        background-color:rgb(174, 210, 175);
+        color: white;
+      }
+
+      .offcanvas-header h3 {
+        margin: 0;
+        font-size: 18px;
+        font-weight: 500;
+      }
+
+      .offcanvas-header button {
+        background: none;
+        border: none;
+        color: white;
+        font-size: 24px;
+        cursor: pointer;
+        padding: 0 8px;
+      }
+
+      .notification-list {
+        padding: 10px;
+        overflow-y: auto;
+        height: calc(100% - 60px);
+      }
+
+      /* Notification Items */
+      .notification-item {
+        padding: 15px;
+        margin-bottom: 10px;
+        border-radius: 8px;
+        border-left: 4px solid #4CAF50;
+        background-color: #f8f9fa;
+        transition: all 0.2s ease;
+      }
+
+      .notification-item:hover {
+        transform: translateX(5px);
+        background-color: #f0f0f0;
+      }
+
+      /* Different notification types */
+      .notification-item.success {
+        border-left-color: #4CAF50;
+        background-color: #E8F5E9;
+      }
+
+      .notification-item.warning {
+        border-left-color: #FFC107;
+        background-color: #FFF8E1;
+      }
+
+      .notification-item.danger {
+        border-left-color: #f44336;
+        background-color: #FFEBEE;
+      }
+
+      .notification-item.info {
+        border-left-color: #2196F3;
+        background-color: #E3F2FD;
+      }
+
+      /* Popup Notification */
+      .notification-popup {
+        position: fixed;
+        top: 20px;
+        right: 70px;
+        background-color: #4CAF50;
+        color: white;
+        padding: 12px 20px;
+        border-radius: 8px;
+        z-index: 1002;
+        display: none;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        animation: slideIn 0.3s ease;
+      }
+
+      @keyframes slideIn {
+        from {
+          transform: translateX(100%);
+          opacity: 0;
+        }
+        to {
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
+
+      /* Scrollbar styling */
+      .notification-list::-webkit-scrollbar {
+        width: 8px;
+      }
+
+      .notification-list::-webkit-scrollbar-track {
+        background: #f1f1f1;
+      }
+
+      .notification-list::-webkit-scrollbar-thumb {
+        background: #4CAF50;
+        border-radius: 4px;
+      }
+
+      .notification-list::-webkit-scrollbar-thumb:hover {
+        background: #45a049;
+      }
+
+      .notification-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+        display: none;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .notification-overlay.open {
+        display: block;
+        opacity: 1;
       }
 
       h1 {
-          text-align: center;
-          color: #333;
-          margin-bottom: 20px;
+        text-align: center;
+        color: #333;
+        margin-bottom: 20px;
       }
 
       .schedule-container {
-          display: flex;
-          margin-top: 20px;
-          gap: 20px;
+        display: flex;
+        margin-top: 20px;
+        gap: 20px;
       }
 
       .subjects-list, .teachers-list {
-          width: 200px;
-          padding: 15px;
-          background-color: #fff;
-          border-radius: 8px;
-          border: 1px solid #eee;
+        width: 200px;
+        padding: 15px;
+        background-color: #fff;
+        border-radius: 8px;
+        border: 1px solid #eee;
       }
 
       .subject-card, .teacher-card {
-          padding: 10px;
-          margin-bottom: 10px;
-          border-radius: 4px;
-          cursor: move;
-          text-align: center;
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 4px;
+        cursor: move;
+        text-align: center;
       }
 
       .subject-card p, .teacher-card p {
-          margin: 2px 0;
-          font-size: 14px;
+        margin: 2px 0;
+        font-size: 14px;
       }
 
       .schedule {
-          flex-grow: 1;
-          border-collapse: collapse;
-          background: white;
+        flex-grow: 1;
+        border-collapse: collapse;
+        background: white;
       }
 
       .schedule th, .schedule td {
-          border: 1px solid #ddd;
-          padding: 4px;
-          text-align: center;
+        border: 1px solid #ddd;
+        padding: 4px;
+        text-align: center;
       }
 
       .schedule thead {
-          background-color: #f8f9fa;
+        background-color: #f8f9fa;
       }
 
       .schedule th:first-child, .schedule td:first-child {
-          background-color: #f8f9fa;
-          font-weight: bold;
-          width: 120px;
+        background-color: #f8f9fa;
+        font-weight: bold;
+        width: 120px;
       }
 
       .schedule td {
-          height: 40px !important; /* Garante que a altura seja aplicada */
-          padding: 4px !important; /* Reduz espaçamento interno */
-          vertical-align: middle;
+        height: 40px !important; /* Garante que a altura seja aplicada */
+        padding: 4px !important; /* Reduz espaçamento interno */
+        vertical-align: middle;
       }
 
       .time-slot {
-          min-height: 80px;
-          border-radius: 4px;
-          transition: background-color 0.2s;
-          display: flex;
-          flex-direction: column;
-          gap: 5px;
+        min-height: 80px;
+        border-radius: 4px;
+        transition: background-color 0.2s;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
       }
 
       .time-slot:empty {
-          border: 2px dashed #ddd;
+        border: 2px dashed #ddd;
       }
 
       .time-slot:not(:empty) {
-          border: none;
+        border: none;
       }
 
       .select2-container {
-          margin-bottom: 20px;
+        margin-bottom: 20px;
       }
 
       .search-container {
-          margin-bottom: 22px;
-          display: flex;
-          align-items: center;
-          background: #fff;
-          border-radius: 8px;
-          padding: 5px 10px;
-          box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+        margin-bottom: 22px;
+        display: flex;
+        align-items: center;
+        background: #fff;
+        border-radius: 8px;
+        padding: 5px 10px;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
       }
 
       .search-container input {
-          border: none;
-          outline: none;
-          padding: 8px 12px;
-          border-radius: 6px;
-          width: 100%;
-          font-size: 14px;
+        border: none;
+        outline: none;
+        padding: 8px 12px;
+        border-radius: 6px;
+        width: 100%;
+        font-size: 14px;
       }
 
       .search-container i {
-          margin-right: 8px;
-          color: #999;
+        margin-right: 8px;
+        color: #999;
       }
 
       .search-container img {
-          width: 20px;
-          height: 20px;
-          margin-right: 8px;
+        width: 20px;
+        height: 20px;
+        margin-right: 8px;
       }
 
       .info-text {
-          font-size: 12px;
-          color: #666;
-          text-align: center;
-          margin-top: 10px;
+        font-size: 12px;
+        color: #666;
+        text-align: center;
+        margin-top: 10px;
+      }
+
+      .select2-container--default .select2-selection--single {
+        border: none !important;
+        background: none !important;
+      }
+
+      /* Main select container */
+      .select2-container .select2-selection--single {
+        height: 42px !important;
+        border: 2px solid #4CAF50 !important;
+        border-radius: 8px !important;
+        background-color: white !important;
+        padding: 6px 12px !important;
+      }
+
+      /* Text input area */
+      .select2-container .select2-selection--single .select2-selection__rendered {
+        color: #2E7D32 !important;
+        line-height: 28px !important;
+        padding-left: 0 !important;
+      }
+
+      /* Placeholder text */
+      .select2-container--default .select2-selection--single .select2-selection__placeholder {
+        color: #66BB6A !important;
+      }
+
+      /* Dropdown arrow */
+      .select2-container--default .select2-selection--single .select2-selection__arrow {
+        height: 40px !important;
+        right: 8px !important;
+      }
+
+      .select2-container--default .select2-selection--single .select2-selection__arrow b {
+        border-color: #4CAF50 transparent transparent transparent !important;
+        border-width: 6px 4px 0 4px !important;
+      }
+
+      /* Dropdown panel */
+      .select2-container--default .select2-dropdown {
+        border: 2px solid #4CAF50 !important;
+        border-radius: 8px !important;
+        margin-top: 4px !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+      }
+
+      /* Dropdown options */
+      .select2-container--default .select2-results__option {
+        padding: 8px 12px !important;
+      }
+
+      /* Highlighted option */
+      .select2-container--default .select2-results__option--highlighted[aria-selected] {
+        background-color: #4CAF50 !important;
+        color: white !important;
+      }
+
+      /* Selected option */
+      .select2-container--default .select2-results__option[aria-selected=true] {
+        background-color: #E8F5E9 !important;
+        color: #2E7D32 !important;
+      }
+
+      /* Focus state */
+      .select2-container--default.select2-container--focus .select2-selection--single,
+      .select2-container--default.select2-container--open .select2-selection--single {
+        border-color: #2E7D32 !important;
+        box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2) !important;
+      }
+
+      /* Search box in dropdown */
+      .select2-container--default .select2-search--dropdown .select2-search__field {
+        border: 1px solid #4CAF50 !important;
+        border-radius: 4px !important;
+        padding: 6px !important;
+      }
+
+      .select2-container--default .select2-search--dropdown .select2-search__field:focus {
+        outline: none !important;
+        border-color: #2E7D32 !important;
+        box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2) !important;
       }
 
       @media print {
       /* Hide elements that are not needed in print */
       #printGrade,
-      .nav, 
+      .nav,
       .controls {
         display: none;
       }
-  
+
       /* Optionally, adjust font sizes or layout for printing */
       body {
         font-size: 12pt;
@@ -161,15 +434,28 @@
       #subjects-list {
         display: none;
       }
-    }
+          }
     </style>
   </head>
   <body>
+    <div id="notification-button" class="notification-button">
+      <span class="notification-icon">🔔</span>
+      <span id="notification-count" class="notification-count">0</span>
+    </div>
+    <div id="notification-offcanvas" class="notification-offcanvas">
+      <div class="offcanvas-header">
+        <h3>Notificações</h3>
+        <button id="close-offcanvas">&times;</button>
+      </div>
+      <div id="notification-list" class="notification-list"></div>
+    </div>
+    <div id="notification-popup" class="notification-popup"></div>
+    <div id="notification-overlay" class="notification-overlay"></div>
     <div class="container">
-      <select id="turma-select" style="width: 100%; max-width: 250px;">
-      </select>
-      <div style="background-color:rgb(163, 192, 153); color: #363636; padding: 12px; margin: 15px 0; border: 
-      1px solidrgb(145, 173, 143); border-radius: 4px; text-align: center; font-weight: bold;" id="aviso">
+      <div class="select">
+        <select id="turma-select" style="width: 100%; max-width: 250px;"></select>
+      </div>
+      <div style="background-color:rgb(163, 192, 153); color: #363636; padding: 12px; margin: 15px 0; border: 1px solidrgb(145, 173, 143); border-radius: 4px; text-align: center; font-weight: bold;">
         Dê dois cliques para remover itens do calendário
       </div>
       <button id="printGrade">Print Grade</button>
@@ -266,7 +552,7 @@
               subjectsList.appendChild(card);
             });
           }
-          
+
           function createTeacherCards() {
             const teachersList = document.getElementById('teachers-list');
             teachers.forEach((teacher, index) => {
@@ -339,6 +625,34 @@
 
           var scheduleAssignments = {};
 
+          function checkTeacherConflicts() {
+              const selectedTurma = $('#turma-select').val();
+              if (!selectedTurma) return;
+
+              const teacherSchedule = {};
+
+              // Iterate through all time slots
+              $('.time-slot').each(function() {
+                  const cellKey = $(this).data('cell-key');
+                  const teacherCard = $(this).find('.teacher-card');
+                  if (teacherCard.length) {
+                      const teacherId = teacherCard.data('id');
+                      const teacherName = teacherCard.find('strong').text();
+
+                      if (!teacherSchedule[teacherId]) {
+                          teacherSchedule[teacherId] = [];
+                      }
+
+                      // Check for conflicts
+                      if (teacherSchedule[teacherId].includes(cellKey)) {
+                          showNotification(`Conflito: ${teacherName} está alocado em horários sobrepostos.`);
+                      }
+
+                      teacherSchedule[teacherId].push(cellKey);
+                  }
+              });
+          }
+
           function initializeSortable() {
             document.querySelectorAll('.time-slot').forEach(timeSlot => {
               // If a Sortable instance exists on this element, destroy it.
@@ -393,7 +707,7 @@
                     const maxUses = parseInt(item.getAttribute('data-max-uses'));
 
                     // Find the original card in the list
-                    const originalCard = item.classList.contains('subject-card') 
+                    const originalCard = item.classList.contains('subject-card')
                       ? document.querySelector(`#subjects-list .subject-card[data-id="${originalId}"]`)
                       : document.querySelector(`#teachers-list .teacher-card[data-id="${originalId}"]`);
 
@@ -421,7 +735,7 @@
                         originalCard.style.display = 'none';
                       }
                     }
-                  } // <-- Missing closing brace added here
+                  }
 
                   // Get the currently selected turma.
                   const selectedTurma = $('#turma-select').val();
@@ -485,6 +799,7 @@
                       data: { aula: params },
                       success: function(response) {
                         console.log('Aula updated:', response);
+                        checkTeacherConflicts();
                       },
                       error: function(error) {
                         console.error('Error updating aula:', error);
@@ -501,6 +816,7 @@
                         console.log('Aula created:', response);
                         slotEl.setAttribute('data-aula-id', response.id);
                         console.log("response:", response.id);
+                        checkTeacherConflicts();
                       },
                       error: function(error) {
                         console.error('Error creating aula:', error);
@@ -512,28 +828,28 @@
             });
           }
 
-            // Delegated event listener for double-clicking on dropped cards
+          // Delegated event listener for double-clicking on dropped cards
           $(document).on('dblclick', '.time-slot', function(e) {
             // Check if the target (or one of its parents) is a teacher or subject card.
             const $card = $(e.target).closest('.subject-card, .teacher-card');
             if (!$card.length) return; // Not a card: ignore the event.
-          
+
             e.preventDefault();
-            
+
             const $timeSlot = $(this);
             const aulaId = $timeSlot.data('aula-id');
-          
+
             // If there's no schedule assignment, just remove the card.
             if (!aulaId) {
               $card.remove();
               return;
             }
-          
+
             // Optionally, ask for confirmation before deleting:
             if (!confirm("Deseja remover essa alocação?")) {
               return;
             }
-          
+
             // Perform the AJAX DELETE call. Make sure your routes include:
             // resources :aulas, only: [:create, :update, :destroy]
             $.ajax({
@@ -545,8 +861,7 @@
                 console.log('Aula deleted:', response);
                 // Remove the schedule assignment from the UI:
                 $timeSlot.removeAttr('data-aula-id').empty();
-                
-                // Optionally, update any other related UI state or objects (e.g. scheduleAssignments)
+                showNotification('Aula removida com sucesso!');
               },
               error: function(error) {
                 console.error('Error deleting aula:', error);
@@ -626,10 +941,64 @@
             }
             // Reinitialize Sortable on the updated cells.
             initializeSortable();
+
+            // Check for conflicts after populating the schedule
+            checkTeacherConflicts();
           });
-          document.getElementById('printGrade').addEventListener('click', function() {
-            window.print();
-        });
+
+          let notificationCount = 0;
+          const notificationButton = document.getElementById('notification-button');
+          const notificationOffcanvas = document.getElementById('notification-offcanvas');
+          const notificationList = document.getElementById('notification-list');
+          const notificationPopup = document.getElementById('notification-popup');
+          const closeOffcanvasButton = document.getElementById('close-offcanvas');
+          const notificationOverlay = document.createElement('div');
+
+          // Criar e adicionar o overlay
+          notificationOverlay.className = 'notification-overlay';
+          document.body.appendChild(notificationOverlay);
+
+          // Abrir offcanvas e overlay
+          notificationButton.addEventListener('click', () => {
+            notificationOffcanvas.classList.add('open');
+            notificationOverlay.classList.add('open');
+          });
+
+          // Fechar ao clicar no overlay
+          notificationOverlay.addEventListener('click', () => {
+            notificationOffcanvas.classList.remove('open');
+            notificationOverlay.classList.remove('open');
+          });
+
+          // Manter o botão de fechar funcionando
+          closeOffcanvasButton.addEventListener('click', () => {
+            notificationOffcanvas.classList.remove('open');
+            notificationOverlay.classList.remove('open');
+          });
+
+          function showNotification(message, type = 'success') {
+            // Atualiza o contador de notificações
+            notificationCount++;
+            document.getElementById('notification-count').textContent = notificationCount;
+
+            // Adiciona à lista de notificações
+            const notificationItem = document.createElement('div');
+            notificationItem.className = `notification-item ${type}`;
+            notificationItem.textContent = message;
+            notificationList.prepend(notificationItem);
+
+            // Mostra o popup
+            notificationPopup.textContent = message;
+            notificationPopup.className = `notification-popup ${type}`;
+            notificationPopup.style.display = 'block';
+
+            // Adiciona animação de entrada
+            notificationPopup.style.animation = 'slideIn 0.3s ease';
+
+            setTimeout(() => {
+              notificationPopup.style.display = 'none';
+            }, 3000);
+          }
       });
     </script>
   </body>

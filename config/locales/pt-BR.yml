@@ -30,7 +30,7 @@ pt-BR:
       disponibilidade_salas: "Disponibilidade Salas"
       aulas: "Aulas"
       subareas: "Subareas"
-      users: "Usuários"
+      users: "Professores"
     actions:
       index: "Lista"
       new: "Incluir"
@@ -109,8 +109,8 @@ pt-BR:
         one: "Subarea"
         other: "Subareas"
       users: 
-        one: "Usuário"
-        other: "Usuários"
+        one: "Professor"
+        other: "Professores"
     attributes:
       ambiente:
         descricao: "Descrição"
