@@ -55,9 +55,10 @@
                     <%= link_to content_tag(:i, "", class: "ph-eye me-2") + t("common.actions.show"), disponibilidade_sala_path(disponibilidade_sala), class: "dropdown-item" %>
                     <%= link_to content_tag(:i, "", class: "ph-pen me-2") + t("common.actions.edit"), edit_disponibilidade_sala_path(disponibilidade_sala), class: "dropdown-item" %>
                     <%= form_for disponibilidade_sala, method: :delete do |f| %>
-                      <a class="dropdown-item hand-pointer" data-confirm-delete="<%= disponibilidade_sala_path(disponibilidade_sala) %>" data-csrf-token="<%= form_authenticity_token %>">
-                        <i class="ph-trash-simple me-2"></i><%= t("common.actions.delete") %>
-                      </a>
+                      <button type="submit" class="dropdown-item hand-pointer">
+                        <i class="ph-trash-simple me-2"></i>
+                        <%= t("common.actions.delete") %>
+                      </button>
                     <% end %>
                   </div>
                 </div>

@@ -799,10 +799,26 @@
                       data: { aula: params },
                       success: function(response) {
                         console.log('Aula updated:', response);
+                        const message = response.message || 'Aula atualizada com sucesso!';
+                        showNotification(message, 'success');
                         checkTeacherConflicts();
                       },
                       error: function(error) {
-                        console.error('Error updating aula:', error);
+                        let message = 'Erro ao atualizar aula.';
+
+                        if (error.responseJSON) {
+                          if (Array.isArray(error.responseJSON)) {
+                            // The response is an array of error messages.
+                            message = error.responseJSON.join('<br>');
+                          } else if (error.responseJSON.errors && Array.isArray(error.responseJSON.errors)) {
+                            // The response contains an "errors" array.
+                            message = error.responseJSON.errors.join('<br>');
+                          } else if (error.responseJSON.message) {
+                            // The response contains a single "message".
+                            message = error.responseJSON.message;
+                          }
+                        }
+                        showNotification(message, 'error');
                       }
                     });
                   } else {
@@ -813,13 +829,27 @@
                       dataType: 'json',
                       data: { aula: params },
                       success: function(response) {
-                        console.log('Aula created:', response);
                         slotEl.setAttribute('data-aula-id', response.id);
-                        console.log("response:", response.id);
+                        const message = response.message || 'Aula criada com sucesso!';
+                        showNotification(message, 'success');
                         checkTeacherConflicts();
                       },
                       error: function(error) {
-                        console.error('Error creating aula:', error);
+                        let message = 'Erro ao atualizar aula.';
+
+                        if (error.responseJSON) {
+                          if (Array.isArray(error.responseJSON)) {
+                            // The response is an array of error messages.
+                            message = error.responseJSON.join('<br>');
+                          } else if (error.responseJSON.errors && Array.isArray(error.responseJSON.errors)) {
+                            // The response contains an "errors" array.
+                            message = error.responseJSON.errors.join('<br>');
+                          } else if (error.responseJSON.message) {
+                            // The response contains a single "message".
+                            message = error.responseJSON.message;
+                          }
+                        }
+                        showNotification(message, 'error');
                       }
                     });
                   }
@@ -864,7 +894,20 @@
                 showNotification('Aula removida com sucesso!');
               },
               error: function(error) {
-                console.error('Error deleting aula:', error);
+                let message = 'Erro ao atualizar aula.';
+                if (error.responseJSON) {
+                  if (Array.isArray(error.responseJSON)) {
+                    // The response is an array of error messages.
+                    message = error.responseJSON.join('<br>');
+                  } else if (error.responseJSON.errors && Array.isArray(error.responseJSON.errors)) {
+                    // The response contains an "errors" array.
+                    message = error.responseJSON.errors.join('<br>');
+                  } else if (error.responseJSON.message) {
+                    // The response contains a single "message".
+                    message = error.responseJSON.message;
+                  }
+                }
+                showNotification(message, 'error');
               }
             });
           });
@@ -988,7 +1031,7 @@
             notificationList.prepend(notificationItem);
 
             // Mostra o popup
-            notificationPopup.textContent = message;
+            notificationPopup.innerHTML = message;
             notificationPopup.className = `notification-popup ${type}`;
             notificationPopup.style.display = 'block';
 

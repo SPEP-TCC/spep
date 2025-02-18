@@ -6,9 +6,11 @@ class Aula < ApplicationRecord
 
   ### adicionar user_id a aula
   before_save :ocupar_ambiente
-  before_save :verificar_aula_noite
-  before_save :verificar_restricao_professor
   before_save :set_horario_fim
+  validate :verify_aula_igual
+  validate :verify_aula_turmas
+  validate :verificar_aula_noite
+  validate :verificar_restricao_professor
 
   def ocupar_ambiente
     ambiente_ocupado = DisponibilidadeSala.find_by(ambiente_id: self.ambiente_id, dia: self.dia,
@@ -16,7 +18,6 @@ class Aula < ApplicationRecord
     )
     if ambiente_ocupado
       errors.add(:base, "Ambiente já ocupado para este dia e horário.")
-      throw(:abort)
     else
       DisponibilidadeSala.create(ambiente_id: self.ambiente_id, dia: self.dia,
                                 horario_inicio: self.horario_inicio, horario_fim: self.horario_fim
@@ -30,6 +31,7 @@ class Aula < ApplicationRecord
                           dia: self.dia, horario: self.horario_inicio)
     if restricao_professor
       errors.add(:base, "Professor selecionado possuí uma restrição para esse dia e horário.")
+      throw :abort
     end
   end
 
@@ -47,7 +49,7 @@ class Aula < ApplicationRecord
       throw[:abort]
     elsif self.horario_inicio == horario_inicio_insti && aula_salva_anterior_ultima.horario_fim == horario_fim_insti
         errors.add(:base, "Professor já alocado na última aula do dia anterior.")
-        throw[:abort]
+        throw :abort
     end
   end
 
@@ -59,13 +61,27 @@ class Aula < ApplicationRecord
     fim = inicio + 50.minutes
     self.horario_fim = fim.strftime("%H:%M")
   end
-=begin
-  def verificar_turnos
-    manha = Instituicao.find_by(id: self.grade_curricular.matriz_curricular_aplicada.curso.instituicao_id).horario_inicio_aula
-    horarios = nil
-    until horarios <= 12 do
-      horario
+
+  def verify_aula_igual
+    aula_presente = Aula.find_by(
+      ambiente_id: self.ambiente_id,
+      dia: self.dia,
+      horario_inicio: self.horario_inicio,
+      grade_curricular_id: self.grade_curricular_id
+    )
+    if aula_presente
+      errors.add(:base, "Esta aula com esses atributos já existe.")
     end
   end
-=end
+
+  def verify_aula_turmas
+    aula_presente = Aula.find_by(
+      dia: self.dia,
+      horario_inicio: self.horario_inicio
+    )
+    if aula_presente
+      errors.add(:base, "Professor já ocupado neste dia e horário.")
+      throw :abort
+    end
+  end
 end
