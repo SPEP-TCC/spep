@@ -20,7 +20,7 @@
           <%= f.input :carga_horaria_total, input_html: { class: "keyup" } %>
         </div>
         <div class="col-12 col-lg-1 order-lg-1 mt-5">
-          <%= f.input :optativa, input_html: { class: "keyup" } %>
+          <%= f.input :optativa, as: :boolean, input_html: { class: "keyup" } %>
         </div>
         <div class="col-12 col-lg-1 order-lg-3 d-none d-lg-flex align-items-center justify-content-end mt-2">
           <%= link_to_remove_association f, class: "btn btn-outline-danger" do %>

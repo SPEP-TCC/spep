@@ -7,7 +7,7 @@ class CreateRestricoes < ActiveRecord::Migration[7.2]
         t.references :user, foreign_key: true
         t.references :turno, foreign_key: true
         t.integer :dia
-        t.time :horario
+        t.string :horario
         t.string :created_by
         t.string :updated_by
         t.datetime :deleted_at

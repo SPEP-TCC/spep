@@ -11,7 +11,7 @@
           <%= f.input :dia, input_html: { class: "keyup" } %>
         </div>
         <div class="col-12 col-lg-4 order-lg-1">
-          <%= f.input :horario, input_html: { class: "keyup" } %>
+          <%= f.input :horario, as: :string, input_html: { class: "keyup" } %>
         </div>
         <div class="col-12 col-lg-4 order-lg-1">
           <%= f.association :turno, input_html: { class: "keyup choice" } %>

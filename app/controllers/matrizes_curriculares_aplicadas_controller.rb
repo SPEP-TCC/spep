@@ -21,6 +21,7 @@ class MatrizesCurricularesAplicadasController < ApplicationController
 
   def create
     @matriz_curricular_aplicada = MatrizCurricularAplicada.new(matriz_curricular_aplicada_params)
+    byebug
 
     if @matriz_curricular_aplicada.save
       redirect_to matrizes_curriculares_aplicadas_path, notice: t("messages.created_successfully")
@@ -56,7 +57,7 @@ class MatrizesCurricularesAplicadasController < ApplicationController
     permitted_attributes = MatrizCurricularAplicada.column_names.reject { |col| [ "deleted_at", "created_by", "updated_by" ].include?(col) }
     params.require(:matriz_curricular_aplicada).permit(permitted_attributes.map(&:to_sym),
                                                        grades_curriculares_attributes: [ :id, :disciplina_id, :carga_horaria,
-                                                      :periodo_calendario, :optativa, :carga_horaria_total ])
+                                                      :periodo_calendario, :optativa, :carga_horaria_total, :_destroy ])
   end
 
   def handle_not_found

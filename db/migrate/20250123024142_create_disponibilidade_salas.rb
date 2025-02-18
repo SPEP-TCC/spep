@@ -6,8 +6,8 @@ class CreateDisponibilidadeSalas < ActiveRecord::Migration[7.2]
       create_table :disponibilidade_salas do |t|
         t.references :ambiente, foreign_key: true
         t.integer :dia
-        t.time :horario_inicio
-        t.time :horario_fim
+        t.string :horario_inicio
+        t.string :horario_fim
         t.string :created_by
         t.string :updated_by
         t.datetime :deleted_at

@@ -6,7 +6,7 @@
 Instituicao.find_or_create_by([
     { nome: "IFRO - CAMPUS CALAMA", duracao_aula: 50, tempos_aula: 16, inep: "11109807",
       endereco: "AVENIDA CALAMA, 4985 LOTE 994, QUADRA 169. FLODOALDO PONTES PINTO.", horario_inicio_aula: "7:30",
-      horario_fim_aulas: "22:40" },
+      horario_fim_aulas: "21:40" },
     { nome: "EEEFM ESTUDO E TRABALHO", duracao_aula: 50, tempos_aula: 10, inep: "11001046",
       endereco: "RUA ALEXANDRE GUIMARÃES, BAIRRO AREAL, Nº1340" }
 ])
