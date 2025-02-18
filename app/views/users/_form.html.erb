@@ -8,19 +8,19 @@
   <div class="card">
     <div class="card-body">
       <div class="row">
-        <div class="col-12 col-lg-6">
+        <div class="col-12 col-lg-8">
           <%= f.input :nome, input_html: { class: "keyup", disabled: local_assigns[:disabled] } %>
         </div>
-        <div class="col-12 col-lg-3">
+        <div class="col-12 col-lg-4">
           <%= f.input :cpf, input_html: { class: "keyup", disabled: local_assigns[:disabled] } %>
         </div>
-        <div class="col-12 col-lg-3">
+        <div class="col-12 col-lg-6">
           <%= f.input :email, input_html: { class: "keyup", disabled: local_assigns[:disabled] } %>
         </div>
         <div class="col-12 col-lg-6">
           <%= f.association :tipo_contrato, input_html: { class: "keyup choice", disabled: local_assigns[:disabled] } %>
         </div>
-        <div class="col-12 col-lg-6 mt-5">
+        <div class="col-12">
           <%= f.input :admin, input_html: { disabled: local_assigns[:disabled] } %>
         </div>
       </div>

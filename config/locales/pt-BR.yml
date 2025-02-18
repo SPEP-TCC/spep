@@ -1,6 +1,7 @@
 ---
 pt-BR:
   common:
+    search_placeholder: "Pesquise por "
     filters: Filtros
     clean_filters: Limpar Filtros
     apply_filters: Aplicar Filtros

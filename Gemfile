@@ -39,6 +39,9 @@ gem "simple_form"
 # filtros
 gem "ransack"
 
+# Validar cpf e cnpj
+gem 'cpf_cnpj'
+
 # nested_form
 gem "cocoon"
 
