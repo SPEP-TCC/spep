@@ -1,3 +1,5 @@
+require "time"
+
 class Aula < ApplicationRecord
   belongs_to :grade_curricular
   belongs_to :ambiente
@@ -6,6 +8,7 @@ class Aula < ApplicationRecord
   before_save :ocupar_ambiente
   before_save :verificar_aula_noite
   before_save :verificar_restricao_professor
+  before_save :set_horario_fim
 
   def ocupar_ambiente
     ambiente_ocupado = DisponibilidadeSala.find_by(ambiente_id: self.ambiente_id, dia: self.dia,
@@ -48,6 +51,14 @@ class Aula < ApplicationRecord
     end
   end
 
+
+  def set_horario_fim
+    return unless self.horario_inicio.present?
+
+    inicio = Time.parse(self.horario_inicio)
+    fim = inicio + 50.minutes
+    self.horario_fim = fim.strftime("%H:%M")
+  end
 =begin
   def verificar_turnos
     manha = Instituicao.find_by(id: self.grade_curricular.matriz_curricular_aplicada.curso.instituicao_id).horario_inicio_aula

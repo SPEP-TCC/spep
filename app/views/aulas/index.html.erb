@@ -142,15 +142,37 @@
           text-align: center;
           margin-top: 10px;
       }
+
+      @media print {
+      /* Hide elements that are not needed in print */
+      #printGrade,
+      .nav, 
+      .controls {
+        display: none;
+      }
+  
+      /* Optionally, adjust font sizes or layout for printing */
+      body {
+        font-size: 12pt;
+      }
+
+      #teachers-list,
+      #aviso,
+      #subjects-list {
+        display: none;
+      }
+    }
     </style>
   </head>
   <body>
     <div class="container">
       <select id="turma-select" style="width: 100%; max-width: 250px;">
       </select>
-      <div style="background-color:rgb(163, 192, 153); color: #363636; padding: 12px; margin: 15px 0; border: 1px solidrgb(145, 173, 143); border-radius: 4px; text-align: center; font-weight: bold;">
+      <div style="background-color:rgb(163, 192, 153); color: #363636; padding: 12px; margin: 15px 0; border: 
+      1px solidrgb(145, 173, 143); border-radius: 4px; text-align: center; font-weight: bold;" id="aviso">
         Dê dois cliques para remover itens do calendário
       </div>
+      <button id="printGrade">Print Grade</button>
       <div class="schedule-container">
         <div id="subjects-list" class="subjects-list">
           <h3 style="text-align: center;">Matérias</h3>
@@ -602,11 +624,12 @@
                 }
               }
             }
-
             // Reinitialize Sortable on the updated cells.
             initializeSortable();
           });
-
+          document.getElementById('printGrade').addEventListener('click', function() {
+            window.print();
+        });
       });
     </script>
   </body>
