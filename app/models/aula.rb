@@ -8,6 +8,8 @@ class Aula < ApplicationRecord
   before_save :ocupar_ambiente
   before_save :set_horario_fim
   validate :verify_aula_igual
+  validate :verify_aula_professor_mesmo_horario
+  validate :verify_aula_mesmo_horario
   validate :verify_aula_turmas
   validate :verificar_aula_noite
   validate :verificar_restricao_professor
@@ -63,22 +65,49 @@ class Aula < ApplicationRecord
   end
 
   def verify_aula_igual
-    aula_presente = Aula.find_by(
-      ambiente_id: self.ambiente_id,
-      dia: self.dia,
-      horario_inicio: self.horario_inicio,
-      grade_curricular_id: self.grade_curricular_id
-    )
+    aula_presente = Aula.where(
+      ambiente_id: ambiente_id,
+      dia: dia,
+      horario_inicio: horario_inicio,
+      grade_curricular_id: grade_curricular_id
+    ).where.not(id: id).first
+
     if aula_presente
       errors.add(:base, "Esta aula com esses atributos já existe.")
+      throw :abort
     end
   end
 
+  def verify_aula_mesmo_horario
+    if Aula.where(dia: dia, horario_inicio: horario_inicio, grade_curricular_id: grade_curricular_id)
+           .where.not(id: id)
+           .exists?
+      errors.add(:base, "Já existe uma aula para este horário")
+      throw :abort
+    end
+  end
+
+  def verify_aula_professor_mesmo_horario
+    return unless user_id.present?
+
+    if Aula.where(dia: dia, horario_inicio: horario_inicio, user_id: user_id)
+           .where.not(id: id)
+           .exists?
+      errors.add(:base, "Este professor já possui uma aula agendada para este horário em outra turma.")
+      throw :abort
+    end
+  end
+
+
   def verify_aula_turmas
-    aula_presente = Aula.find_by(
-      dia: self.dia,
-      horario_inicio: self.horario_inicio
-    )
+    return unless user_id.present?
+
+    aula_presente = Aula.where(
+      dia: dia,
+      horario_inicio: horario_inicio,
+      user_id: user_id
+    ).where.not(id: id).first
+
     if aula_presente
       errors.add(:base, "Professor já ocupado neste dia e horário.")
       throw :abort

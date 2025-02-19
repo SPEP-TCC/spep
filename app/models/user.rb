@@ -5,8 +5,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :grades_curriculares
-  has_many :restricoes
   belongs_to :tipo_contrato
+  has_many :restricoes
 
   accepts_nested_attributes_for :restricoes, allow_destroy: true
 
@@ -20,7 +20,7 @@ class User < ApplicationRecord
   private
 
   def validar_cpf
-    if !CPF.valid?(cpf) 
+    if !CPF.valid?(cpf)
       errors.add(:cpf, "é inválido!")
     end
   end

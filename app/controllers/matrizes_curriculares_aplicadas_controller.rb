@@ -21,7 +21,6 @@ class MatrizesCurricularesAplicadasController < ApplicationController
 
   def create
     @matriz_curricular_aplicada = MatrizCurricularAplicada.new(matriz_curricular_aplicada_params)
-    byebug
 
     if @matriz_curricular_aplicada.save
       redirect_to matrizes_curriculares_aplicadas_path, notice: t("messages.created_successfully")

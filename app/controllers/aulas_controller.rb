@@ -21,11 +21,52 @@ class AulasController < ApplicationController
                                                         "turmas.descricao AS turma",
                                                         "(grades_curriculares.carga_horaria * 60) AS weeklyminutes"
                                                 ).to_json
+    assignments = Aula.joins(
+     "INNER JOIN grades_curriculares ON grades_curriculares.id = aulas.grade_curricular_id
+      INNER JOIN disciplinas ON disciplinas.id = grades_curriculares.disciplina_id
+      INNER JOIN turmas ON turmas.id = aulas.turma_id
+      INNER JOIN users ON users.id = aulas.user_id
+      INNER JOIN tipos_contratos ON users.tipo_contrato_id = tipos_contratos.id"
+      ).select(
+        "turmas.id AS turma_id",
+        "aulas.dia AS dia",
+        "aulas.horario_inicio AS horario_inicio",
+        "aulas.id AS aula_id",
+        "disciplinas.id AS disciplina_id",
+        "disciplinas.descricao AS disciplina_descricao",
+        "grades_curriculares.carga_horaria AS disciplina_carga_horaria",
+        "aulas.user_id AS teacher_id",
+        "users.nome AS teacher_nome",
+        "tipos_contratos.carga_horaria AS teacher_carga_horaria"
+      )
 
+      @saved_assignments = assignments.map do |assignment|
+        # Compute max uses based on carga_horaria (assuming a 50-minute block)
+        subject_max_uses = (assignment.disciplina_carga_horaria.to_f / 50).floor
+        teacher_max_uses = (assignment.teacher_carga_horaria.to_f / 50).floor
 
-    @aulas = Aula.includes(:grade_curricular, :ambiente)
-                 .where(ambiente: { instituicao_id: @instituicao.id })
-    render layout: false
+        {
+          turma_id: assignment.turma_id,
+          dia: assignment.dia,
+          horario_inicio: assignment.horario_inicio,
+          aula_id: assignment.aula_id,
+          subject: {
+            id: assignment.disciplina_id,
+            descricao: assignment.disciplina_descricao,
+            carga_horaria: assignment.disciplina_carga_horaria,
+            max_uses: subject_max_uses
+            # You can calculate current uses on the fly or later, if needed
+          },
+          teacher: {
+            id: assignment.teacher_id,
+            nome: assignment.teacher_nome,
+            carga_horaria: assignment.teacher_carga_horaria,
+            max_uses: teacher_max_uses
+            # Similarly, current uses could be computed or added if needed
+          }
+        }
+      end
+      render layout: false
   end
 
   def new
@@ -64,7 +105,6 @@ class AulasController < ApplicationController
       render json: @aula.errors.full_messages, status: :unprocessable_entity
     end
   end
-
 
 
   def calcular_horarios(horario_inicio, duracao_aula, ultima_aula)

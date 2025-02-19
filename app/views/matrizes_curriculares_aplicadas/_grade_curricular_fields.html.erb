@@ -1,11 +1,6 @@
 <div class="nested-fields row">
   <div class="card mb-3">
     <div class="card-body">
-      <div class="col-12 mb-2 d-lg-none text-end">
-        <%= link_to_remove_association f, class: "btn btn-outline-danger border border-0 btn-remove-card" do %>
-          <i class="ph-x"></i>
-        <% end %>
-      </div>
       <div class="row">
         <div class="col-12 col-lg-4 order-lg-1">
           <%= f.association :disciplina, input_html: { class: "keyup choice" } %>

@@ -487,6 +487,23 @@
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.14.0/Sortable.min.js"></script>
     <script>
       $(document).ready(function() {
+
+        function buildSubjectCard(data, currentUses) {
+            const maxUses = Math.floor(data.weeklyminutes / 50);
+            return `<div class="subject-card" data-id="${data.id}" data-current-uses="${currentUses}" data-max-uses="${maxUses}">
+                      <p><strong>${data.name}</strong></p>
+                      <p>Room info here</p>
+                      <p class="aula-counter">Aula ${currentUses}/${maxUses}</p>
+                    </div>`;
+          }
+          
+          function buildTeacherCard(data, currentUses) {
+            const maxUses = Math.floor(data.weeklyminutes / 50);
+            return `<div class="teacher-card" data-id="${data.id}" data-current-uses="${currentUses}" data-max-uses="${maxUses}">
+                      <p><strong>${data.name}</strong></p>
+                      <p class="aula-counter">Aula ${currentUses}/${maxUses}</p>
+                    </div>`;
+          }
           // Lista de cores claras para matérias e professores
           const lightColors = [
             '#DCEDC8', '#7ca37c', '#49ab81', '#87A96B', '#8FBC8B', '#71BC78',
@@ -653,6 +670,53 @@
               });
           }
 
+          function populateScheduleFromSavedAssignments() {
+            var savedAssignments = JSON.parse('<%= raw(json_escape(@saved_assignments.to_json)) %>');
+
+            console.log(savedAssignments);
+            const selectedTurma = $('#turma-select').val();
+            if (!selectedTurma || !savedAssignments[selectedTurma]) return;
+            
+
+            const turmaAssignments = savedAssignments[selectedTurma];
+            Object.keys(turmaAssignments).forEach(cellKey => {''
+              const assignment = turmaAssignments[cellKey];
+              const slotEl = document.querySelector(`.time-slot[data-cell-key="${cellKey}"]`);
+              if (!slotEl) return;
+
+              // Assuming you computed current uses elsewhere or have a way to compute them:
+              const subjectCurrentUses = getSubjectCurrentUses(assignment.subject.id);
+              const teacherCurrentUses = getTeacherCurrentUses(assignment.teacher.id);
+
+              if (assignment.subject) {
+                const subjectHTML = buildSubjectCard(assignment.subject, subjectCurrentUses);
+                slotEl.insertAdjacentHTML('beforeend', subjectHTML);
+              }
+
+              if (assignment.teacher) {
+                const teacherHTML = buildTeacherCard(assignment.teacher, teacherCurrentUses);
+                slotEl.insertAdjacentHTML('beforeend', teacherHTML);
+              }
+
+              // Store the aula id on the time-slot for further updates.
+              slotEl.setAttribute('data-aula-id', assignment.aula_id);
+            });
+          }
+
+          function getSubjectCurrentUses(subjectId) {
+            // Example: loop over savedAssignments to count how many times this subject appears
+            // Or, if you have that data precomputed from the server, return it directly.
+            return 0; // placeholder
+          }
+
+          function getTeacherCurrentUses(teacherId) {
+            // Similar logic as above.
+            return 0; // placeholder
+          }
+
+          document.addEventListener('DOMContentLoaded', populateScheduleFromSavedAssignments);
+
+
           function initializeSortable() {
             document.querySelectorAll('.time-slot').forEach(timeSlot => {
               // If a Sortable instance exists on this element, destroy it.
@@ -777,6 +841,7 @@
                     dia: dia,
                     horario_inicio: horarioInicio,
                     horario_fim: horarioFim,
+                    turma_id: selectedTurma
                   };
 
                   if (subjectCard) {
@@ -943,6 +1008,7 @@
           createSubjectCards();
           createTeacherCards();
           createScheduleTable();
+          populateScheduleFromSavedAssignments();
           initializeSortable();
 
           $('#turma-select').on('change', function() {

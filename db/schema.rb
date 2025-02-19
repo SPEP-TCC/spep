@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_02_13_012338) do
+ActiveRecord::Schema[7.2].define(version: 2025_02_19_022951) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -50,8 +50,10 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_13_012338) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id"
+    t.bigint "turma_id"
     t.index ["ambiente_id"], name: "index_aulas_on_ambiente_id"
     t.index ["grade_curricular_id"], name: "index_aulas_on_grade_curricular_id"
+    t.index ["turma_id"], name: "index_aulas_on_turma_id"
     t.index ["user_id"], name: "index_aulas_on_user_id"
   end
 
@@ -307,6 +309,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_13_012338) do
   add_foreign_key "areas", "etapas"
   add_foreign_key "aulas", "ambientes"
   add_foreign_key "aulas", "grades_curriculares"
+  add_foreign_key "aulas", "turmas"
   add_foreign_key "aulas", "users"
   add_foreign_key "curriculo_ementa_disciplinas", "curriculos_ementas"
   add_foreign_key "curriculo_ementa_disciplinas", "disciplinas"

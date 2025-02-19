@@ -18,7 +18,7 @@ $(document).ready(function () {
   
   
   // Basic wizard setup
-  $('.steps-basic').steps({
+/*   $('.steps-basic').steps({
     headerTag: 'h6',
     bodyTag: 'fieldset',
     transitionEffect: 'fade',
@@ -32,13 +32,13 @@ $(document).ready(function () {
       var form = $(this).closest('form'); // Encontra o formulário pai do elemento atual
       form.submit(); // Isso aciona o envio do formulário
     }
-  });
+  }); */
 
   // Inicialização do Wizard
-  var wizard = new Wizard('#basicwizard', {
+/*   var wizard = new Wizard('#basicwizard', {
     validate: true, // Validação do formulário em cada etapa
     progress: true // Mostra o progresso do wizard
-  });
+  }); */
 
   // Controla os botões do wizard (Primeiro, Voltar, Próximo, Finalizar)
   $('.first').on('click', function () {

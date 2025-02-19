@@ -7,7 +7,39 @@
   <!-- Card e formulário -->
   <div class="card">
     <div class="card-body">
-      <%= render "turma", f: f %>
+      <div class="row">
+        <div class="col-12 col-lg-9">
+          <%= f.input :descricao, input_html: { class: "keyup", disabled: local_assigns[:disabled] } %>
+        </div>
+        <div class="col-12 col-lg-3">
+          <%= f.input :vagas, input_html: { class: "keyup", disabled: local_assigns[:disabled] } %>
+        </div>
+        <div class="col-12 col-lg-3">
+          <%= f.input :numero_efetivo_estudantes, input_html: { class: "keyup", disabled: local_assigns[:disabled] } %>
+        </div>
+        <div class="col-12 col-lg-9">
+          <%= f.association :matriz_curricular_aplicada, input_html: { class: "keyup choice", disabled: local_assigns[:disabled] } %>
+        </div>
+        <div class="col-12">
+          <%= f.input :sala_recorrente, input_html: { class: "keyup", disabled: local_assigns[:disabled] } %>
+        </div>
+        <div class="col-12 col-lg-4">
+          <%= f.association :turno, input_html: { class: "keyup choice", disabled: local_assigns[:disabled] } %>
+        </div>
+        <div class="col-12 col-lg-8">
+          <%= f.association :ambiente, input_html: { class: "keyup choice", disabled: local_assigns[:disabled] } %>
+        </div>
+      </div>
+      <div class="row">
+        <div id="grades_curriculares_turmas">
+          <%= f.simple_fields_for :grades_curriculares_turmas do |grade_curricular_turma| %>
+            <%= render 'grade_curricular_turma_fields', :f => grade_curricular_turma %>
+          <% end %>
+          <div class="links">
+            <%= link_to_add_association 'Adicionar disciplinas', f, :grades_curriculares_turmas, class: 'btn btn-primary btn-sm mb-2' %>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="card-footer text-end">
       <%= btn_submit(f) %>

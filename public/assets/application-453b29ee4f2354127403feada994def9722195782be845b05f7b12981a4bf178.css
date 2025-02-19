@@ -1,0 +1,50 @@
+/*
+* This is a manifest file that'll be compiled into application.css, which will include all the files
+* listed below.
+*
+* Any CSS (and SCSS, if configured) file within this directory, lib/assets/stylesheets, or any plugin's
+* vendor/assets/stylesheets directory can be referenced here using a relative path.
+*
+* You're free to add application-wide styles to this file and they'll appear at the bottom of the
+* compiled file so the styles you add here take precedence over styles defined in any other CSS
+* files in this directory. Styles in this file should be added after the last require_* statement.
+* It is generally better to create a new file per style scope.
+*
+
+
+*/
+.hand-pointer,
+.nav-item,
+.hand-pointer:hover,
+.nav-item:hover {
+  cursor: pointer;
+}
+
+.sort_link,
+.sort_link:hover {
+  text-decoration: none;
+  color: var(--bs-table-color-state, var(--bs-table-color-type, var(--bs-table-color)));
+}
+
+.keyup {
+  text-transform: uppercase;
+}
+
+.downcase {
+  text-transform: lowercase;
+}
+
+thead th, .table thead th {
+  background: transparent;
+}
+
+td a {
+  color: var(--bs-table-color-state, var(--bs-table-color-type, var(--bs-table-color)));
+}
+
+.table-striped > tbody > tr:nth-of-type(odd) > * {
+  --bs-table-color-type: var(--bs-table-striped-color);
+  --bs-table-bg-type: #f9fbff ;
+}
+
+/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImFwcGxpY2F0aW9uLmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTs7Ozs7Ozs7Ozs7Ozs7Q0FjQztBQUNEOzs7O0VBSUUsZUFBZTtBQUNqQjs7QUFFQTs7RUFFRSxxQkFBcUI7RUFDckIscUZBQXFGO0FBQ3ZGOztBQUVBO0VBQ0UseUJBQXlCO0FBQzNCOztBQUVBO0VBQ0UseUJBQXlCO0FBQzNCOztBQUVBO0VBQ0UsdUJBQXVCO0FBQ3pCOztBQUVBO0VBQ0UscUZBQXFGO0FBQ3ZGOztBQUVBO0VBQ0Usb0RBQW9EO0VBQ3BELDRCQUE0QjtBQUM5QiIsImZpbGUiOiJhcHBsaWNhdGlvbi5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyIvKlxuKiBUaGlzIGlzIGEgbWFuaWZlc3QgZmlsZSB0aGF0J2xsIGJlIGNvbXBpbGVkIGludG8gYXBwbGljYXRpb24uY3NzLCB3aGljaCB3aWxsIGluY2x1ZGUgYWxsIHRoZSBmaWxlc1xuKiBsaXN0ZWQgYmVsb3cuXG4qXG4qIEFueSBDU1MgKGFuZCBTQ1NTLCBpZiBjb25maWd1cmVkKSBmaWxlIHdpdGhpbiB0aGlzIGRpcmVjdG9yeSwgbGliL2Fzc2V0cy9zdHlsZXNoZWV0cywgb3IgYW55IHBsdWdpbidzXG4qIHZlbmRvci9hc3NldHMvc3R5bGVzaGVldHMgZGlyZWN0b3J5IGNhbiBiZSByZWZlcmVuY2VkIGhlcmUgdXNpbmcgYSByZWxhdGl2ZSBwYXRoLlxuKlxuKiBZb3UncmUgZnJlZSB0byBhZGQgYXBwbGljYXRpb24td2lkZSBzdHlsZXMgdG8gdGhpcyBmaWxlIGFuZCB0aGV5J2xsIGFwcGVhciBhdCB0aGUgYm90dG9tIG9mIHRoZVxuKiBjb21waWxlZCBmaWxlIHNvIHRoZSBzdHlsZXMgeW91IGFkZCBoZXJlIHRha2UgcHJlY2VkZW5jZSBvdmVyIHN0eWxlcyBkZWZpbmVkIGluIGFueSBvdGhlciBDU1NcbiogZmlsZXMgaW4gdGhpcyBkaXJlY3RvcnkuIFN0eWxlcyBpbiB0aGlzIGZpbGUgc2hvdWxkIGJlIGFkZGVkIGFmdGVyIHRoZSBsYXN0IHJlcXVpcmVfKiBzdGF0ZW1lbnQuXG4qIEl0IGlzIGdlbmVyYWxseSBiZXR0ZXIgdG8gY3JlYXRlIGEgbmV3IGZpbGUgcGVyIHN0eWxlIHNjb3BlLlxuKlxuKj0gcmVxdWlyZV90cmVlIC5cbio9IHJlcXVpcmVfc2VsZlxuKi9cbi5oYW5kLXBvaW50ZXIsXG4ubmF2LWl0ZW0sXG4uaGFuZC1wb2ludGVyOmhvdmVyLFxuLm5hdi1pdGVtOmhvdmVyIHtcbiAgY3Vyc29yOiBwb2ludGVyO1xufVxuXG4uc29ydF9saW5rLFxuLnNvcnRfbGluazpob3ZlciB7XG4gIHRleHQtZGVjb3JhdGlvbjogbm9uZTtcbiAgY29sb3I6IHZhcigtLWJzLXRhYmxlLWNvbG9yLXN0YXRlLCB2YXIoLS1icy10YWJsZS1jb2xvci10eXBlLCB2YXIoLS1icy10YWJsZS1jb2xvcikpKTtcbn1cblxuLmtleXVwIHtcbiAgdGV4dC10cmFuc2Zvcm06IHVwcGVyY2FzZTtcbn1cblxuLmRvd25jYXNlIHtcbiAgdGV4dC10cmFuc2Zvcm06IGxvd2VyY2FzZTtcbn1cblxudGhlYWQgdGgsIC50YWJsZSB0aGVhZCB0aCB7XG4gIGJhY2tncm91bmQ6IHRyYW5zcGFyZW50O1xufVxuXG50ZCBhIHtcbiAgY29sb3I6IHZhcigtLWJzLXRhYmxlLWNvbG9yLXN0YXRlLCB2YXIoLS1icy10YWJsZS1jb2xvci10eXBlLCB2YXIoLS1icy10YWJsZS1jb2xvcikpKTtcbn1cblxuLnRhYmxlLXN0cmlwZWQgPiB0Ym9keSA+IHRyOm50aC1vZi10eXBlKG9kZCkgPiAqIHtcbiAgLS1icy10YWJsZS1jb2xvci10eXBlOiB2YXIoLS1icy10YWJsZS1zdHJpcGVkLWNvbG9yKTtcbiAgLS1icy10YWJsZS1iZy10eXBlOiAjZjlmYmZmIDtcbn1cbiJdfQ== */
