@@ -6,7 +6,7 @@ class User < ApplicationRecord
 
   has_many :grades_curriculares
   belongs_to :tipo_contrato
-  has_many :restricoes
+  has_many :restricoes, dependent: :destroy, inverse_of: :user
 
   accepts_nested_attributes_for :restricoes, allow_destroy: true
 

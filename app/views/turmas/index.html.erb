@@ -1,9 +1,38 @@
 <div class="card">
-  <div class="card-header border-0 d-flex justify-content-between">
-    <!-- Botão para abrir o modal de filtros -->
-    <%= render "shared/index_header_buttons", index_url: turmas_path do %>
-    <%= link_to t("common.actions.new"), new_turma_path, class: "btn btn-primary" %>
-    <% end %>
+  <div class="card-header border-0">
+    <div class="row w-100 g-2">
+      <!-- Input de Pesquisa -->
+      <div class="col-12 col-md-6 col-lg-4 d-flex align-items-center justify-content-center">
+        <%= search_form_for @q, url: turmas_path, class: "form-inline w-100" do |f| %>
+          <div class="input-group align-items-center justify-content-center">
+            <%= 
+            f.search_field :descricao_cont, 
+            class: "form-control", 
+            placeholder: t("Nome", default: "Pesquise..."), 
+            title: "Nome",
+            data: { bs_toggle: "tooltip" }
+          %>
+            <div class="input-group-append">
+              <%= button_tag type: 'submit', class: "btn btn-outline-secondary" do %>
+                <i class="ti ti-search"></i>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+      <!-- Botão de Limpar Filtros -->
+      <% if params[:q] %>
+        <div class="col-12 col-md-2 d-flex align-items-center justify-content-center">
+          <%= link_to t("common.clean_filters"), turmas_path, class: "btn btn-secondary w-100 w-md-auto" %>
+        </div>
+      <% end %>
+      <!-- Botão de Incluir -->
+      <div class="col-12 col-md-2 d-flex ms-auto align-items-center justify-content-end">
+        <%= render "shared/index_header_buttons", index_url: turmas_path do %>
+          <%= link_to t("common.actions.new"), new_turma_path, class: "btn btn-primary w-100 w-md-auto" %>
+        <% end %>
+      </div>
+    </div>
   </div>
   <div class="card-body">
     <div class="table-responsive">
@@ -11,59 +40,44 @@
         <thead>
           <tr>
             <th class="text-center col-1 opacity-75"><%= t("common.table_th_actions") %></th>
-            
-              <th class="opacity-75"><%= sort_link(@q, :descricao, t("activerecord.attributes.turma.descricao")) %></th>
-            
-              <th class="opacity-75"><%= sort_link(@q, :vagas, t("activerecord.attributes.turma.vagas")) %></th>
-            
-              <th class="opacity-75"><%= sort_link(@q, :matriz_curricular_aplicada, t("activerecord.attributes.turma.matriz_curricular_aplicada")) %></th>
-            
-              <th class="opacity-75"><%= sort_link(@q, :numero_efetivo_estudantes, t("activerecord.attributes.turma.numero_efetivo_estudantes")) %></th>
-            
-              <th class="opacity-75"><%= sort_link(@q, :sala_recorrente, t("activerecord.attributes.turma.sala_recorrente")) %></th>
-            
-              <th class="opacity-75"><%= sort_link(@q, :turno, t("activerecord.attributes.turma.turno")) %></th>
-            
-              <th class="opacity-75"><%= sort_link(@q, :ambiente, t("activerecord.attributes.turma.ambiente")) %></th>
-            
+            <th class="opacity-75"><%= sort_link(@q, :descricao, t("activerecord.attributes.turma.descricao")) %></th>
+            <th class="opacity-75"><%= sort_link(@q, :vagas, t("activerecord.attributes.turma.vagas")) %></th>
+            <th class="opacity-75"><%= sort_link(@q, :matriz_curricular_aplicada, t("activerecord.attributes.turma.matriz_curricular_aplicada")) %></th>
+            <th class="opacity-75"><%= sort_link(@q, :numero_efetivo_estudantes, t("activerecord.attributes.turma.numero_efetivo_estudantes")) %></th>
+            <th class="opacity-75"><%= sort_link(@q, :sala_recorrente, t("activerecord.attributes.turma.sala_recorrente")) %></th>
+            <th class="opacity-75"><%= sort_link(@q, :turno, t("activerecord.attributes.turma.turno")) %></th>
+            <th class="opacity-75"><%= sort_link(@q, :ambiente, t("activerecord.attributes.turma.ambiente")) %></th>
           </tr>
         </thead>
         <tbody>
           <% @turmas.each do |turma| %>
-          <tr>
-            <td class="text-center">
-              <div class="dropdown-toggle">
-                <a href="#" class="text-body dropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                  <i class="ti ti-settings fs-4"></i>
-                </a>
-                <div class="dropdown-menu">
-                  <div class="dropdown-header"><%= t("common.table_dropdown_options") %></div>
-                  <%= link_to content_tag(:i, "", class: "ph-eye me-2") + t("common.actions.show"), turma_path(turma), class: "dropdown-item" %>
-                  <%= link_to content_tag(:i, "", class: "ph-pen me-2") + t("common.actions.edit"), edit_turma_path(turma), class: "dropdown-item" %>
-                  <%= form_for turma, method: :delete do |f| %>
-                  <a class="dropdown-item hand-pointer" data-confirm-delete="<%= turma_path(turma) %>" data-csrf-token="<%= form_authenticity_token %>">
-                    <i class="ph-trash-simple me-2"></i><%= t("common.actions.delete") %>
+            <tr>
+              <td class="text-center">
+                <div class="dropdown-toggle">
+                  <a href="#" class="text-body dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="ti ti-settings fs-4"></i>
                   </a>
-                  <% end %>
+                  <div class="dropdown-menu">
+                    <div class="dropdown-header"><%= t("common.table_dropdown_options") %></div>
+                    <%= link_to content_tag(:i, "", class: "ph-eye me-2") + t("common.actions.show"), turma_path(turma), class: "dropdown-item" %>
+                    <%= link_to content_tag(:i, "", class: "ph-pen me-2") + t("common.actions.edit"), edit_turma_path(turma), class: "dropdown-item" %>
+                    <%= form_for turma, method: :delete do |f| %>
+                      <button type="submit" class="dropdown-item hand-pointer">
+                        <i class="ph-trash-simple me-2"></i>
+                        <%= t("common.actions.delete") %>
+                      </button>
+                    <% end %>
+                  </div>
                 </div>
-              </div>
-            </td>
-            
+              </td>
               <td><%= turma.descricao %></td>
-            
               <td><%= turma.vagas %></td>
-            
               <td><%= turma.matriz_curricular_aplicada %></td>
-            
               <td><%= turma.numero_efetivo_estudantes %></td>
-            
               <td><%= turma.sala_recorrente %></td>
-            
               <td><%= turma.turno %></td>
-            
               <td><%= turma.ambiente %></td>
-            
-          </tr>
+            </tr>
           <% end %>
         </tbody>
       </table>

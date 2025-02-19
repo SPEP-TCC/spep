@@ -104,6 +104,7 @@ $(document).ready(function () {
   $('.tanque').mask('000'); 
   $('.portas').mask('0'); 
   $('.passageiro').mask('000');
+  $('.hora').mask('00:00');
   
 
   $('.coordenada').mask('-999.999999', {

@@ -4,6 +4,6 @@ class Area < ApplicationRecord
   has_many :subareas
 
   def to_s
-    self.descricao
+    "#{self.descricao} - #{self.etapa.descricao}"
   end
 end

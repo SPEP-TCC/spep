@@ -16,7 +16,7 @@ class TurmasController < ApplicationController
   end
 
   def edit
-    @user.grades_curriculares_turmas.build
+    @turma.grades_curriculares_turmas.build
   end
 
   def create

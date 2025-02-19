@@ -87,4 +87,15 @@ module ApplicationHelper
   def formatar_processo_sei(processo_sei)
     processo_sei.gsub(/(\d{4})(\d{6})(\d{4})(\d{2})/, '\1.\2/\3-\4') if processo_sei
   end
+
+  def dias_numeros
+    dias = [
+      1 => "DOMINGO",
+      2 => "SEGUNDA",
+      3 => "TERÇA",
+      4 => "QUARTA",
+      5 => "QUINTA",
+      6 => "SEXTA",
+      7 => "SÁBADO"
+    ]
 end

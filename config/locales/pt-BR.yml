@@ -140,7 +140,7 @@ pt-BR:
         nivel: "Nível"
       grade_curricular: 
         disciplina: "Disciplina"
-        carga_horaria: "Carga Horária"
+        carga_horaria: "Carga Horária Semanal"
         periodo_calendario: "Período"
         optativa: "Optativa"
         carga_horaria_total: "Carga Horária Total"
