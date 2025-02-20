@@ -6,11 +6,13 @@
         <%= search_form_for @q, url: ambientes_path, class: "form-inline w-100" do |f| %>
           <div class="d-flex">
             <div class="input-group">
-              <%= f.search_field :descricao_or_instituicao_nome_cont, 
-              class: "form-control", 
-              placeholder: t("Descrição", default: "Pesquise..."), 
-              title: "Descrição ou Instituição", 
-              data: { bs_toggle: "tooltip" } %>
+              <%= 
+                f.search_field :descricao_or_instituicao_nome_cont, 
+                class: "form-control", 
+                placeholder: t("Descrição", default: "Pesquise..."), 
+                title: "Descrição ou Instituição", 
+                data: { bs_toggle: "tooltip" } 
+              %>
             </div>
             <div class="col-lg-2 d-flex align-items-center justify-content-center">
               <div class="input-group-append">

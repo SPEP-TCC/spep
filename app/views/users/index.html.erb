@@ -4,18 +4,22 @@
       <!-- Input de Pesquisa -->
       <div class="col-12 col-md-6 col-lg-4 d-flex align-items-center justify-content-center">
         <%= search_form_for @q, url: users_path, class: "form-inline w-100" do |f| %>
-          <div class="input-group align-items-center justify-content-center">
-            <%= 
-            f.search_field :nome_cont, 
-            class: "form-control", 
-            placeholder: t("Nome", default: "Pesquise..."), 
-            title: "Nome",
-            data: { bs_toggle: "tooltip" }
-          %>
-            <div class="input-group-append">
-              <%= button_tag type: 'submit', class: "btn btn-outline-secondary" do %>
-                <i class="ti ti-search"></i>
-              <% end %>
+          <div class="d-flex">
+            <div class="input-group">
+              <%= 
+                f.search_field :nome_cont, 
+                class: "form-control", 
+                placeholder: t("Nome", default: "Pesquise..."), 
+                title: "Nome",
+                data: { bs_toggle: "tooltip" }
+              %>
+            </div>
+            <div class="col-lg-2 d-flex align-items-center justify-content-center">
+              <div class="input-group-append">
+                <%= button_tag type: 'submit', class: "btn btn-outline-secondary" do %>
+                  <i class="ti ti-search"></i>
+                <% end %>
+              </div>
             </div>
           </div>
         <% end %>
