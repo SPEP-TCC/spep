@@ -25,36 +25,38 @@
       }
 
       /* Notification Button */
+      /* Estilo do botão de notificação */
+      /* Estilo do botão de notificação */
       .notification-button {
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        background-color:rgb(255, 255, 255);
+        background-color: rgb(255, 255, 255);
         border: none;
         border-radius: 50%;
-        width: 44px;
-        height: 44px;
-        display: flex;
+        width: 50px; /* Tamanho ajustado */
+        height: 50px;
+        cursor: pointer;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+        display: flex; /* Usado para garantir que o conteúdo (ícone e contador) fiquem alinhados */
         justify-content: center;
         align-items: center;
-        cursor: pointer;
-        z-index: 1000;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-        transition: all 0.3s ease;
+        position: relative; /* Posicionamento relativo para o contador */
       }
 
+      /* Efeito de hover do botão */
       .notification-button:hover {
-        background-color:rgb(227, 227, 227);
-        transform: scale(1.05);
+        background-color: rgb(227, 227, 227);
+        transform: scale(1.1);
       }
 
+      /* Ícone dentro do botão */
       .notification-icon {
-        color: white;
-        font-size: 20px;
+        color: #333;
+        font-size: 24px; /* Tamanho ajustado para o ícone */
       }
 
+      /* Estilo do contador de notificações */
       .notification-count {
-        position: absolute;
+        position: absolute; /* Posiciona o contador no canto superior direito */
         top: -5px;
         right: -5px;
         background-color: #f44336;
@@ -64,10 +66,10 @@
         height: 22px;
         font-size: 12px;
         font-weight: bold;
+        border: 2px solid white;
         display: flex;
         justify-content: center;
         align-items: center;
-        border: 2px solid white;
       }
 
       /* Offcanvas Panel */
@@ -78,9 +80,9 @@
         width: 350px;
         height: 100%;
         background-color: #fff;
-        box-shadow: -2px 0 15px rgba(0,0,0,0.1);
+        box-shadow: -2px 0 15px rgba(0, 0, 0, 0.1);
         transition: right 0.3s ease;
-        z-index: 1001;
+        z-index: 9999; /* Aumentando o z-index para garantir que esteja no topo */
       }
 
       .notification-offcanvas.open {
@@ -125,6 +127,7 @@
         border-left: 4px solid #4CAF50;
         background-color: #f8f9fa;
         transition: all 0.2s ease;
+        z-index: 9999;
       }
 
       .notification-item:hover {
@@ -136,6 +139,7 @@
       .notification-item.success {
         border-left-color: #4CAF50;
         background-color: #E8F5E9;
+        z-index: 9999;
       }
 
       .notification-item.warning {
@@ -166,6 +170,7 @@
         display: none;
         box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         animation: slideIn 0.3s ease;
+        z-index: 9999;
       }
 
       @keyframes slideIn {
@@ -327,6 +332,22 @@
         margin-right: 8px;
       }
 
+      .btn-imprimir {
+        margin-left: 5px;
+        font-weight: bold;
+        text-transform: uppercase;
+        border-radius: 10px;
+        padding: 9px 20px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+      }
+
+      .btn-imprimir i {
+        font-size: 1.2em;
+      }
+
       .info-text {
         font-size: 12px;
         color: #666;
@@ -341,6 +362,7 @@
 
       /* Main select container */
       .select2-container .select2-selection--single {
+        margin-left: 10px;
         height: 42px !important;
         border: 2px solid #4CAF50 !important;
         border-radius: 8px !important;
@@ -417,31 +439,38 @@
       }
 
       @media print {
-      /* Hide elements that are not needed in print */
-      #printGrade,
-      .nav,
-      .controls {
-        display: none;
-      }
+        /* Definindo a orientação da página para paisagem */
+        @page {
+          size: landscape;
+        }
 
-      /* Optionally, adjust font sizes or layout for printing */
-      body {
-        font-size: 12pt;
-      }
+        /* Ocultando todos os elementos da página */
+        body * {
+          visibility: hidden;
+        }
 
-      #teachers-list,
-      #aviso,
-      #subjects-list {
-        display: none;
+        /* Tornando a tabela visível */
+        #schedule, #schedule * {
+          visibility: visible;
+        }
+
+        /* Ajustando a tabela para ocupar 100% da largura da página */
+        #schedule {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+        }
+
+        /* Ajustando a altura para preencher a página, se necessário */
+        #schedule td, #schedule th {
+          padding: 5px; /* Ajuste o padding conforme necessário */
+        }
       }
-          }
     </style>
   </head>
   <body>
-    <div id="notification-button" class="notification-button">
-      <span class="notification-icon">🔔</span>
-      <span id="notification-count" class="notification-count">0</span>
-    </div>
     <div id="notification-offcanvas" class="notification-offcanvas">
       <div class="offcanvas-header">
         <h3>Notificações</h3>
@@ -452,13 +481,25 @@
     <div id="notification-popup" class="notification-popup"></div>
     <div id="notification-overlay" class="notification-overlay"></div>
     <div class="container">
-      <div class="select">
-        <select id="turma-select" style="width: 100%; max-width: 250px;"></select>
+      <div class="row d-flex">
+        <div class="col-8 col-lg-10">
+          <div class="select">
+            <select id="turma-select" style="width: 100%; max-width: 250px;"></select>
+          </div>
+        </div>
+        <div class="col-2 col-lg-1">
+          <button class="btn btn-success btn-imprimir" id="printGrade">Imprimir</button>
+        </div>
+        <div class="col d-flex justify-content-end">
+          <div id="notification-button" class="notification-button">
+            <span class="notification-icon">🔔</span>
+            <span id="notification-count" class="notification-count">0</span>
+          </div>
+        </div>
       </div>
       <div style="background-color:rgb(163, 192, 153); color: #363636; padding: 12px; margin: 15px 0; border: 1px solidrgb(145, 173, 143); border-radius: 4px; text-align: center; font-weight: bold;">
         Dê dois cliques para remover itens do calendário
       </div>
-      <button id="printGrade">Print Grade</button>
       <div class="schedule-container">
         <div id="subjects-list" class="subjects-list">
           <h3 style="text-align: center;">Matérias</h3>
@@ -487,6 +528,14 @@
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.14.0/Sortable.min.js"></script>
     <script>
       $(document).ready(function() {
+        function setupPrintButton() {
+          document.getElementById("printGrade").addEventListener("click", () => {
+            window.print()
+          })
+        }
+
+        setupPrintButton()
+
         function buildSubjectCard(data, currentUses) {
           const maxUses = Math.floor(data.carga_horaria / 50);
           return `<div class="subject-card" data-id="${data.id}" data-current-uses="${currentUses}" data-max-uses="${maxUses}" data-ambiente-id="${data.room_id}" style="background-color: #DCEDC8;">
@@ -685,42 +734,42 @@
             var savedAssignments = JSON.parse('<%= raw(json_escape(@saved_assignments.to_json)) %>');
             var organizedAssignments = organizeAssignmentsByTurma(savedAssignments);
 
-//          console.log(organizedAssignments);
+      //          console.log(organizedAssignments);
             function populateScheduleFromSavedAssignments() {
               const selectedTurma = $('#turma-select').val();
               if (!selectedTurma) {
                 console.log("No turma selected.");
                 return;
               }
-            
+
               if (!organizedAssignments[selectedTurma]) {
                 console.log("No assignments found for turma", selectedTurma);
                 return;
               }
-            
+
               scheduleAssignments[selectedTurma] = organizedAssignments[selectedTurma];
               const turmaAssignments = organizedAssignments[selectedTurma];
-            
+
               console.log("Populating assignments for turma:", selectedTurma, turmaAssignments);
-            
+
               for (const cellKey in turmaAssignments) {
                 const assignment = turmaAssignments[cellKey];
                 console.log("Assignment for cell", cellKey, ":", assignment);
-            
+
                 const slotEl = document.querySelector(`.time-slot[data-cell-key="${cellKey}"]`);
                 if (!slotEl) {
                   console.error(`No slot element found for cell key: ${cellKey}`);
                   continue;
                 }
-            
+
                 // Clear any previously inserted cards to avoid duplication.
                 slotEl.innerHTML = '';
-            
+
                 // Set the aula_id on the time-slot (important for deletion)
                 if (assignment.aula_id) {
                   slotEl.setAttribute('data-aula-id', assignment.aula_id);
                 }
-            
+
                 // Rebuild and insert the subject card if present.
                 if (assignment.subject) {
                   let subjectHtml = assignment.subject.html;
@@ -734,7 +783,7 @@
                     console.error("Failed to generate subject HTML");
                   }
                 }
-            
+
                 // Rebuild and insert the teacher card if present.
                 if (assignment.teacher) {
                   let teacherHtml = assignment.teacher.html;
@@ -971,36 +1020,36 @@
           // Delegated event listener for double-clicking on dropped cards
           $(document).on('dblclick', '.time-slot', function(e) {
             console.log('Double-click event triggered on time-slot');
-            
+
             // Check if the target (or one of its parents) is a teacher or subject card.
             const $card = $(e.target).closest('.subject-card, .teacher-card');
             if (!$card.length) {
               console.log('No card found in the clicked element');
               return; // Not a card: ignore the event.
             }
-          
+
             console.log('Card found:', $card);
             e.preventDefault();
-          
+
             const $timeSlot = $(this);
             const aulaId = $timeSlot.data('aula-id');
-          
+
             console.log('Time slot:', $timeSlot);
             console.log('Aula ID:', aulaId);
-          
+
             // If there's no schedule assignment, just remove the card.
             if (!aulaId) {
               console.log('No aula ID found, removing card');
               $card.remove();
               return;
             }
-          
+
             // Optionally, ask for confirmation before deleting:
             if (!confirm("Deseja remover essa alocação?")) {
               console.log('Deletion cancelled by user');
               return;
             }
-          
+
             // Perform the AJAX DELETE call.
             $.ajax({
               url: `/aulas/${aulaId}`,
@@ -1029,7 +1078,7 @@
               }
             });
           });
-          
+
           // Add this line to check if the event listener is being attached
           console.log('Double-click event listener attached to document');
 
@@ -1071,10 +1120,10 @@
               $('#turma-select').val(turmas[0]);
             }
             $('#turma-select').trigger('change');
-            
+
             // Now call the function to populate the schedule.
             populateScheduleFromSavedAssignments();
-            
+
             initializeSortable();
             checkTeacherConflicts();
           });
