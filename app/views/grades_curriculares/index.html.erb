@@ -2,7 +2,7 @@
   <div class="card-header border-0 d-flex justify-content-between">
     <!-- Botão para abrir o modal de filtros -->
     <%= render "shared/index_header_buttons", index_url: grades_curriculares_path do %>
-    <%= link_to t("common.actions.new"), new_grade_curricular_path, class: "btn btn-primary" %>
+      <%= link_to t("common.actions.new"), new_grade_curricular_path, class: "btn btn-primary" %>
     <% end %>
   </div>
   <div class="card-body">
@@ -11,59 +11,44 @@
         <thead>
           <tr>
             <th class="text-center col-1 opacity-75"><%= t("common.table_th_actions") %></th>
-            
-              <th class="opacity-75"><%= sort_link(@q, :disciplina, t("activerecord.attributes.grade_curricular.disciplina")) %></th>
-            
-              <th class="opacity-75"><%= sort_link(@q, :carga_horaria, t("activerecord.attributes.grade_curricular.carga_horaria")) %></th>
-            
-              <th class="opacity-75"><%= sort_link(@q, :periodo_calendario, t("activerecord.attributes.grade_curricular.periodo_calendario")) %></th>
-            
-              <th class="opacity-75"><%= sort_link(@q, :optativa, t("activerecord.attributes.grade_curricular.optativa")) %></th>
-            
-              <th class="opacity-75"><%= sort_link(@q, :carga_horaria_total, t("activerecord.attributes.grade_curricular.carga_horaria_total")) %></th>
-            
-              <th class="opacity-75"><%= sort_link(@q, :matriz_curricular_aplicada, t("activerecord.attributes.grade_curricular.matriz_curricular_aplicada")) %></th>
-            
-              <th class="opacity-75"><%= sort_link(@q, :user, t("activerecord.attributes.grade_curricular.user")) %></th>
-            
+            <th class="opacity-75"><%= sort_link(@q, :disciplina, t("activerecord.attributes.grade_curricular.disciplina")) %></th>
+            <th class="opacity-75"><%= sort_link(@q, :carga_horaria, t("activerecord.attributes.grade_curricular.carga_horaria")) %></th>
+            <th class="opacity-75"><%= sort_link(@q, :periodo_calendario, t("activerecord.attributes.grade_curricular.periodo_calendario")) %></th>
+            <th class="opacity-75"><%= sort_link(@q, :optativa, t("activerecord.attributes.grade_curricular.optativa")) %></th>
+            <th class="opacity-75"><%= sort_link(@q, :carga_horaria_total, t("activerecord.attributes.grade_curricular.carga_horaria_total")) %></th>
+            <th class="opacity-75"><%= sort_link(@q, :matriz_curricular_aplicada, t("activerecord.attributes.grade_curricular.matriz_curricular_aplicada")) %></th>
+            <th class="opacity-75"><%= sort_link(@q, :user, t("activerecord.attributes.grade_curricular.user")) %></th>
           </tr>
         </thead>
         <tbody>
           <% @grades_curriculares.each do |grade_curricular| %>
-          <tr>
-            <td class="text-center">
-              <div class="dropdown-toggle">
-                <a href="#" class="text-body dropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                  <i class="ti ti-settings fs-4"></i>
-                </a>
-                <div class="dropdown-menu">
-                  <div class="dropdown-header"><%= t("common.table_dropdown_options") %></div>
-                  <%= link_to content_tag(:i, "", class: "ph-eye me-2") + t("common.actions.show"), grade_curricular_path(grade_curricular), class: "dropdown-item" %>
-                  <%= link_to content_tag(:i, "", class: "ph-pen me-2") + t("common.actions.edit"), edit_grade_curricular_path(grade_curricular), class: "dropdown-item" %>
-                  <%= form_for grade_curricular, method: :delete do |f| %>
-                  <a class="dropdown-item hand-pointer" data-confirm-delete="<%= grade_curricular_path(grade_curricular) %>" data-csrf-token="<%= form_authenticity_token %>">
-                    <i class="ph-trash-simple me-2"></i><%= t("common.actions.delete") %>
+            <tr>
+              <td class="text-center">
+                <div class="dropdown-toggle">
+                  <a href="#" class="text-body dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="ti ti-settings fs-4"></i>
                   </a>
-                  <% end %>
+                  <div class="dropdown-menu">
+                    <div class="dropdown-header"><%= t("common.table_dropdown_options") %></div>
+                    <%= link_to content_tag(:i, "", class: "ph-eye me-2") + t("common.actions.show"), grade_curricular_path(grade_curricular), class: "dropdown-item" %>
+                    <%= link_to content_tag(:i, "", class: "ph-pen me-2") + t("common.actions.edit"), edit_grade_curricular_path(grade_curricular), class: "dropdown-item" %>
+                    <%= form_for grade_curricular, method: :delete do |f| %>
+                      <button type="submit" class="dropdown-item hand-pointer">
+                        <i class="ph-trash-simple me-2"></i>
+                        <%= t("common.actions.delete") %>
+                      </button>
+                    <% end %>
+                  </div>
                 </div>
-              </div>
-            </td>
-            
+              </td>
               <td><%= grade_curricular.disciplina %></td>
-            
               <td><%= grade_curricular.carga_horaria %></td>
-            
               <td><%= grade_curricular.periodo_calendario %></td>
-            
               <td><%= grade_curricular.optativa %></td>
-            
               <td><%= grade_curricular.carga_horaria_total %></td>
-            
               <td><%= grade_curricular.matriz_curricular_aplicada %></td>
-            
               <td><%= grade_curricular.user %></td>
-            
-          </tr>
+            </tr>
           <% end %>
         </tbody>
       </table>
