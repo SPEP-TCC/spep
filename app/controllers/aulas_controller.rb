@@ -66,7 +66,6 @@ class AulasController < ApplicationController
           }
         }
       end
-      render layout: false
   end
 
   def new

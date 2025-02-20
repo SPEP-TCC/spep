@@ -98,4 +98,5 @@ module ApplicationHelper
       6 => "SEXTA",
       7 => "SÁBADO"
     ]
+  end
 end
